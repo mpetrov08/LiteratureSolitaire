@@ -1,4 +1,5 @@
 ﻿using LiteratureSolitaire.Infrastructure.Data.Models;
+using LiteratureSolitaire.Infrastructure.Data.Seed;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -18,6 +19,10 @@ namespace LiteratureSolitaire.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.ApplyConfiguration(new AuthorConfiguration());
+            builder.ApplyConfiguration(new GenreConfiguration());
+            builder.ApplyConfiguration(new LiteraryDirectionConfiguration());
+            builder.ApplyConfiguration(new WorkConfiguration());
             base.OnModelCreating(builder);
         }
 

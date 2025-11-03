@@ -4,6 +4,7 @@ using LiteratureSolitaire.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LiteratureSolitaire.Infrastructure.Migrations
 {
     [DbContext(typeof(LiteratureSolitaireDbContext))]
-    partial class LiteratureSolitaireDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251103210011_Data_Seed")]
+    partial class Data_Seed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -191,7 +194,7 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                         new
                         {
                             Id = 5,
-                            Name = "Стихотворение"
+                            Name = "Поема"
                         },
                         new
                         {
@@ -351,7 +354,7 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                             Characters = "Стоян Глаушев, Султана, Лазар, Катерина, Рафе Клинче, Климент Бенков, Божана, Стойка Нунева, Аврам Немтур",
                             GenreId = 1,
                             LiteraryDirectionId = 1,
-                            Title = "\"Железният светилник\""
+                            Title = "Железният светилник"
                         },
                         new
                         {
@@ -360,7 +363,7 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                             Characters = "Бай Ганьо, Гочоолу, Дочоолу, Данко Харсъзина, Гуньо Адвокатина/Гуньо Келеперчиков",
                             GenreId = 2,
                             LiteraryDirectionId = 1,
-                            Title = "\"Бай Ганьо журналист\""
+                            Title = "Бай Ганьо журналист"
                         },
                         new
                         {
@@ -369,7 +372,7 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                             Characters = "Бяла Врана, Жена с проблем, Жена символ, Директор на театър, бай Цончо, Йовчо, Цончето, Печо, баба Кера, Извънземното, Георги",
                             GenreId = 3,
                             LiteraryDirectionId = 1,
-                            Title = "\"Балкански синдром\""
+                            Title = "Балкански синдром"
                         },
                         new
                         {
@@ -378,7 +381,7 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                             Characters = "Паисий, лирически говорител",
                             GenreId = 4,
                             LiteraryDirectionId = 2,
-                            Title = "\"Паисий\""
+                            Title = "Паисий"
                         },
                         new
                         {
@@ -387,7 +390,7 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                             Characters = "Лирически говорител, историята",
                             GenreId = 5,
                             LiteraryDirectionId = 1,
-                            Title = "\"История\""
+                            Title = "История"
                         },
                         new
                         {
@@ -396,7 +399,7 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                             Characters = "хлебарките, космическият удваник, трите врани, каракачанката, въшкарчето, глиганът, Апостола, папунякът, щъркелът, лисицата, Емилиян Станев, Григор Вачков, Методи Андонов",
                             GenreId = 1,
                             LiteraryDirectionId = 3,
-                            Title = "\"Ноев ковчег\""
+                            Title = "Ноев ковчег"
                         },
                         new
                         {
@@ -405,7 +408,7 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                             Characters = "Соломон, лирически говорител",
                             GenreId = 5,
                             LiteraryDirectionId = 1,
-                            Title = "\"Борба\""
+                            Title = "Борба"
                         },
                         new
                         {
@@ -414,7 +417,7 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                             Characters = "Андрешко, съдия-изпълнител, повествователят",
                             GenreId = 6,
                             LiteraryDirectionId = 4,
-                            Title = "\"Андрешко\""
+                            Title = "Андрешко"
                         },
                         new
                         {
@@ -423,7 +426,7 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                             Characters = "Дяволът, плебеят",
                             GenreId = 7,
                             LiteraryDirectionId = 1,
-                            Title = "\"Приказка за стълбата\""
+                            Title = "Приказка за стълбата"
                         },
                         new
                         {
@@ -432,7 +435,7 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                             Characters = "Лирически герой/Аз, либето",
                             GenreId = 5,
                             LiteraryDirectionId = 2,
-                            Title = "\"До моето първо либе\""
+                            Title = "До моето първо либе"
                         },
                         new
                         {
@@ -441,7 +444,7 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                             Characters = "Лирически говорител, загиналите воини, България",
                             GenreId = 5,
                             LiteraryDirectionId = 1,
-                            Title = "\"Новото гробище над Сливница\""
+                            Title = "Новото гробище над Сливница"
                         },
                         new
                         {
@@ -450,7 +453,7 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                             Characters = "Иво Обретенович, Елисавета, Никола Козичката, полковникът",
                             GenreId = 8,
                             LiteraryDirectionId = 1,
-                            Title = "\"Крадецът на праскови\""
+                            Title = "Крадецът на праскови"
                         },
                         new
                         {
@@ -459,7 +462,7 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                             Characters = "лирически Аз, природата",
                             GenreId = 9,
                             LiteraryDirectionId = 1,
-                            Title = "\"При Рилския манастир\""
+                            Title = "При Рилския манастир"
                         },
                         new
                         {
@@ -468,7 +471,7 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                             Characters = "лирически говорител, Ваньо селянчето",
                             GenreId = 10,
                             LiteraryDirectionId = 6,
-                            Title = "\"Градушка\""
+                            Title = "Градушка"
                         },
                         new
                         {
@@ -477,7 +480,7 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                             Characters = "лирически говорител, белостволите буки",
                             GenreId = 11,
                             LiteraryDirectionId = 5,
-                            Title = "\"Спи езерото\""
+                            Title = "Спи езерото"
                         },
                         new
                         {
@@ -486,7 +489,7 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                             Characters = "лирически Аз/влюбеният мъж, обречената жена",
                             GenreId = 12,
                             LiteraryDirectionId = 6,
-                            Title = "\"Аз искам да те помня така\""
+                            Title = "Аз искам да те помня така"
                         },
                         new
                         {
@@ -495,7 +498,7 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                             Characters = "лирически Аз/влюбеният мъж, обичаната жена",
                             GenreId = 5,
                             LiteraryDirectionId = 1,
-                            Title = "\"Колко си хубава!\""
+                            Title = "Колко си хубава!"
                         },
                         new
                         {
@@ -504,7 +507,7 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                             Characters = "влюбената девойка/лирическият говорител, обичаният",
                             GenreId = 5,
                             LiteraryDirectionId = 1,
-                            Title = "\"Посвещение\""
+                            Title = "Посвещение"
                         },
                         new
                         {
@@ -513,7 +516,7 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                             Characters = "Монката, дядо Захари",
                             GenreId = 6,
                             LiteraryDirectionId = 4,
-                            Title = "\"Спасова могила\""
+                            Title = "Спасова могила"
                         },
                         new
                         {
@@ -522,7 +525,7 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                             Characters = "лирическият Аз, Господ",
                             GenreId = 5,
                             LiteraryDirectionId = 7,
-                            Title = "\"Молитва\""
+                            Title = "Молитва"
                         },
                         new
                         {
@@ -531,7 +534,7 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                             Characters = "лирическият Аз, Животът",
                             GenreId = 5,
                             LiteraryDirectionId = 8,
-                            Title = "\"Вяра\""
+                            Title = "Вяра"
                         },
                         new
                         {
@@ -540,7 +543,7 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                             Characters = "Лазар Дъбака, дядо Корчан, Христина",
                             GenreId = 6,
                             LiteraryDirectionId = 4,
-                            Title = "\"Ветрената мелница\""
+                            Title = "Ветрената мелница"
                         },
                         new
                         {
@@ -549,7 +552,7 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                             Characters = "Сали Яшар, Джапар, Шакире",
                             GenreId = 6,
                             LiteraryDirectionId = 1,
-                            Title = "\"Песента на колелетата\""
+                            Title = "Песента на колелетата"
                         },
                         new
                         {
@@ -558,7 +561,7 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                             Characters = "Виктор Георг/дядо Георги, Божения, Марсен, Франета, Ванда",
                             GenreId = 8,
                             LiteraryDirectionId = 9,
-                            Title = "\"Баладa за Георг Хених\""
+                            Title = "Баладa за Георг Хених"
                         },
                         new
                         {
@@ -567,7 +570,7 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                             Characters = "лирическият Аз",
                             GenreId = 5,
                             LiteraryDirectionId = 6,
-                            Title = "\"Две души\""
+                            Title = "Две души"
                         },
                         new
                         {
@@ -576,7 +579,7 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                             Characters = "потомката - лирическият Аз",
                             GenreId = 5,
                             LiteraryDirectionId = 6,
-                            Title = "\"Потомка\""
+                            Title = "Потомка"
                         },
                         new
                         {
@@ -585,7 +588,7 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                             Characters = "лирическият говорител/Аз",
                             GenreId = 10,
                             LiteraryDirectionId = 8,
-                            Title = "\"Честен кръст\""
+                            Title = "Честен кръст"
                         });
                 });
 

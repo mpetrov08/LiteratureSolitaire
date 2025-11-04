@@ -23,6 +23,7 @@ namespace LiteratureSolitaire.Infrastructure.Data
             builder.ApplyConfiguration(new GenreConfiguration());
             builder.ApplyConfiguration(new LiteraryDirectionConfiguration());
             builder.ApplyConfiguration(new WorkConfiguration());
+
             base.OnModelCreating(builder);
         }
 

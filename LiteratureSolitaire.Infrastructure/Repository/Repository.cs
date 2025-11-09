@@ -11,7 +11,7 @@ namespace LiteratureSolitaire.Infrastructure.Repository
 {
     public class Repository : IRepository
     {
-        private readonly LiteratureSolitaireDbContext context;
+        private readonly DbContext context;
 
         public Repository(LiteratureSolitaireDbContext _context)
         {

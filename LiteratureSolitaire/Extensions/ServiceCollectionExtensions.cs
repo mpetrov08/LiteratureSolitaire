@@ -1,4 +1,6 @@
-﻿using LiteratureSolitaire.Infrastructure.Data;
+﻿using LiteratureSolitaire.Core.Contracts;
+using LiteratureSolitaire.Core.Services;
+using LiteratureSolitaire.Infrastructure.Data;
 using LiteratureSolitaire.Infrastructure.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -35,6 +37,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddScoped<IDeckService, DeckService>();
             return services;
         }
     }

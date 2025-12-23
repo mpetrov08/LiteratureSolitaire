@@ -22,6 +22,7 @@ namespace LiteratureSolitaire.Infrastructure.Data
             builder.ApplyConfiguration(new AuthorConfiguration());
             builder.ApplyConfiguration(new GenreConfiguration());
             builder.ApplyConfiguration(new LiteraryDirectionConfiguration());
+            builder.ApplyConfiguration(new CategoryConfiguration());
             builder.ApplyConfiguration(new WorkConfiguration());
 
             base.OnModelCreating(builder);
@@ -34,5 +35,7 @@ namespace LiteratureSolitaire.Infrastructure.Data
         public DbSet<LiteraryDirection> LiteraryDirections { get; set; }
 
         public DbSet<Work> Works { get; set; }
+
+        public DbSet<Category> Categories { get; set; }
     }
 }

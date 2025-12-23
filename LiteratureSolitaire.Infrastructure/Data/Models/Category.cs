@@ -8,20 +8,16 @@ using System.Threading.Tasks;
 
 namespace LiteratureSolitaire.Infrastructure.Data.Models
 {
-    [Comment("Author")]
-    public class Author
+    [Comment("Category")]
+    public class Category
     {
         [Key]
-        [Comment("Author Identifier")]
+        [Comment("Category Identifier")]
         public int Id { get; set; }
 
         [Required]
-        [Comment("Author`s Name")]
+        [Comment("Category Name")]
         public string Name { get; set; } = null!;
-
-        [Required]
-        [Comment("Author`s Photo Path")]
-        public string PhotoPath { get; set; } = null!;
 
         public IEnumerable<Work> Works { get; set; } = new List<Work>();
     }

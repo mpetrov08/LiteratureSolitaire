@@ -28,6 +28,7 @@ namespace LiteratureSolitaire.Core.Services
                 .Include(w => w.Author)
                 .Include(w => w.Genre)
                 .Include(w => w.LiteraryDirection)
+                .Include(w => w.Category)
                 .ToListAsync();
 
             var cards = new List<Card>();
@@ -42,13 +43,19 @@ namespace LiteratureSolitaire.Core.Services
                 cards.Add(new Card
                 {
                     Type = "Author",
-                    Content = work.Author.Name
+                    Content = work.Author.PhotoPath
                 });
 
                 cards.Add(new Card
                 {
                     Type = "Literary Direction",
                     Content = work.LiteraryDirection.Name
+                });
+                
+                cards.Add(new Card
+                {
+                    Type = "Category",
+                    Content = work.Category.Name
                 });
 
                 cards.Add(new Card

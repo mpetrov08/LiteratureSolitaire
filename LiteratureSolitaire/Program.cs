@@ -14,9 +14,10 @@ namespace LiteratureSolitaire
             builder.Services.AddApplicationIdentity(builder.Configuration);
             builder.Services.AddControllersWithViews();
             builder.Services.AddApplicationServices(builder.Configuration);
+            builder.Services.AddSession();
 
             var app = builder.Build();
-
+            app.UseSession();
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {

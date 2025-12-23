@@ -1,0 +1,89 @@
+﻿@using LiteratureSolitaire.Extensions
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/card.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/toast.css" asp-append-version="true" />
+}
+
+@{
+    Layout = "_Layout";
+}
+
+<h2>🎴 Литературен пасианс</h2>
+
+<div class="top-row">
+    <div id="deck" class="deck" onclick="drawCard()"></div>
+
+    <div class="button-group">
+        <button id="drawButton" class="top-btn" onclick="drawCard()">Тегли карта</button>
+        <form asp-action="Shuffle" method="post">
+            <button type="submit" class="top-btn shuffle">Разбъркай</button>
+        </form>
+        <form asp-action="ValidateBoard" method="post">
+            <button type="submit" class="top-btn validate">Провери</button>
+        </form>
+    </div>
+
+    @{
+        var drawn = Context.Session.GetObjectFromJson<List<LiteratureSolitaire.Core.Models.Card>>("drawn") ?? new();
+    }
+
+    <div id="drawPile"
+         class="draw-pile"
+         ondrop="dropToDrawPile(event)"
+         ondragover="allowDrop(event)">
+        @foreach (var card in drawn)
+        {
+            <partial name="_CardPartial" model="card" />
+        }
+    </div>
+</div>
+
+<hr />
+
+@if (TempData["CorrectCount"] != null)
+{
+    <div class="result-box">
+        <span>Верни: @TempData["CorrectCount"] / 162</span>
+    </div>
+}
+
+<h3>Игрално поле</h3>
+
+<div id="board">
+    @{
+        var board = Context.Session.GetObjectFromJson<List<LiteratureSolitaire.Models.BoardSlot>>("board");
+    }
+
+    @for (int sec = 1; sec <= 27; sec++)
+    {
+        <div class="section">
+            <div class="section-header">
+                <h4>Раздел @sec</h4>
+            </div>
+
+            <div class="section-cards">
+                @for (int pos = 1; pos <= 6; pos++)
+                {
+                    var slot = board?.FirstOrDefault(s => s.Section == sec && s.Position == pos);
+                    <div class="drop-slot"
+                        data-section="@sec"
+                        data-position="@pos"
+                        ondrop="dropCard(event)"
+                        ondragover="allowDrop(event)">
+                        @if (slot?.Card != null)
+                        {
+                            <partial name="_CardPartial" model="slot.Card" />
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>
+
+<div id="toast-container"></div>
+
+@section Scripts {
+    <script src="~/js/card.js" asp-append-version="true"></script>
+}

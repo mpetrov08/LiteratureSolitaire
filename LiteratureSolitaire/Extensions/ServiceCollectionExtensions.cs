@@ -38,6 +38,7 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped<IDeckService, DeckService>();
+            services.AddScoped<IBoardService, BoardService>();
             return services;
         }
     }

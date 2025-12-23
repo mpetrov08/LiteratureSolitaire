@@ -4,6 +4,7 @@ using LiteratureSolitaire.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LiteratureSolitaire.Infrastructure.Migrations
 {
     [DbContext(typeof(LiteratureSolitaireDbContext))]
-    partial class LiteratureSolitaireDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251222164926_AddCategoryTable")]
+    partial class AddCategoryTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,11 +39,6 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasComment("Author`s Name");
 
-                    b.Property<string>("PhotoPath")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasComment("Author`s Photo Path");
-
                     b.HasKey("Id");
 
                     b.ToTable("Authors", t =>
@@ -52,122 +50,102 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Димитър Талев",
-                            PhotoPath = "/images/authors/dimitar_talev.png"
+                            Name = "Димитър Талев"
                         },
                         new
                         {
                             Id = 2,
-                            Name = "Алеко Константинов",
-                            PhotoPath = "/images/authors/aleko_konstantinov.jpg"
+                            Name = "Алеко Константинов"
                         },
                         new
                         {
                             Id = 3,
-                            Name = "Станислав Стратиев",
-                            PhotoPath = "/images/authors/stanislav_stratiev.jpg"
+                            Name = "Станислав Стратиев"
                         },
                         new
                         {
                             Id = 4,
-                            Name = "Иван Вазов",
-                            PhotoPath = "/images/authors/ivan_vazov.jpg"
+                            Name = "Иван Вазов"
                         },
                         new
                         {
                             Id = 5,
-                            Name = "Никола Вапцаров",
-                            PhotoPath = "/images/authors/nikola_vaptsarov.jpg"
+                            Name = "Никола Вапцаров"
                         },
                         new
                         {
                             Id = 6,
-                            Name = "Йордан Радичков",
-                            PhotoPath = "/images/authors/yordan_radichkov.jpg"
+                            Name = "Йордан Радичков"
                         },
                         new
                         {
                             Id = 7,
-                            Name = "Христо Ботев",
-                            PhotoPath = "/images/authors/hristo_botev.jpg"
+                            Name = "Христо Ботев"
                         },
                         new
                         {
                             Id = 8,
-                            Name = "Елин Пелин",
-                            PhotoPath = "/images/authors/elin_pelin.jpg"
+                            Name = "Елин Пелин"
                         },
                         new
                         {
                             Id = 9,
-                            Name = "Христо Смирненски",
-                            PhotoPath = "/images/authors/hristo_smirnenski.jpg"
+                            Name = "Христо Смирненски"
                         },
                         new
                         {
                             Id = 10,
-                            Name = "Емилиян Станев",
-                            PhotoPath = "/images/authors/emilian_stanev.jpg"
+                            Name = "Емилиян Станев"
                         },
                         new
                         {
                             Id = 11,
-                            Name = "Пейо Яворов",
-                            PhotoPath = "/images/authors/peyo_yavorov.jpg"
+                            Name = "Пейо Яворов"
                         },
                         new
                         {
                             Id = 12,
-                            Name = "Пенчо Славейков",
-                            PhotoPath = "/images/authors/pencho_slaveikov.jpg"
+                            Name = "Пенчо Славейков"
                         },
                         new
                         {
                             Id = 13,
-                            Name = "Димчо Дебелянов",
-                            PhotoPath = "/images/authors/dimcho_debelqnov.jpg"
+                            Name = "Димчо Дебелянов"
                         },
                         new
                         {
                             Id = 14,
-                            Name = "Христо Фотев",
-                            PhotoPath = "/images/authors/hristo_fotev.jpg"
+                            Name = "Христо Фотев"
                         },
                         new
                         {
                             Id = 15,
-                            Name = "Петя Дубарова",
-                            PhotoPath = "/images/authors/petya_dubarova.jpg"
+                            Name = "Петя Дубарова"
                         },
                         new
                         {
                             Id = 16,
-                            Name = "Атанас Далчев",
-                            PhotoPath = "/images/authors/atanas_dalchev.jpg"
+                            Name = "Атанас Далчев"
                         },
                         new
                         {
                             Id = 17,
-                            Name = "Йордан Йовков",
-                            PhotoPath = "/images/authors/yordan_yovkov.jpg"
+                            Name = "Йордан Йовков"
                         },
                         new
                         {
                             Id = 18,
-                            Name = "Виктор Пасков",
-                            PhotoPath = "/images/authors/viktor_paskov.jpg"
+                            Name = "Виктор Пасков"
                         },
                         new
                         {
                             Id = 19,
-                            Name = "Елисавета Багряна",
-                            PhotoPath = "/images/authors/elisaveta_bagryana.jpg"
+                            Name = "Елисавета Багряна"
                         },
                         new
                         {
                             Id = 20,
-                            Name = "Борис Христов",
-                            PhotoPath = "/images/authors/boris_hristov.jpg"
+                            Name = "Борис Христов"
                         });
                 });
 

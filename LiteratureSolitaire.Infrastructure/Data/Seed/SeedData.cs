@@ -91,6 +91,24 @@ namespace LiteratureSolitaire.Infrastructure.Data.Seed
 
         public LiteraryDirection Modernism { get; set; }
 
+        public Category TheNativeAndTheForeign { get; set; }
+
+        public Category ThePastAndMemory { get; set; }
+
+        public Category SocietyAndPower { get; set; }
+
+        public Category LifeAndDeath { get; set; }
+
+        public Category Nature { get; set; }
+
+        public Category Love { get; set; }
+
+        public Category FaithAndHope { get; set; }
+
+        public Category LaborAndCreativity { get; set; } 
+
+        public Category ChoiceAndInnerConflict { get; set; }
+
         public Work TheIronCandlestick { get; set; }
 
         public Work BayGanyoTheJournalist { get; set; }
@@ -150,6 +168,7 @@ namespace LiteratureSolitaire.Infrastructure.Data.Seed
             SeedAuthors();
             SeedGenres();
             SeedLiteraryDirections();
+            SeedCategories();
             SeedWorks();
         }
 
@@ -158,121 +177,141 @@ namespace LiteratureSolitaire.Infrastructure.Data.Seed
             DimitarTalev = new Author
             {
                 Id = 1,
-                Name = "Димитър Талев"
+                Name = "Димитър Талев",
+                PhotoPath = "/images/authors/dimitar_talev.png"
             };
 
             AlekoKonstantinov = new Author
             {
                 Id = 2,
-                Name = "Алеко Константинов"
+                Name = "Алеко Константинов",
+                PhotoPath = "/images/authors/aleko_konstantinov.jpg"
             };
 
             StanislavStratiev = new Author
             {
                 Id = 3,
-                Name = "Станислав Стратиев"
+                Name = "Станислав Стратиев",
+                PhotoPath = "/images/authors/stanislav_stratiev.jpg"
             };
 
             IvanVazov = new Author
             {
                 Id = 4,
-                Name = "Иван Вазов"
+                Name = "Иван Вазов",
+                PhotoPath = "/images/authors/ivan_vazov.jpg"
             };
 
             NikolaVaptsarov = new Author
             {
                 Id = 5,
-                Name = "Никола Вапцаров"
+                Name = "Никола Вапцаров",
+                PhotoPath = "/images/authors/nikola_vaptsarov.jpg"
             };
 
             YordanRadichkov = new Author
             {
                 Id = 6,
-                Name = "Йордан Радичков"
+                Name = "Йордан Радичков",
+                PhotoPath = "/images/authors/yordan_radichkov.jpg"
             };
 
             HristoBotev = new Author
             {
                 Id = 7,
-                Name = "Христо Ботев"
+                Name = "Христо Ботев",
+                PhotoPath = "/images/authors/hristo_botev.jpg"
             };
 
             ElinPelin = new Author
             {
                 Id = 8,
-                Name = "Елин Пелин"
+                Name = "Елин Пелин",
+                PhotoPath = "/images/authors/elin_pelin.jpg"
             };
 
             HristoSmirnenski = new Author
             {
                 Id = 9,
-                Name = "Христо Смирненски"
+                Name = "Христо Смирненски",
+                PhotoPath = "/images/authors/hristo_smirnenski.jpg"
             };
 
             EmilianStanev = new Author
             {
                 Id = 10,
-                Name = "Емилиян Станев"
+                Name = "Емилиян Станев",
+                PhotoPath = "/images/authors/emilian_stanev.jpg"
             };
 
             PeyoYavorov = new Author
             {
                 Id = 11,
-                Name = "Пейо Яворов"
+                Name = "Пейо Яворов",
+                PhotoPath = "/images/authors/peyo_yavorov.jpg"
             };
 
             PenchoSlaveykov = new Author
             {
                 Id = 12,
-                Name = "Пенчо Славейков"
+                Name = "Пенчо Славейков",
+                PhotoPath = "/images/authors/pencho_slaveikov.jpg"
             };
 
             DimichoDebelyanov = new Author
             {
                 Id = 13,
-                Name = "Димчо Дебелянов"
+                Name = "Димчо Дебелянов",
+                PhotoPath = "/images/authors/dimcho_debelqnov.jpg"
             };
 
             HristoFotev = new Author
             {
                 Id = 14,
-                Name = "Христо Фотев"
+                Name = "Христо Фотев",
+                PhotoPath = "/images/authors/hristo_fotev.jpg"
             };
 
             PetyaDubarova = new Author
             {
                 Id = 15,
-                Name = "Петя Дубарова"
+                Name = "Петя Дубарова",
+                PhotoPath = "/images/authors/petya_dubarova.jpg"
             };
 
             AtanasDalchev = new Author
             {
                 Id = 16,
-                Name = "Атанас Далчев"
+                Name = "Атанас Далчев",
+                PhotoPath = "/images/authors/atanas_dalchev.jpg"
             };
 
             YordanYovkov = new Author
             {
                 Id = 17,
-                Name = "Йордан Йовков"
+                Name = "Йордан Йовков",
+                PhotoPath = "/images/authors/yordan_yovkov.jpg"
             };
 
             ViktorPaskov = new Author
             {
                 Id = 18,
-                Name = "Виктор Пасков"
+                Name = "Виктор Пасков",
+                PhotoPath = "/images/authors/viktor_paskov.jpg"
             };
 
             ElisavetaBagryana = new Author
             {
                 Id = 19,
-                Name = "Елисавета Багряна"
+                Name = "Елисавета Багряна",
+                PhotoPath = "/images/authors/elisaveta_bagryana.jpg"
             };
 
             BorisHristov = new Author
             {
                 Id = 20,
-                Name = "Борис Христов"
+                Name = "Борис Христов",
+                PhotoPath = "/images/authors/boris_hristov.jpg"
             };
         }
 
@@ -408,6 +447,63 @@ namespace LiteratureSolitaire.Infrastructure.Data.Seed
             };
         }
 
+        private void SeedCategories()
+        {
+            TheNativeAndTheForeign = new Category
+            {
+                Id = 1,
+                Name = "Родното и чуждото"
+            };
+
+            ThePastAndMemory = new Category
+            {
+                Id = 2,
+                Name = "Миналото и паметта"
+            };
+
+            SocietyAndPower = new Category
+            {
+                Id = 3,
+                Name = "Обществото и властта"
+            };
+
+            LifeAndDeath = new Category
+            {
+                Id = 4,
+                Name = "Животът и смъртта"
+            };
+
+            Nature = new Category
+            {
+                Id = 5,
+                Name = "Природата"
+            };
+
+            Love = new Category
+            {
+                Id = 6,
+                Name = "Любовта"
+            };
+
+            FaithAndHope = new Category
+            {
+                Id = 7,
+                Name = "Вярата и надеждата"
+            };
+
+            LaborAndCreativity = new Category
+            {
+                Id = 8,
+                Name = "Трудът и творчеството"
+            };
+
+            ChoiceAndInnerConflict = new Category
+            {
+                Id = 9,
+                Name = "Изборът и раздвоението"
+            };
+        }
+
         private void SeedWorks()
         {
             TheIronCandlestick = new Work
@@ -418,7 +514,8 @@ namespace LiteratureSolitaire.Infrastructure.Data.Seed
                 Characters = "Стоян Глаушев, Султана, Лазар, Катерина, Рафе Клинче, " +
                 "Климент Бенков, Божана, Стойка Нунева, Аврам Немтур",
                 GenreId = Novel.Id,
-                LiteraryDirectionId = Realism.Id
+                LiteraryDirectionId = Realism.Id,
+                CategoryId = TheNativeAndTheForeign.Id
             };
 
             BayGanyoTheJournalist = new Work
@@ -429,7 +526,8 @@ namespace LiteratureSolitaire.Infrastructure.Data.Seed
                 Characters = "Бай Ганьо, Гочоолу, Дочоолу, Данко Харсъзина, " +
                 "Гуньо Адвокатина/Гуньо Келеперчиков",
                 GenreId = Feuilleton.Id,
-                LiteraryDirectionId = Realism.Id
+                LiteraryDirectionId = Realism.Id,
+                CategoryId = TheNativeAndTheForeign.Id
             };
 
             BalkanSyndrome = new Work
@@ -440,7 +538,8 @@ namespace LiteratureSolitaire.Infrastructure.Data.Seed
                 Characters = "Бяла Врана, Жена с проблем, Жена символ, Директор на театър, " +
                 "бай Цончо, Йовчо, Цончето, Печо, баба Кера, Извънземното, Георги",
                 GenreId = SatiricalComedy.Id,
-                LiteraryDirectionId = Realism.Id
+                LiteraryDirectionId = Realism.Id,
+                CategoryId = TheNativeAndTheForeign.Id
             };
 
             SaintPaisius = new Work
@@ -450,7 +549,8 @@ namespace LiteratureSolitaire.Infrastructure.Data.Seed
                 AuthorId = IvanVazov.Id,
                 Characters = "Паисий, лирически говорител",
                 GenreId = Ode.Id,
-                LiteraryDirectionId = Romanticism.Id
+                LiteraryDirectionId = Romanticism.Id,
+                CategoryId = ThePastAndMemory.Id
             };
 
             History = new Work
@@ -460,7 +560,8 @@ namespace LiteratureSolitaire.Infrastructure.Data.Seed
                 AuthorId = NikolaVaptsarov.Id,
                 Characters = "Лирически говорител, историята",
                 GenreId = Poem.Id,
-                LiteraryDirectionId = Realism.Id
+                LiteraryDirectionId = Realism.Id,
+                CategoryId = ThePastAndMemory.Id
             };
 
             NoahsArk = new Work
@@ -472,7 +573,8 @@ namespace LiteratureSolitaire.Infrastructure.Data.Seed
                 "въшкарчето, глиганът, Апостола, папунякът, щъркелът, лисицата, Емилиян Станев, " +
                 "Григор Вачков, Методи Андонов",
                 GenreId = Novel.Id,
-                LiteraryDirectionId = MagicalRealism.Id
+                LiteraryDirectionId = MagicalRealism.Id,
+                CategoryId = ThePastAndMemory.Id
             };
 
             TheStruggle = new Work
@@ -482,7 +584,8 @@ namespace LiteratureSolitaire.Infrastructure.Data.Seed
                 AuthorId = HristoBotev.Id,
                 Characters = "Соломон, лирически говорител",
                 GenreId = Poem.Id,
-                LiteraryDirectionId = Realism.Id
+                LiteraryDirectionId = Realism.Id,
+                CategoryId = SocietyAndPower.Id
             };
 
             Andreshko = new Work
@@ -492,7 +595,8 @@ namespace LiteratureSolitaire.Infrastructure.Data.Seed
                 AuthorId = ElinPelin.Id,
                 Characters = "Андрешко, съдия-изпълнител, повествователят",
                 GenreId = ShortStory.Id,
-                LiteraryDirectionId = SocialRealism.Id
+                LiteraryDirectionId = SocialRealism.Id,
+                CategoryId = SocietyAndPower.Id
             };
 
             ATaleOfTheStairway = new Work
@@ -502,7 +606,8 @@ namespace LiteratureSolitaire.Infrastructure.Data.Seed
                 AuthorId = HristoSmirnenski.Id,
                 Characters = "Дяволът, плебеят",
                 GenreId = Satire.Id,
-                LiteraryDirectionId = Realism.Id
+                LiteraryDirectionId = Realism.Id,
+                CategoryId = SocietyAndPower.Id
             };
 
             ToMyFirstLove = new Work
@@ -512,7 +617,8 @@ namespace LiteratureSolitaire.Infrastructure.Data.Seed
                 AuthorId = HristoBotev.Id,
                 Characters = "Лирически герой/Аз, либето",
                 GenreId = Poem.Id,
-                LiteraryDirectionId = Romanticism.Id
+                LiteraryDirectionId = Romanticism.Id,
+                CategoryId = LifeAndDeath.Id
             };
 
             TheNewCemetryNearSlivnitsa = new Work
@@ -522,7 +628,8 @@ namespace LiteratureSolitaire.Infrastructure.Data.Seed
                 AuthorId = IvanVazov.Id,
                 Characters = "Лирически говорител, загиналите воини, България",
                 GenreId = Poem.Id,
-                LiteraryDirectionId = Realism.Id
+                LiteraryDirectionId = Realism.Id,
+                CategoryId = LifeAndDeath.Id
             };
 
             ThePeachThief = new Work
@@ -532,7 +639,8 @@ namespace LiteratureSolitaire.Infrastructure.Data.Seed
                 AuthorId = EmilianStanev.Id,
                 Characters = "Иво Обретенович, Елисавета, Никола Козичката, полковникът",
                 GenreId = ShortNovel.Id,
-                LiteraryDirectionId = Realism.Id
+                LiteraryDirectionId = Realism.Id,
+                CategoryId = LifeAndDeath.Id
             };
 
             AtRilaMonastery = new Work
@@ -542,7 +650,8 @@ namespace LiteratureSolitaire.Infrastructure.Data.Seed
                 AuthorId = IvanVazov.Id,
                 Characters = "лирически Аз, природата",
                 GenreId = PantheisticPoem.Id,
-                LiteraryDirectionId = Realism.Id
+                LiteraryDirectionId = Realism.Id,
+                CategoryId = Nature.Id
             };
 
             Hailstorm = new Work
@@ -552,7 +661,8 @@ namespace LiteratureSolitaire.Infrastructure.Data.Seed
                 AuthorId = PeyoYavorov.Id,
                 Characters = "лирически говорител, Ваньо селянчето",
                 GenreId = EpicPoem.Id,
-                LiteraryDirectionId = Symbolism.Id
+                LiteraryDirectionId = Symbolism.Id,
+                CategoryId = Nature.Id
             };
 
             TheLakeSleeps = new Work
@@ -562,7 +672,8 @@ namespace LiteratureSolitaire.Infrastructure.Data.Seed
                 AuthorId = PenchoSlaveykov.Id,
                 Characters = "лирически говорител, белостволите буки",
                 GenreId = LyricalMiniature.Id,
-                LiteraryDirectionId = Individualism.Id
+                LiteraryDirectionId = Individualism.Id,
+                CategoryId = Nature.Id
             };
 
             IWantToRememberYouJustLikeThis = new Work
@@ -572,7 +683,8 @@ namespace LiteratureSolitaire.Infrastructure.Data.Seed
                 AuthorId = DimichoDebelyanov.Id,
                 Characters = "лирически Аз/влюбеният мъж, обречената жена",
                 GenreId = Elegy.Id,
-                LiteraryDirectionId = Symbolism.Id
+                LiteraryDirectionId = Symbolism.Id,
+                CategoryId = Love.Id
             };
 
             HowBeatifulYouAre = new Work
@@ -582,7 +694,8 @@ namespace LiteratureSolitaire.Infrastructure.Data.Seed
                 AuthorId = HristoFotev.Id,
                 Characters = "лирически Аз/влюбеният мъж, обичаната жена",
                 GenreId = Poem.Id,
-                LiteraryDirectionId = Realism.Id
+                LiteraryDirectionId = Realism.Id,
+                CategoryId = Love.Id
             };
 
             Deadication = new Work
@@ -592,7 +705,8 @@ namespace LiteratureSolitaire.Infrastructure.Data.Seed
                 AuthorId = PetyaDubarova.Id,
                 Characters = "влюбената девойка/лирическият говорител, обичаният",
                 GenreId = Poem.Id,
-                LiteraryDirectionId = Realism.Id
+                LiteraryDirectionId = Realism.Id,
+                CategoryId = Love.Id
             };
 
             SapsovaMound = new Work
@@ -602,7 +716,8 @@ namespace LiteratureSolitaire.Infrastructure.Data.Seed
                 AuthorId = ElinPelin.Id,
                 Characters = "Монката, дядо Захари",
                 GenreId = ShortStory.Id,
-                LiteraryDirectionId = SocialRealism.Id
+                LiteraryDirectionId = SocialRealism.Id,
+                CategoryId = FaithAndHope.Id
             };
 
             Prayer = new Work
@@ -612,7 +727,8 @@ namespace LiteratureSolitaire.Infrastructure.Data.Seed
                 AuthorId = AtanasDalchev.Id,
                 Characters = "лирическият Аз, Господ",
                 GenreId = Poem.Id,
-                LiteraryDirectionId = Diabolism.Id
+                LiteraryDirectionId = Diabolism.Id,
+                CategoryId = FaithAndHope.Id
             };
 
             Faith = new Work
@@ -622,7 +738,8 @@ namespace LiteratureSolitaire.Infrastructure.Data.Seed
                 AuthorId = NikolaVaptsarov.Id,
                 Characters = "лирическият Аз, Животът",
                 GenreId = Poem.Id,
-                LiteraryDirectionId = Existentialism.Id
+                LiteraryDirectionId = Existentialism.Id,
+                CategoryId = FaithAndHope.Id
             };
 
             TheWindMill = new Work
@@ -632,7 +749,8 @@ namespace LiteratureSolitaire.Infrastructure.Data.Seed
                 AuthorId = ElinPelin.Id,
                 Characters = "Лазар Дъбака, дядо Корчан, Христина",
                 GenreId = ShortStory.Id,
-                LiteraryDirectionId = SocialRealism.Id
+                LiteraryDirectionId = SocialRealism.Id,
+                CategoryId = LaborAndCreativity.Id
             };
 
             TheSongOfTheWheels = new Work
@@ -642,7 +760,8 @@ namespace LiteratureSolitaire.Infrastructure.Data.Seed
                 AuthorId = YordanYovkov.Id,
                 Characters = "Сали Яшар, Джапар, Шакире",
                 GenreId = ShortStory.Id,
-                LiteraryDirectionId = Realism.Id
+                LiteraryDirectionId = Realism.Id,
+                CategoryId = LaborAndCreativity.Id
             };
 
             BalladForGeorgHenig = new Work
@@ -652,7 +771,8 @@ namespace LiteratureSolitaire.Infrastructure.Data.Seed
                 AuthorId = ViktorPaskov.Id,
                 Characters = "Виктор Георг/дядо Георги, Божения, Марсен, Франета, Ванда",
                 GenreId = ShortNovel.Id,
-                LiteraryDirectionId = Modernism.Id
+                LiteraryDirectionId = Modernism.Id,
+                CategoryId = LaborAndCreativity.Id
             };
 
             TwoSouls = new Work
@@ -662,7 +782,8 @@ namespace LiteratureSolitaire.Infrastructure.Data.Seed
                 AuthorId = PeyoYavorov.Id,
                 Characters = "лирическият Аз",
                 GenreId = Poem.Id,
-                LiteraryDirectionId = Symbolism.Id
+                LiteraryDirectionId = Symbolism.Id,
+                CategoryId = ChoiceAndInnerConflict.Id
             };
 
             Descendant = new Work
@@ -672,7 +793,8 @@ namespace LiteratureSolitaire.Infrastructure.Data.Seed
                 AuthorId = ElisavetaBagryana.Id,
                 Characters = "потомката - лирическият Аз",
                 GenreId = Poem.Id,
-                LiteraryDirectionId = Symbolism.Id
+                LiteraryDirectionId = Symbolism.Id,
+                CategoryId = ChoiceAndInnerConflict.Id
             };
 
             HonestCross = new Work
@@ -682,7 +804,8 @@ namespace LiteratureSolitaire.Infrastructure.Data.Seed
                 AuthorId = BorisHristov.Id,
                 Characters = "лирическият говорител/Аз",
                 GenreId = EpicPoem.Id,
-                LiteraryDirectionId = Existentialism.Id
+                LiteraryDirectionId = Existentialism.Id,
+                CategoryId = ChoiceAndInnerConflict.Id
             };
         }
     }

@@ -45,5 +45,12 @@ namespace LiteratureSolitaire.Infrastructure.Data.Models
 
         [ForeignKey(nameof(LiteraryDirectionId))]
         public LiteraryDirection LiteraryDirection { get; set; } = null!;
+
+        [Required]
+        [Comment("Work Category")]
+        public int CategoryId { get; set; }
+
+        [ForeignKey(nameof(CategoryId))]
+        public Category Category { get; set; } = null!;
     }
 }

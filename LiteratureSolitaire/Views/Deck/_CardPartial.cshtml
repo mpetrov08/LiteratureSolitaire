@@ -1,0 +1,29 @@
+﻿@model LiteratureSolitaire.Core.Models.Card
+
+@{
+    var cls = Model.IsCorrectChecked
+        ? (Model.IsCorrect ? "correct" : "wrong")
+        : "";
+}
+
+<div class="card @cls"
+     draggable="true"
+     data-card-id="@Model.Id"
+     ondragstart="dragStart(event)"
+     ondragend="dragEnd(event)">
+    <div class="card-type">@Model.Type</div>
+    @if (Model.Type == "Author")
+    {
+        <div class="card-content image-content">
+            <img src="@Model.Content"
+                 alt="Author portrait"
+                 draggable="false" />
+        </div>
+    }
+    else
+    {
+        <div class="card-content">
+            @Model.Content
+        </div>
+    }
+</div>

@@ -55,68 +55,41 @@ namespace LiteratureSolitaire.Core.Services
                 var correspondingWork = works.FirstOrDefault(w => w.Title == titleCard.Content);
                 titleCard.IsCorrect = true;
 
-                var authorCard = cards.FirstOrDefault(c => c.Type == "Author");
                 var correctAuthor = correspondingWork.Author.PhotoPath;
+                ValidateCardsByType(cards, "Author", correctAuthor);
 
-                var literaryDirectionCard = cards.FirstOrDefault(c => c.Type == "Literary Direction");
                 var correctLiteraryDirection = correspondingWork.LiteraryDirection.Name;
+                ValidateCardsByType(cards, "Literary Direction", correctLiteraryDirection);
 
-                var genreCard = cards.FirstOrDefault(c => c.Type == "Genre");
                 var correctGenre = correspondingWork.Genre.Name;
+                ValidateCardsByType(cards, "Genre", correctGenre);
 
-                var characterCard = cards.FirstOrDefault(c => c.Type == "Character");
                 var correctCharacters = correspondingWork.Characters;
+                ValidateCardsByType(cards, "Character", correctCharacters);
 
-                var categoryCard = cards.FirstOrDefault(c => c.Type == "Category");
                 var correctCategory = correspondingWork.Category.Name;
-
-                if (authorCard != null && authorCard.Content == correctAuthor)
-                {
-                    authorCard.IsCorrect = true;
-                }
-                else if (authorCard != null)
-                {
-                    authorCard.IsCorrect = false;
-                }
-
-                if (literaryDirectionCard != null && literaryDirectionCard.Content == correctLiteraryDirection)
-                {
-                    literaryDirectionCard.IsCorrect = true;
-                }
-                else if(literaryDirectionCard != null)
-                {
-                    literaryDirectionCard.IsCorrect = false;
-                }
-
-                if (genreCard != null && genreCard.Content == correctGenre)
-                {
-                    genreCard.IsCorrect = true;
-                }
-                else if (genreCard != null)
-                {
-                    genreCard.IsCorrect = false;
-                }
-
-                if (characterCard != null && characterCard.Content == correctCharacters)
-                {
-                    characterCard.IsCorrect = true;
-                }
-                else if (characterCard != null)
-                {
-                    characterCard.IsCorrect = false;
-                }
-
-                if (categoryCard != null && categoryCard.Content == correctCategory)
-                {
-                    categoryCard.IsCorrect = true;
-                }
-                else if (categoryCard != null)
-                {
-                    categoryCard.IsCorrect = false;
-                }
+                ValidateCardsByType(cards, "Category", correctCategory);
             }
 
             return boardSlots;
+        }
+
+        private void ValidateCardsByType(List<Card> cards, string type, string correctValue)
+        {
+            bool isAlreadyCorrect = false;
+
+            foreach (var card in cards.Where(c => c.Type == type))
+            {
+                if (card.Content == correctValue && !isAlreadyCorrect)
+                {
+                    card.IsCorrect = true;
+                    isAlreadyCorrect = true;
+                }
+                else
+                {
+                    card.IsCorrect = false;
+                }
+            }
         }
     }
 }

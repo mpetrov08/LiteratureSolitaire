@@ -76,9 +76,15 @@ namespace LiteratureSolitaire.Core.Services
 
         public async Task<List<Card>> ShuffleDeckAsync(List<Card> cards)
         {
-            Random rnd = new Random();
+            var rnd = Random.Shared;
 
-            return cards.OrderBy(c => rnd.Next()).ToList();
+            for (int i = cards.Count - 1; i > 0; i--)
+            {
+                int j = rnd.Next(i + 1);
+                (cards[i], cards[j]) = (cards[j], cards[i]);
+            }
+
+            return cards;
         }
     }
 }

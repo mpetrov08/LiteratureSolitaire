@@ -75,6 +75,11 @@
     animation: cardIn .25s ease;
 }
 
+.card:has(.image-content) {
+    padding: 0;
+    display: flex;
+}
+
 .card:active {
     cursor: grabbing;
 }
@@ -110,23 +115,47 @@
 }
 
 .card-content {
+    flex: 1;
     font-size: 14px;
+    line-height: 1.25;
+    max-height: 105px;
+    overflow-x: hidden;
+    overflow-y: auto; 
+
+    word-break: normal;
+    overflow-wrap: normal;
+    hyphens: auto;
+}
+
+.card-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.card-content::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.3);
+    border-radius: 4px;
+}
+
+.card[data-type="Character"] .card-content {
+    text-align: left;
+    font-size: 12.5px;
 }
 
 .card-content.image-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 110px;
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    max-height: none;
 }
 
 .card-content.image-content img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-    border-radius: 4px;
-    pointer-events: none;
-}
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 6px;
+}  
 
 #board {
     display: grid;

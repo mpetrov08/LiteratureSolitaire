@@ -11,7 +11,6 @@
      data-card-id="@Model.Id"
      ondragstart="dragStart(event)"
      ondragend="dragEnd(event)">
-    <div class="card-type">@Model.Type</div>
     @if (Model.Type == "Author")
     {
         <div class="card-content image-content">
@@ -22,6 +21,8 @@
     }
     else
     {
+        <div class="card-type">@Model.Type</div>
+
         <div class="card-content">
             @Model.Content
         </div>

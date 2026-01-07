@@ -21,6 +21,8 @@ async function drawCard() {
         if (html.trim() !== "") {
             document.getElementById("drawPile")
                 .insertAdjacentHTML("beforeend", html.trim());
+
+            adjustFontSizeForOverflow(); 
         }
     } catch (e) {
         console.error("Draw failed", e);
@@ -28,6 +30,27 @@ async function drawCard() {
         drawing = false;
     }
 }
+
+function adjustFontSizeForOverflow() {
+    document.querySelectorAll('.card-content').forEach(el => {
+        const baseFont = el.closest('.card')?.dataset.type === 'Character'
+            ? 12.5
+            : 14;
+
+        let fontSize = baseFont;
+        el.style.fontSize = fontSize + 'px';
+
+        while (
+            (el.scrollHeight > el.clientHeight || el.scrollWidth > el.clientWidth) &&
+            fontSize > 11
+        ) {
+            fontSize -= 0.5;
+            el.style.fontSize = fontSize + 'px';
+        }
+    });
+}
+
+window.addEventListener('load', adjustFontSizeForOverflow);
 
 function allowDrop(ev) {
     ev.preventDefault();

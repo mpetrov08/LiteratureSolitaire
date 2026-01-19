@@ -1,0 +1,136 @@
+﻿.rules {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 30px 35px;
+    background: linear-gradient(180deg, #ffffff, #f4f6fb);
+    border-radius: 20px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    border: 2px solid rgba(0, 0, 0, 0.05);
+    animation: fadeInUp 0.6s ease;
+}
+
+.rules h2 {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 25px;
+    color: #2c3e50;
+}
+
+.rules h3 {
+    font-size: 22px;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    color: #34495e;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.rules p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: #444;
+    margin-bottom: 15px;
+}
+
+.rules ul,
+.rules ol {
+    margin-left: 25px;
+    margin-bottom: 20px;
+}
+
+.rules li {
+    font-size: 15.5px;
+    line-height: 1.6;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.rules ul li {
+    position: relative;
+    padding-left: 10px;
+}
+
+.rules ul li::marker {
+    color: #2575fc;
+    font-weight: bold;
+}
+
+.rules ul li strong {
+    color: #222;
+}
+
+.rules ul li:nth-child(1)::marker {
+    color: #28a745;
+}
+
+.rules ul li:nth-child(2)::marker {
+    color: #dc3545;
+}
+
+.rules strong {
+    color: #1f3c88;
+}
+
+.rules li:hover {
+    transform: translateX(4px);
+    transition: transform 0.2s ease;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 900px) {
+    .rules {
+        margin: 30px 20px;
+        padding: 25px;
+    }
+
+    .rules h2 {
+        font-size: 28px;
+    }
+
+    .rules h3 {
+        font-size: 20px;
+    }
+
+    .rules p,
+    .rules li {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 600px) {
+    .rules {
+        margin: 20px 12px;
+        padding: 20px;
+        border-radius: 16px;
+    }
+
+    .rules h2 {
+        font-size: 24px;
+    }
+
+    .rules h3 {
+        font-size: 18px;
+    }
+
+    .rules p,
+    .rules li {
+        font-size: 14px;
+    }
+
+    .rules ul,
+    .rules ol {
+        margin-left: 18px;
+    }
+}

@@ -1,8 +1,45 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@section Styles {
+    <link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@{
+    ViewData["Title"] = "Home";
+}
+
+<section class="home-hero">
+    <h1>LiteratureSolitaire</h1>
+    <p class="subtitle">
+        Образователна игра за подготовка за ДЗИ по българска литература
+        за 11. и 12. клас.
+    </p>
+
+    <a asp-controller="Deck" asp-action="Index" class="btn-play">
+        Започни играта
+    </a>
+</section>
+
+<section class="home-features">
+    <div class="feature-card">
+        <h3>Учи чрез игра</h3>
+        <p>
+            Усвоявай знанията по българска литература по интерактивен
+            и забавен начин.
+        </p>
+    </div>
+
+    <div class="feature-card">
+        <h3>Подготовка за ДЗИ</h3>
+        <p>
+            Съдържанието е съобразено с учебната програма
+            за 11. и 12. клас.
+        </p>
+    </div>
+
+    <div class="feature-card">
+        <h3>Практически знания</h3>
+        <p>
+            Запомняй автори, жанрове, направления и герои
+            чрез логически връзки.
+        </p>
+    </div>
+</section>

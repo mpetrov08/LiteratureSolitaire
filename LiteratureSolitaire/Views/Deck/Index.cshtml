@@ -7,6 +7,7 @@
 
 @{
     Layout = "_Layout";
+    ViewData["HideFooter"] = true;
 }
 
 <h2>🎴 Литературен пасианс</h2>
@@ -29,9 +30,7 @@
     }
 
     <div id="drawPile"
-         class="draw-pile"
-         ondrop="dropToDrawPile(event)"
-         ondragover="allowDrop(event)">
+         class="draw-pile">
         @foreach (var card in drawn)
         {
             <partial name="_CardPartial" model="card" />
@@ -45,6 +44,15 @@
 {
     <div class="result-box">
         <span>Верни: @TempData["CorrectCount"] / 162</span>
+
+        @if ((int)TempData["CorrectCount"] == 162)
+        {
+            <script>
+                window.addEventListener("load", () => {
+                    launchConfetti();
+                });
+            </script>
+        }
     </div>
 }
 
@@ -67,10 +75,8 @@
                 {
                     var slot = board?.FirstOrDefault(s => s.Section == sec && s.Position == pos);
                     <div class="drop-slot"
-                        data-section="@sec"
-                        data-position="@pos"
-                        ondrop="dropCard(event)"
-                        ondragover="allowDrop(event)">
+                         data-section="@sec"
+                         data-position="@pos">
                         @if (slot?.Card != null)
                         {
                             <partial name="_CardPartial" model="slot.Card" />
@@ -86,4 +92,5 @@
 
 @section Scripts {
     <script src="~/js/card.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 }

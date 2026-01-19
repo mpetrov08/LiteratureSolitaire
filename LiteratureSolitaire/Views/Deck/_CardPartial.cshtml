@@ -7,10 +7,8 @@
 }
 
 <div class="card @cls"
-     draggable="true"
      data-card-id="@Model.Id"
-     ondragstart="dragStart(event)"
-     ondragend="dragEnd(event)">
+     data-type="@Model.Type">
     @if (Model.Type == "Author")
     {
         <div class="card-content image-content">

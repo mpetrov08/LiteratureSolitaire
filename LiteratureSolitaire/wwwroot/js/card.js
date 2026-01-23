@@ -295,3 +295,14 @@ function launchConfetti() {
         if (Date.now() < end) requestAnimationFrame(frame);
     })();
 }
+
+document.addEventListener("click", e => {
+    if (window.innerWidth > 600) return;
+
+    const card = e.target.closest(".card");
+    if (!card) return;
+
+    if (card.dataset.type === "Character") {
+        card.classList.toggle("expanded");
+    }
+});

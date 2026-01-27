@@ -27,6 +27,7 @@ async function drawCard() {
                 .forEach(c => c._origin ??= c.parentElement);
 
             adjustFontSizeForOverflow();
+            adjustCardAlignment();
         }
     } catch (e) {
         console.error("Draw failed", e);
@@ -50,6 +51,18 @@ function adjustFontSizeForOverflow() {
         ) {
             fontSize -= 0.5;
             el.style.fontSize = fontSize + 'px';
+        }
+    });
+}
+
+function adjustCardAlignment() {
+    document.querySelectorAll('.card-content').forEach(el => {
+        const card = el.closest('.card');
+
+        if (el.scrollHeight > el.clientHeight + 1) {
+            card.classList.add('has-overflow');
+        } else {
+            card.classList.remove('has-overflow');
         }
     });
 }

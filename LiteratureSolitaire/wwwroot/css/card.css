@@ -99,7 +99,10 @@ footer {
 .card {
     width: 120px;
     height: 160px;
-    background: #fff;
+    background-image: url('/images/textures/paper-background.jpg');
+    background-size: cover; /* или contain */
+    background-position: center;
+    background-repeat: no-repeat;
     border-radius: 8px;
     border: 2px solid #444;
     padding: 10px;
@@ -109,6 +112,10 @@ footer {
     transition: transform .15s ease, box-shadow .15s ease;
     animation: cardIn .25s ease;
     touch-action: none;
+    display: flex;
+    flex-direction: column;
+    /*justify-content: center;*/ /* вертикално */
+    align-items: center; /* хоризонтално */
 }
 
 .card:has(.image-content) {
@@ -158,9 +165,13 @@ footer {
     flex: 1;
     font-size: 14px;
     line-height: 1.25;
-    max-height: 105px;
+    height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 
     word-break: normal;
     overflow-wrap: normal;
@@ -174,13 +185,19 @@ footer {
 .card-content::-webkit-scrollbar-thumb {
     background: rgba(0,0,0,0.3);
     border-radius: 4px;
+    align-items: stretch;
+
 }
 
 .card[data-type="Character"] .card-content {
-    text-align: left;
+    text-align: center;
     font-size: 12.5px;
-    max-height: 105px;
+    max-height: 100%;
     overflow-y: auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .card-content.image-content {
@@ -197,7 +214,12 @@ footer {
     object-fit: cover;
     display: block;
     border-radius: 6px;
-}  
+}
+
+.card.has-overflow .card-content {
+    justify-content: flex-start;
+    align-items: flex-start;
+}
 
 #board {
     display: grid;
@@ -210,7 +232,7 @@ footer {
     border: 2px dashed #888;
     padding: 10px;
     border-radius: 10px;
-    background: linear-gradient(180deg, #fdfdfd, #f3f3f3);
+    background: linear-gradient( 180deg, #f7f4ef 0%, #efe9e1 45%, #e6dfd6 100% );
     box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
     display: flex;
     flex-direction: column;

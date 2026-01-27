@@ -18,5 +18,7 @@ html {
 }
 
 body {
-    margin-bottom: 60px;
+    margin: 0;
+    background: linear-gradient( 180deg, #f6f4f1 0%, #ebe7e1 50%, #e2ddd6 100% );
+    background-attachment: fixed;
 }

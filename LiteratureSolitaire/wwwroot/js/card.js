@@ -71,12 +71,27 @@ window.addEventListener('load', adjustFontSizeForOverflow);
 
 let activeCard = null;
 
-document.addEventListener("pointerdown", onPointerDown);
+//document.addEventListener("pointerdown", onPointerDown);
+document.addEventListener("pointerdown", e => {
+    const card = e.target.closest(".card");
+    if (!card) return;
+
+    onPointerDown(e);
+});
 document.addEventListener("pointermove", onPointerMove);
 document.addEventListener("pointerup", onPointerUp);
 document.addEventListener("pointercancel", cancelDrag);
 
 function onPointerDown(e) {
+    if (
+        e.target.closest("button") ||
+        e.target.closest("form") ||
+        e.target.closest("a")
+    ) {
+        e.stopPropagation();
+        return;
+    }
+
     const card = e.target.closest(".card");
     if (!card) return;
 

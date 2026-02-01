@@ -100,7 +100,7 @@ footer {
     width: 120px;
     height: 160px;
     background-image: url('/images/textures/paper-background.jpg');
-    background-size: cover; /* или contain */
+    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     border-radius: 8px;
@@ -114,8 +114,7 @@ footer {
     touch-action: none;
     display: flex;
     flex-direction: column;
-    /*justify-content: center;*/ /* вертикално */
-    align-items: center; /* хоризонтално */
+    align-items: center;
 }
 
 .card:has(.image-content) {
@@ -278,9 +277,9 @@ footer {
     display: flex;
     gap: 10px;
     min-height: 160px;
-    max-width: calc(5 * 120px + 4 * 10px);
-    overflow: hidden;
-    justify-content: flex-start;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .result-box {
@@ -319,6 +318,50 @@ footer {
     to {
         transform: scale(1);
         opacity: 1;
+    }
+}
+
+@media (pointer: coarse) and (min-width: 1024px) {
+    .top-row {
+        grid-template-columns: 1fr;
+        row-gap: 24px;
+        justify-items: center;
+    }
+
+    .button-group {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    #drawPile {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 14px;
+        flex-wrap: wrap;
+        max-width: 100%;
+        overflow: visible;
+        padding: 0 20px;
+        box-sizing: border-box;
+    }
+
+    .card,
+    .deck,
+    .drop-slot {
+        width: 120px;
+        height: 160px;
+    }
+
+    #board {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 28px;
+    }
+
+    .section-cards {
+        grid-template-columns: repeat(auto-fit, 120px);
+        gap: 14px;
+        justify-content: center;
     }
 }
 
@@ -445,5 +488,9 @@ footer {
     .card:not([data-type="Character"]) .card-content {
         overflow: hidden;
         max-height: 100%;
+    }
+
+    .top-btn {
+        touch-action: manipulation;
     }
 }

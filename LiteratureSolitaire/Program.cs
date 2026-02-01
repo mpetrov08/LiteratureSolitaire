@@ -1,3 +1,4 @@
+using LiteratureSolitaire.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,6 +18,13 @@ namespace LiteratureSolitaire
             builder.Services.AddSession();
 
             var app = builder.Build();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var db = scope.ServiceProvider.GetRequiredService<LiteratureSolitaireDbContext>();
+                db.Database.Migrate();
+            }
+
             app.UseSession();
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

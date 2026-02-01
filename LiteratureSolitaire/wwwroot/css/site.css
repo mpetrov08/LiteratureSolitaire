@@ -22,3 +22,10 @@ body {
     background: linear-gradient( 180deg, #f6f4f1 0%, #ebe7e1 50%, #e2ddd6 100% );
     background-attachment: fixed;
 }
+
+@media (pointer: coarse) and (min-width: 1200px) {
+    .navbar-nav {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}

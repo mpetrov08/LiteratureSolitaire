@@ -69,171 +69,7 @@ function adjustCardAlignment() {
 
 window.addEventListener('load', adjustFontSizeForOverflow);
 
-let activeCard = null;
-
-//document.addEventListener("pointerdown", onPointerDown);
-document.addEventListener("pointerdown", e => {
-    const card = e.target.closest(".card");
-    if (!card) return;
-
-    onPointerDown(e);
-});
-document.addEventListener("pointermove", onPointerMove);
-document.addEventListener("pointerup", onPointerUp);
-document.addEventListener("pointercancel", cancelDrag);
-
-function onPointerDown(e) {
-    if (
-        e.target.closest("button") ||
-        e.target.closest("form") ||
-        e.target.closest("a")
-    ) {
-        e.stopPropagation();
-        return;
-    }
-
-    const card = e.target.closest(".card");
-    if (!card) return;
-
-    activeCard = card;
-    card._origin ??= card.parentElement;
-
-    const rect = card.getBoundingClientRect();
-    card.dataset.offsetX = e.clientX - rect.left;
-    card.dataset.offsetY = e.clientY - rect.top;
-
-    card.classList.add("dragging");
-    card.setPointerCapture(e.pointerId);
-
-    card.style.left = rect.left + "px";
-    card.style.top = rect.top + "px";
-}
-
-function onPointerMove(e) {
-    if (!activeCard) return;
-
-    const cardRect = activeCard.getBoundingClientRect();
-
-    const rawX = e.clientX - activeCard.dataset.offsetX;
-    const rawY = e.clientY - activeCard.dataset.offsetY;
-
-    const maxX = window.innerWidth - cardRect.width;
-    const maxY = window.innerHeight - cardRect.height;
-
-    const x = clamp(rawX, 0, maxX);
-    const y = clamp(rawY, 0, maxY);
-
-    activeCard.style.left = x + "px";
-    activeCard.style.top = y + "px";
-
-    handleAutoScroll(e.clientY);
-    highlightSlot(e.clientX, e.clientY);
-}
-
-function onPointerUp(e) {
-    if (!activeCard) return;
-
-    activeCard.releasePointerCapture(e.pointerId);
-
-    const target = document.elementFromPoint(e.clientX, e.clientY);
-    const slot = target?.closest(".drop-slot");
-    const drawPile = target?.closest("#drawPile");
-
-    if (slot) {
-        placeCardToSlot(activeCard, slot);
-    }
-    else if (drawPile) {
-        returnToDrawPile(activeCard);
-    }
-    else {
-        resetCard(activeCard);
-    }
-
-    stopAutoScroll();
-    clearHighlights();
-    activeCard = null;
-}
-
-function cancelDrag() {
-    if (!activeCard) return;
-
-    stopAutoScroll();
-    resetCard(activeCard);
-    activeCard = null;
-}
-
-const scrollContainer = document.getElementById("page-scroll");
-
-const AUTO_SCROLL_MARGIN = 100; 
-const AUTO_SCROLL_MIN_SPEED = 4;
-const AUTO_SCROLL_MAX_SPEED = 26;
-
-let autoScrollDir = 0;
-let autoScrollSpeed = 0;
-let autoScrollRAF = null;
-
-function startAutoScroll() {
-    if (autoScrollRAF) return;
-
-    const step = () => {
-        if (!autoScrollDir) {
-            autoScrollRAF = null;
-            return;
-        }
-
-        scrollContainer.scrollTop += autoScrollDir * autoScrollSpeed;
-        autoScrollRAF = requestAnimationFrame(step);
-    };
-
-    autoScrollRAF = requestAnimationFrame(step);
-}
-
-function clamp(value, min, max) {
-    return Math.max(min, Math.min(max, value));
-}
-
-function easeOutQuad(t) {
-    return t * (2 - t);
-}
-
-function handleAutoScroll(pointerY) {
-    const rect = scrollContainer.getBoundingClientRect();
-
-    if (pointerY < rect.top + AUTO_SCROLL_MARGIN) {
-        const distance = Math.max(pointerY - rect.top, 0);
-        const ratio = 1 - distance / AUTO_SCROLL_MARGIN;
-
-        autoScrollDir = -1;
-        autoScrollSpeed =
-            AUTO_SCROLL_MIN_SPEED +
-            (AUTO_SCROLL_MAX_SPEED - AUTO_SCROLL_MIN_SPEED) * easeOutQuad(ratio);
-
-        startAutoScroll();
-        return;
-    }
-
-    if (pointerY > rect.bottom - AUTO_SCROLL_MARGIN) {
-        const distance = Math.max(rect.bottom - pointerY, 0);
-        const ratio = 1 - distance / AUTO_SCROLL_MARGIN;
-
-        autoScrollDir = 1;
-        autoScrollSpeed =
-            AUTO_SCROLL_MIN_SPEED +
-            (AUTO_SCROLL_MAX_SPEED - AUTO_SCROLL_MIN_SPEED) * easeOutQuad(ratio);
-
-        startAutoScroll();
-        return;
-    }
-
-    stopAutoScroll();
-}
-
-function stopAutoScroll() {
-    autoScrollDir = 0;
-    autoScrollSpeed = 0;
-}
-
-async function placeCardToSlot(card, slot) {
+async function placeCardToSlot(card, slot, options = {}) {
     const response = await fetch("/Deck/PlaceCard", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -251,8 +87,9 @@ async function placeCardToSlot(card, slot) {
     }
 
     const existing = slot.querySelector(".card");
-    if (existing) {
-        card._origin.appendChild(existing);
+
+    if (existing && !options.swap) {
+        existing._origin.appendChild(existing);
     }
 
     slot.appendChild(card);
@@ -260,25 +97,41 @@ async function placeCardToSlot(card, slot) {
 }
 
 async function returnToDrawPile(card) {
-    const response = await fetch("/Deck/ReturnToDrawPile", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ cardId: card.dataset.cardId })
-    });
+    const drawPile = document.getElementById("drawPile");
 
-    if (!response.ok) {
-        showToast("Не може да имате повече от 5 карти", "warning");
-        resetCard(card);
-        return;
+    if (card.closest("#drawPile")) return true;
+
+    try {
+        const response = await fetch("/Deck/ReturnToDrawPile", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ cardId: card.dataset.cardId })
+        });
+
+        if (!response.ok) {
+            const text = await response.text();
+
+            if (text === "LIMIT") showToast("Не може да имате повече от 5 карти", "warning");
+
+            resetCard(card);
+            return false;
+        }
+
+        drawPile.appendChild(card);
+        cleanupCard(card);
+        return true;
+
+    } catch (e) {
+        console.error("Return failed", e);
+        return false;
     }
-
-    document.getElementById("drawPile").appendChild(card);
-    cleanupCard(card);
 }
 
 function resetCard(card) {
     cleanupCard(card);
-    card._origin.appendChild(card);
+    card.style.left = "";
+    card.style.top = "";
+    card.style.zIndex = "";
 }
 
 function cleanupCard(card) {
@@ -287,17 +140,349 @@ function cleanupCard(card) {
     card.style.top = "";
 }
 
-function highlightSlot(x, y) {
-    clearHighlights();
-    const el = document.elementFromPoint(x, y);
-    const slot = el?.closest(".drop-slot");
-    if (slot) slot.classList.add("drag-over");
+async function swapCards(cardA, cardB) {
+    const slotA = cardA.closest(".drop-slot");
+    const slotB = cardB.closest(".drop-slot");
+    const drawPile = document.getElementById("drawPile");
+
+    if (slotA && slotB) {
+        const ok1 = await fetch("/Deck/PlaceCard", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                cardId: cardA.dataset.cardId,
+                section: +slotB.dataset.section,
+                position: +slotB.dataset.position
+            })
+        });
+
+        const ok2 = await fetch("/Deck/PlaceCard", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                cardId: cardB.dataset.cardId,
+                section: +slotA.dataset.section,
+                position: +slotA.dataset.position
+            })
+        });
+
+        if (!ok1.ok || !ok2.ok) {
+            showToast("Грешка при размяна", "error");
+            resetCard(cardA);
+            resetCard(cardB);
+            return false;
+        }
+
+        slotA.appendChild(cardB);
+        slotB.appendChild(cardA);
+        cleanupCard(cardA);
+        cleanupCard(cardB);
+        return true;
+    }
+
+    if (slotA || slotB) {
+        const fieldCard = slotA ? cardA : cardB;
+        const drawCard = slotA ? cardB : cardA;
+        const slot = fieldCard.closest(".drop-slot");
+
+        const okPlace = await fetch("/Deck/PlaceCard", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                cardId: drawCard.dataset.cardId,
+                section: +slot.dataset.section,
+                position: +slot.dataset.position
+            })
+        });
+
+        if (!okPlace.ok) {
+            showToast("Грешка при поставяне", "error");
+            resetCard(drawCard);
+            return false;
+        }
+
+        const okReturn = await returnToDrawPile(fieldCard);
+        if (!okReturn) {
+            return false;
+        }
+
+        slot.appendChild(drawCard);
+        cleanupCard(cardA);
+        cleanupCard(cardB);
+        return true;
+    }
+
+    const aNext = cardA.nextSibling === cardB ? cardA : cardB.nextSibling;
+    drawPile.insertBefore(cardA, cardB);
+    drawPile.insertBefore(cardB, aNext);
+    cleanupCard(cardA);
+    cleanupCard(cardB);
+    return true;
 }
 
-function clearHighlights() {
-    document
-        .querySelectorAll(".drop-slot.drag-over")
-        .forEach(s => s.classList.remove("drag-over"));
+const FORCE_TAP_MODE = false;
+
+const isInteractiveBoard =
+    FORCE_TAP_MODE ||
+    (
+        window.matchMedia("(pointer: fine)").matches &&
+        window.matchMedia("(hover: none)").matches &&
+        window.innerWidth >= 1024
+    );
+
+if (!isInteractiveBoard) {
+    let activeCard = null;
+    let isDropping = false;
+
+    //document.addEventListener("pointerdown", onPointerDown);
+    document.addEventListener("pointerdown", e => {
+        const card = e.target.closest(".card");
+        if (!card) return;
+
+        onPointerDown(e);
+    });
+    document.addEventListener("pointermove", onPointerMove);
+    document.addEventListener("pointerup", onPointerUp);
+    document.addEventListener("pointercancel", cancelDrag);
+
+    function onPointerDown(e) {
+        if (
+            e.target.closest("button") ||
+            e.target.closest("form") ||
+            e.target.closest("a")
+        ) {
+            e.stopPropagation();
+            return;
+        }
+
+        const card = e.target.closest(".card");
+        if (!card) return;
+
+        activeCard = card;
+        card._origin ??= card.parentElement;
+
+        const rect = card.getBoundingClientRect();
+        card.dataset.offsetX = e.clientX - rect.left;
+        card.dataset.offsetY = e.clientY - rect.top;
+
+        card.classList.add("dragging");
+        card.setPointerCapture(e.pointerId);
+
+        card.style.left = rect.left + "px";
+        card.style.top = rect.top + "px";
+    }
+
+    async function onPointerMove(e) {
+        if (!activeCard) return;
+
+        const cardRect = activeCard.getBoundingClientRect();
+
+        const rawX = e.clientX - activeCard.dataset.offsetX;
+        const rawY = e.clientY - activeCard.dataset.offsetY;
+
+        const maxX = window.innerWidth - cardRect.width;
+        const maxY = window.innerHeight - cardRect.height;
+
+        const x = clamp(rawX, 0, maxX);
+        const y = clamp(rawY, 0, maxY);
+
+        activeCard.style.left = x + "px";
+        activeCard.style.top = y + "px";
+
+        handleAutoScroll(e.clientY);
+        highlightSlot(e.clientX, e.clientY);
+    }
+
+    async function onPointerUp(e) {
+        if (!activeCard || isDropping) return;
+
+        isDropping = true;
+
+        try {
+            activeCard.releasePointerCapture(e.pointerId);
+
+            const target = document.elementFromPoint(e.clientX, e.clientY);
+            const slot = target?.closest(".drop-slot");
+            const drawPileEl = target?.closest("#drawPile");
+
+            if (slot) {
+                const targetCard = slot.querySelector(".card");
+                const fromSlot = activeCard.closest(".drop-slot");
+
+                if (targetCard && fromSlot) {
+                    await swapCards(activeCard, targetCard);
+                } else {
+                    await placeCardToSlot(activeCard, slot);
+                }
+            }
+            else if (drawPileEl) {
+                const targetCard = target?.closest(".card");
+                const fromDrawPile = activeCard.closest("#drawPile");
+
+                if (targetCard && targetCard !== activeCard) {
+                    await swapCards(activeCard, targetCard);
+                    return;
+                }
+
+                if (fromDrawPile) {
+                    resetCard(activeCard);
+                    return;
+                }
+
+                const ok = await returnToDrawPile(activeCard);
+                if (!ok) return;
+            }
+            else {
+                resetCard(activeCard);
+            }
+        }
+        finally {
+            activeCard = null;
+            clearHighlights();
+            stopAutoScroll();
+            isDropping = false;
+        }
+    }
+
+    function highlightSlot(x, y) {
+        clearHighlights();
+        const el = document.elementFromPoint(x, y);
+        const slot = el?.closest(".drop-slot");
+        if (slot) slot.classList.add("drag-over");
+    }
+
+    function clearHighlights() {
+        document
+            .querySelectorAll(".drop-slot.drag-over")
+            .forEach(s => s.classList.remove("drag-over"));
+    }
+
+    function cancelDrag() {
+        if (!activeCard) return;
+
+        stopAutoScroll();
+        resetCard(activeCard);
+        activeCard = null;
+    }
+
+    const scrollContainer = document.getElementById("page-scroll");
+
+    const AUTO_SCROLL_MARGIN = 100;
+    const AUTO_SCROLL_MIN_SPEED = 4;
+    const AUTO_SCROLL_MAX_SPEED = 26;
+
+    let autoScrollDir = 0;
+    let autoScrollSpeed = 0;
+    let autoScrollRAF = null;
+
+    function startAutoScroll() {
+        if (autoScrollRAF) return;
+
+        const step = () => {
+            if (!autoScrollDir) {
+                autoScrollRAF = null;
+                return;
+            }
+
+            scrollContainer.scrollTop += autoScrollDir * autoScrollSpeed;
+            autoScrollRAF = requestAnimationFrame(step);
+        };
+
+        autoScrollRAF = requestAnimationFrame(step);
+    }
+
+    function clamp(value, min, max) {
+        return Math.max(min, Math.min(max, value));
+    }
+
+    function easeOutQuad(t) {
+        return t * (2 - t);
+    }
+
+    function handleAutoScroll(pointerY) {
+        const rect = scrollContainer.getBoundingClientRect();
+
+        if (pointerY < rect.top + AUTO_SCROLL_MARGIN) {
+            const distance = Math.max(pointerY - rect.top, 0);
+            const ratio = 1 - distance / AUTO_SCROLL_MARGIN;
+
+            autoScrollDir = -1;
+            autoScrollSpeed =
+                AUTO_SCROLL_MIN_SPEED +
+                (AUTO_SCROLL_MAX_SPEED - AUTO_SCROLL_MIN_SPEED) * easeOutQuad(ratio);
+
+            startAutoScroll();
+            return;
+        }
+
+        if (pointerY > rect.bottom - AUTO_SCROLL_MARGIN) {
+            const distance = Math.max(rect.bottom - pointerY, 0);
+            const ratio = 1 - distance / AUTO_SCROLL_MARGIN;
+
+            autoScrollDir = 1;
+            autoScrollSpeed =
+                AUTO_SCROLL_MIN_SPEED +
+                (AUTO_SCROLL_MAX_SPEED - AUTO_SCROLL_MIN_SPEED) * easeOutQuad(ratio);
+
+            startAutoScroll();
+            return;
+        }
+
+        stopAutoScroll();
+    }
+
+    function stopAutoScroll() {
+        autoScrollDir = 0;
+        autoScrollSpeed = 0;
+    }
+} else {
+    let selectedCard = null;
+
+    document.addEventListener("click", async (e) => {
+        const card = e.target.closest(".card");
+        const slot = e.target.closest(".drop-slot");
+        const drawPile = e.target.closest("#drawPile");
+
+        if (card) {
+            if (selectedCard && selectedCard !== card) {
+                const ok = await swapCards(selectedCard, card);
+                if (ok) clearSelectedCard();
+                return;
+            }
+
+            toggleSelectedCard(card);
+            return;
+        }
+
+        if (slot && selectedCard) {
+            await placeCardToSlot(selectedCard, slot);
+            clearSelectedCard();
+            return;
+        }
+
+        if (drawPile && selectedCard) {
+            const ok = await returnToDrawPile(selectedCard);
+            if (ok) clearSelectedCard();
+            return;
+        }
+    });
+
+    function toggleSelectedCard(card) {
+        if (selectedCard === card) {
+            clearSelectedCard();
+            return;
+        }
+
+        clearSelectedCard();
+        selectedCard = card;
+        card.classList.add("selected");
+    }
+
+    function clearSelectedCard() {
+        if (!selectedCard) return;
+        selectedCard.classList.remove("selected");
+        selectedCard = null;
+    }
 }
 
 function showToast(message, type = "info") {

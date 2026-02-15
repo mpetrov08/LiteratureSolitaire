@@ -1,5 +1,7 @@
 ﻿using LiteratureSolitaire.Core.Contracts;
+using LiteratureSolitaire.Core.Enumerations;
 using LiteratureSolitaire.Core.Models;
+using LiteratureSolitaire.Extensions;
 using LiteratureSolitaire.Infrastructure.Data.Models;
 using LiteratureSolitaire.Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +23,7 @@ namespace LiteratureSolitaire.Core.Services
             repository = _repository;
         }
 
-        public async Task<List<Card>> GenerateDeckAsync()
+        public async Task<List<Work>> FilterCards(List<CategorySorting>? categories = null)
         {
             var works = await repository
                 .AllReadОnly<Work>()
@@ -30,6 +32,23 @@ namespace LiteratureSolitaire.Core.Services
                 .Include(w => w.LiteraryDirection)
                 .Include(w => w.Category)
                 .ToListAsync();
+
+            if (categories != null && categories.Any())
+            {
+                var selectedNames = categories
+                    .Select(c => c.GetDisplayName())
+                    .ToList();
+
+                works = works
+                    .Where(w => selectedNames.Contains(w.Category.Name))
+                    .ToList();
+            }
+
+            return works;
+        }
+        public async Task<List<Card>> GenerateDeckAsync(List<CategorySorting>? categories = null)
+        {
+            var works = await FilterCards(categories);
 
             var cards = new List<Card>();
             foreach (var work in works)

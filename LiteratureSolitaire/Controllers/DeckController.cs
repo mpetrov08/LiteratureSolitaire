@@ -1,4 +1,5 @@
 ﻿using LiteratureSolitaire.Core.Contracts;
+using LiteratureSolitaire.Core.Enumerations;
 using LiteratureSolitaire.Core.Models;
 using LiteratureSolitaire.Core.Services;
 using LiteratureSolitaire.Extensions;
@@ -22,18 +23,41 @@ namespace LiteratureSolitaire.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(List<CategorySorting>? categories)
         {
+            var sessionCategories =
+                HttpContext.Session.GetObjectFromJson<List<CategorySorting>>("categories");
+
             var deck = HttpContext.Session.GetObjectFromJson<List<Card>>("deck");
             var drawn = HttpContext.Session.GetObjectFromJson<List<Card>>("drawn") ?? new();
             var board = HttpContext.Session.GetObjectFromJson<List<BoardSlot>>("board");
 
-            if (deck == null || board == null)
+            bool categoriesChanged = false;
+
+            if (categories == null)
+                categories = new List<CategorySorting>();
+
+            if (sessionCategories == null)
+                categoriesChanged = true;
+            else
+                categoriesChanged = 
+                    sessionCategories.Count != categories.Count ||
+                    !sessionCategories.All(c => categories.Contains(c));
+
+            if (categoriesChanged)
             {
-                deck = await deckService.GenerateDeckAsync();
+                deck = null;
+                board = null;
+            }
+
+            if (deck == null || !deck.Any() || board == null)
+            {
+                deck = await deckService.GenerateDeckAsync(categories);
                 drawn = new List<Card>();
 
-                board = Enumerable.Range(1, 27)
+                int sectionCount = deck.Count / 6;
+
+                board = Enumerable.Range(1, sectionCount)
                     .SelectMany(s => Enumerable.Range(1, 6)
                         .Select(p => new BoardSlot
                         {
@@ -46,8 +70,7 @@ namespace LiteratureSolitaire.Controllers
                 HttpContext.Session.SetObjectAsJson("deck", deck);
                 HttpContext.Session.SetObjectAsJson("drawn", drawn);
                 HttpContext.Session.SetObjectAsJson("board", board);
-
-                return View();
+                HttpContext.Session.SetObjectAsJson("categories", categories);
             }
 
             var boardCardIds = board
@@ -61,7 +84,11 @@ namespace LiteratureSolitaire.Controllers
 
             HttpContext.Session.SetObjectAsJson("drawn", drawn);
 
-            return View();
+            return View(new DeckViewModel
+            {
+                SelectedCategories = categories,
+                SectionCount = deck.Count / 6
+            });
         }
 
         [HttpPost]
@@ -201,8 +228,11 @@ namespace LiteratureSolitaire.Controllers
         [HttpPost]
         public async Task<IActionResult> Shuffle()
         {
-            var allCards = await deckService.GenerateDeckAsync();
-            allCards = await deckService.ShuffleDeckAsync(allCards);
+            var categories =
+                HttpContext.Session.GetObjectFromJson<List<CategorySorting>>("categories")
+                ?? new List<CategorySorting>();
+
+            var allCards = await deckService.GenerateDeckAsync(categories);
 
             foreach (var c in allCards)
             {
@@ -214,12 +244,16 @@ namespace LiteratureSolitaire.Controllers
             HttpContext.Session.SetObjectAsJson("drawn", new List<Card>());
 
             var board = HttpContext.Session.GetObjectFromJson<List<BoardSlot>>("board");
-            foreach (var slot in board)
-                slot.Card = null;
 
-            HttpContext.Session.SetObjectAsJson("board", board);
+            if (board != null)
+            {
+                foreach (var slot in board)
+                    slot.Card = null;
 
-            return RedirectToAction("Index");
+                HttpContext.Session.SetObjectAsJson("board", board);
+            }
+
+            return RedirectToAction("Index", new { categories });
         }
 
         [HttpPost]

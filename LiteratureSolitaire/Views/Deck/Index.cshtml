@@ -1,4 +1,8 @@
-﻿@using LiteratureSolitaire.Extensions
+﻿@model DeckViewModel
+@using LiteratureSolitaire.Core.Models
+@using LiteratureSolitaire.Extensions
+@using LiteratureSolitaire.Core.Enumerations
+
 
 @section Styles {
     <link rel="stylesheet" href="~/css/card.css" asp-append-version="true" />
@@ -10,7 +14,36 @@
     ViewData["HideFooter"] = true;
 }
 
-<h2>Литературен пасианс</h2>
+    <h2>Литературен пасианс</h2>
+
+<form method="get" asp-action="Index" class="filter-bar" id="filterForm">
+    <div class="filter-wrapper">
+        <div class="category-grid">
+            @foreach (CategorySorting c in Enum.GetValues(typeof(CategorySorting)))
+            {
+                var isChecked = Model.SelectedCategories?.Contains(c) == true;
+
+                <label class="category-item">
+                    <input type="checkbox"
+                           name="categories"
+                           value="@c"
+                    @(isChecked ? "checked" : "") />
+                    <span>@c.GetDisplayName()</span>
+                </label>
+            }
+        </div>
+
+        <div class="filter-buttons">
+            <button type="submit" class="top-btn filter-btn">
+                Филтрирай
+            </button>
+
+            <button type="button" class="top-btn clear-btn" onclick="clearFilter()">
+                Изчисти
+            </button>
+        </div>
+    </div>
+</form>
 
 <div class="top-row">
     <div id="deck" class="deck" onclick="drawCard()"></div>
@@ -18,6 +51,7 @@
     <div class="button-group">
         <button id="drawButton" class="top-btn" onclick="drawCard()">Тегли карта</button>
         <form asp-action="Shuffle" method="post">
+            <input type="hidden" name="category" value="@Model.SelectedCategories" />
             <button type="submit" class="top-btn shuffle">Разбъркай</button>
         </form>
         <form asp-action="ValidateBoard" method="post">
@@ -63,7 +97,7 @@
         var board = Context.Session.GetObjectFromJson<List<LiteratureSolitaire.Models.BoardSlot>>("board");
     }
 
-    @for (int sec = 1; sec <= 27; sec++)
+    @for (int sec = 1; sec <= Model.SectionCount; sec++)
     {
         <div class="section">
             <div class="section-header">

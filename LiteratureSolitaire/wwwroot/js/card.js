@@ -519,3 +519,11 @@ document.addEventListener("click", e => {
         card.classList.toggle("expanded");
     }
 });
+
+function clearFilter() {
+    document
+        .querySelectorAll('input[name="categories"]')
+        .forEach(cb => cb.checked = false);
+
+    document.getElementById("filterForm").submit();
+}

@@ -220,15 +220,20 @@ async function swapCards(cardA, cardB) {
     return true;
 }
 
+function detectInteractiveBoard() {
+    const ua = navigator.userAgent;
+
+    const isWindows = ua.includes("Windows");
+    const isMobile = /Android|iPhone|iPad|iPod/i.test(ua);
+    const hasTouch = navigator.maxTouchPoints > 0;
+    const isLargeScreen = window.innerWidth >= 1200;
+
+    return isWindows && hasTouch && !isMobile && isLargeScreen;
+}
+
 const FORCE_TAP_MODE = false;
 
-const isInteractiveBoard =
-    FORCE_TAP_MODE ||
-    (
-        window.matchMedia("(pointer: fine)").matches &&
-        window.matchMedia("(hover: none)").matches &&
-        window.innerWidth >= 1024
-    );
+const isInteractiveBoard = FORCE_TAP_MODE || detectInteractiveBoard();
 
 if (!isInteractiveBoard) {
     let activeCard = null;

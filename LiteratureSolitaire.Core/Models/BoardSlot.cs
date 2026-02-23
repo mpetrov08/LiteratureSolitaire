@@ -7,5 +7,6 @@ namespace LiteratureSolitaire.Models
         public int Section { get; set; } 
         public int Position { get; set; } 
         public Card? Card { get; set; }
+        public string? SectionTitle { get; set; }
     }
 }

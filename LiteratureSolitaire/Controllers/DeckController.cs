@@ -190,10 +190,28 @@ namespace LiteratureSolitaire.Controllers
 
             targetSlot.Card = movingCard;
 
+            UpdateSectionTitle(board, dto.Section);
+
+            if (sourceSlot != null)
+            {
+                UpdateSectionTitle(board, sourceSlot.Section);
+            }
+
             HttpContext.Session.SetObjectAsJson("board", board);
             HttpContext.Session.SetObjectAsJson("drawn", drawn);
 
-            return Ok();
+            var updatedSections = new Dictionary<int, string>();
+
+            updatedSections[dto.Section] =
+                board.First(s => s.Section == dto.Section).SectionTitle!;
+
+            if (sourceSlot != null)
+            {
+                updatedSections[sourceSlot.Section] =
+                    board.First(s => s.Section == sourceSlot.Section).SectionTitle!;
+            }
+
+            return Json(updatedSections);
         }
 
         [HttpPost]
@@ -218,6 +236,8 @@ namespace LiteratureSolitaire.Controllers
 
             if (!drawn.Any(c => c.Id == card.Id))
                 drawn.Add(card);
+
+            UpdateSectionTitle(board, slotWithCard.Section);
 
             HttpContext.Session.SetObjectAsJson("board", board);
             HttpContext.Session.SetObjectAsJson("drawn", drawn);
@@ -249,6 +269,11 @@ namespace LiteratureSolitaire.Controllers
             {
                 foreach (var slot in board)
                     slot.Card = null;
+
+                foreach (var section in board.Select(s => s.Section).Distinct())
+                {
+                    UpdateSectionTitle(board, section);
+                }
 
                 HttpContext.Session.SetObjectAsJson("board", board);
             }
@@ -288,6 +313,34 @@ namespace LiteratureSolitaire.Controllers
             HttpContext.Session.SetObjectAsJson("drawn", drawn);
 
             return RedirectToAction("Index");
+        }
+
+        private void UpdateSectionTitle(List<BoardSlot> board, int section)
+        {
+            var sectionSlots = board
+                .Where(s => s.Section == section)
+                .ToList();
+
+            var titleCards = sectionSlots
+                .Where(s => s.Card?.Type == "Title")
+                .Select(s => s.Card)
+                .ToList();
+
+            string newTitle;
+
+            if (titleCards.Any())
+            {
+                newTitle = titleCards.Last()!.Content;
+            }
+            else
+            {
+                newTitle = $"Раздел {section}";
+            }
+
+            foreach (var slot in sectionSlots)
+            {
+                slot.SectionTitle = newTitle;
+            }
         }
     }
 }

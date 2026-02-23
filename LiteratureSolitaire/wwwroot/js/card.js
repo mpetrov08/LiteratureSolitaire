@@ -80,6 +80,8 @@ async function placeCardToSlot(card, slot, options = {}) {
         })
     });
 
+    const updatedSections = await response.json();
+
     if (!response.ok) {
         showToast("Грешка при поставяне на картата", "error");
         resetCard(card);
@@ -94,6 +96,17 @@ async function placeCardToSlot(card, slot, options = {}) {
 
     slot.appendChild(card);
     cleanupCard(card);
+
+    for (const section in updatedSections) {
+        const header = document
+            .querySelector(`.drop-slot[data-section="${section}"]`)
+            ?.closest(".section")
+            ?.querySelector(".section-header h4");
+
+        if (header) {
+            header.textContent = updatedSections[section];
+        }
+    }
 }
 
 async function returnToDrawPile(card) {
@@ -173,6 +186,12 @@ async function swapCards(cardA, cardB) {
             return false;
         }
 
+        const titles1 = await ok1.json();
+        const titles2 = await ok2.json();
+
+        updateSectionHeaders(titles1);
+        updateSectionHeaders(titles2);
+
         slotA.appendChild(cardB);
         slotB.appendChild(cardA);
         cleanupCard(cardA);
@@ -218,6 +237,18 @@ async function swapCards(cardA, cardB) {
     cleanupCard(cardA);
     cleanupCard(cardB);
     return true;
+}
+function updateSectionHeaders(updatedSections) {
+    for (const section in updatedSections) {
+        const header = document
+            .querySelector(`.drop-slot[data-section="${section}"]`)
+            ?.closest(".section")
+            ?.querySelector(".section-header h4");
+
+        if (header) {
+            header.textContent = updatedSections[section];
+        }
+    }
 }
 
 function detectInteractiveBoard() {

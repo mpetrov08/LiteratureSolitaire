@@ -101,7 +101,13 @@
     {
         <div class="section">
             <div class="section-header">
-                <h4>Раздел @sec</h4>
+                @{
+                    var sectionTitle = board?
+                    .FirstOrDefault(s => s.Section == sec)?.SectionTitle
+                    ?? $"Раздел {sec}";
+                }
+
+                <h4>@sectionTitle</h4>
             </div>
 
             <div class="section-cards">

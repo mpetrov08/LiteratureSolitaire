@@ -414,6 +414,76 @@ footer {
     box-shadow: 0 6px 12px rgba(255,75,43,0.4);
 }
 
+.interaction-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    margin: 30px auto 10px auto;
+    padding: 18px 28px;
+    max-width: 500px;
+
+    background: linear-gradient(135deg, #fdfbfb, #ebedee);
+    border-radius: 18px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    transition: all .3s ease;
+}
+
+.interaction-wrapper:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 30px rgba(0,0,0,0.2);
+}
+
+.interaction-title {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: .5px;
+    color: #333;
+}
+
+.interaction-options {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.interaction-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 10px 16px;
+    border-radius: 12px;
+    border: 2px solid #ddd;
+    background: #ffffff;
+
+    cursor: pointer;
+    transition: all .2s ease;
+}
+
+.interaction-item:hover {
+    border-color: #2575fc;
+    background: #f0f5ff;
+    transform: translateY(-2px);
+}
+
+.interaction-item input {
+    accent-color: #2575fc;
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.interaction-item input:checked + span {
+    font-weight: 600;
+    color: #2575fc;
+}
+
+.interaction-item:has(input:checked) {
+    border-color: #2575fc;
+    box-shadow: 0 0 12px rgba(37,117,252,0.4);
+}
+
 @keyframes cardIn {
     from {
         transform: scale(0.9);
@@ -655,5 +725,20 @@ footer {
         width: 100%;
         font-size: 16px;
         padding: 12px;
+    }
+
+    .interaction-wrapper {
+        width: 95%;
+        padding: 14px;
+    }
+
+    .interaction-options {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .interaction-item {
+        width: 100%;
+        justify-content: center;
     }
 }

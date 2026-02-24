@@ -251,22 +251,28 @@ function updateSectionHeaders(updatedSections) {
     }
 }
 
-function detectInteractiveBoard() {
-    const ua = navigator.userAgent;
+let interactionMode = localStorage.getItem("interactionMode") || "drag";
 
-    const isWindows = ua.includes("Windows");
-    const isMobile = /Android|iPhone|iPad|iPod/i.test(ua);
-    const hasTouch = navigator.maxTouchPoints > 0;
-    const isLargeScreen = window.innerWidth >= 1200;
-
-    return isWindows && hasTouch && !isMobile && isLargeScreen;
+function applyInteractionMode(mode) {
+    localStorage.setItem("interactionMode", mode);
+    interactionMode = mode;
+    location.reload();
 }
 
-const FORCE_TAP_MODE = false;
+document.addEventListener("DOMContentLoaded", () => {
+    const radios = document.querySelectorAll('input[name="interactionMode"]');
 
-const isInteractiveBoard = FORCE_TAP_MODE || detectInteractiveBoard();
+    radios.forEach(r => {
+        r.checked = r.value === interactionMode;
 
-if (!isInteractiveBoard) {
+        r.addEventListener("change", () => {
+            applyInteractionMode(r.value);
+        });
+    });
+});
+
+
+if (interactionMode === "drag") {
     let activeCard = null;
     let isDropping = false;
 
@@ -471,7 +477,7 @@ if (!isInteractiveBoard) {
         autoScrollDir = 0;
         autoScrollSpeed = 0;
     }
-} else {
+} else if (interactionMode === "tap") {
     let selectedCard = null;
 
     document.addEventListener("click", async (e) => {

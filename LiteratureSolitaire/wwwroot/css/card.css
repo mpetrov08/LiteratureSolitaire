@@ -603,6 +603,17 @@ footer {
     }
 }
 
+@media (min-width: 601px) {
+
+     .mobile-filter {
+        display: block;
+    }
+
+    .mobile-filter summary {
+        display: none;
+    }
+}
+
 @media (max-width: 600px) {
     #drawPile {
         max-width: 100%;
@@ -726,6 +737,33 @@ footer {
         font-size: 16px;
         padding: 12px;
     }
+
+    
+    .mobile-filter summary {
+        font-size: 18px;
+        font-weight: 600;
+        padding: 12px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, #6a11cb, #2575fc);
+        color: white;
+        cursor: pointer;
+        text-align: center;
+        list-style: none;
+    }
+
+    .mobile-filter summary::-webkit-details-marker {
+        display: none;
+    }
+
+    .mobile-filter[open] summary {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .mobile-filter .filter-bar {
+        margin-top: 10px;
+    }
+
 
     .interaction-wrapper {
         width: 95%;

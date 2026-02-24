@@ -34,15 +34,19 @@ namespace LiteratureSolitaire.Controllers
 
             bool categoriesChanged = false;
 
-            if (categories == null)
-                categories = new List<CategorySorting>();
-
-            if (sessionCategories == null)
-                categoriesChanged = true;
-            else
-                categoriesChanged = 
+            if (categories != null && categories.Any())
+            {
+                if (sessionCategories == null ||
                     sessionCategories.Count != categories.Count ||
-                    !sessionCategories.All(c => categories.Contains(c));
+                    !sessionCategories.All(c => categories.Contains(c)))
+                {
+                    categoriesChanged = true;
+                }
+            }
+            else
+            {
+                categories = sessionCategories ?? new List<CategorySorting>();
+            }
 
             if (categoriesChanged)
             {
@@ -87,7 +91,10 @@ namespace LiteratureSolitaire.Controllers
             return View(new DeckViewModel
             {
                 SelectedCategories = categories,
-                SectionCount = deck.Count / 6
+                SectionCount = board
+                                .Select(s => s.Section)
+                                .Distinct()
+                                .Count()
             });
         }
 

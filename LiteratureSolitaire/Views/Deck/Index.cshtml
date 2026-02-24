@@ -33,34 +33,40 @@
         </label>
     </div>
 </div>
-<form method="get" asp-action="Index" class="filter-bar" id="filterForm">
-    <div class="filter-wrapper">
-        <div class="category-grid">
-            @foreach (CategorySorting c in Enum.GetValues(typeof(CategorySorting)))
-            {
-                var isChecked = Model.SelectedCategories?.Contains(c) == true;
 
-                <label class="category-item">
-                    <input type="checkbox"
-                           name="categories"
-                           value="@c"
-                    @(isChecked ? "checked" : "") />
-                    <span>@c.GetDisplayName()</span>
-                </label>
-            }
+<details class="mobile-filter" open>
+    <summary>Филтър</summary>
+
+    <form method="get" asp-action="Index" class="filter-bar" id="filterForm">
+        <div class="filter-wrapper">
+            <div class="category-grid">
+                @foreach (CategorySorting c in Enum.GetValues(typeof(CategorySorting)))
+                {
+                    var isChecked = Model.SelectedCategories?.Contains(c) == true;
+
+                    <label class="category-item">
+                        <input type="checkbox"
+                               name="categories"
+                               value="@c"
+                        @(isChecked ? "checked" : "") />
+                        <span>@c.GetDisplayName()</span>
+                    </label>
+                }
+            </div>
+
+            <div class="filter-buttons">
+                <button type="submit" class="top-btn filter-btn">
+                    Филтрирай
+                </button>
+
+                <button type="button" class="top-btn clear-btn" onclick="clearFilter()">
+                    Изчисти
+                </button>
+            </div>
         </div>
+    </form>
 
-        <div class="filter-buttons">
-            <button type="submit" class="top-btn filter-btn">
-                Филтрирай
-            </button>
-
-            <button type="button" class="top-btn clear-btn" onclick="clearFilter()">
-                Изчисти
-            </button>
-        </div>
-    </div>
-</form>
+</details>
 
 <div class="top-row">
     <div id="deck" class="deck" onclick="drawCard()"></div>

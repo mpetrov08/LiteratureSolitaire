@@ -100,7 +100,9 @@
 @if (TempData["CorrectCount"] != null)
 {
     <div class="result-box">
-        <span>Верни: @TempData["CorrectCount"] / 162</span>
+        <span>
+            Верни: @TempData["CorrectCount"] / @TempData["TotalCards"]
+        </span>
 
         @if ((int)TempData["CorrectCount"] == 162)
         {

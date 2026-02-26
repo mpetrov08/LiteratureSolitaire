@@ -21,32 +21,28 @@ namespace LiteratureSolitaire.Controllers
 
         private const string DeckSessionKey = "deck";
 
-
         [HttpGet]
         public async Task<IActionResult> Index(List<CategorySorting>? categories)
         {
-            var sessionCategories =
-                HttpContext.Session.GetObjectFromJson<List<CategorySorting>>("categories");
+            var sessionCategories = HttpContext.Session.GetObjectFromJson<List<CategorySorting>>("categories");
 
             var deck = HttpContext.Session.GetObjectFromJson<List<Card>>("deck");
             var drawn = HttpContext.Session.GetObjectFromJson<List<Card>>("drawn") ?? new();
             var board = HttpContext.Session.GetObjectFromJson<List<BoardSlot>>("board");
 
-            bool categoriesChanged = false;
-
-            if (categories != null && categories.Any())
+            if (categories != null)
             {
-                if (sessionCategories == null ||
-                    sessionCategories.Count != categories.Count ||
-                    !sessionCategories.All(c => categories.Contains(c)))
-                {
-                    categoriesChanged = true;
-                }
+                categories = categories;
             }
             else
             {
                 categories = sessionCategories ?? new List<CategorySorting>();
             }
+
+            bool categoriesChanged =
+                sessionCategories == null ||
+                sessionCategories.Count != categories.Count ||
+                !sessionCategories.All(c => categories.Contains(c));
 
             if (categoriesChanged)
             {
@@ -54,7 +50,7 @@ namespace LiteratureSolitaire.Controllers
                 board = null;
             }
 
-            if (deck == null || !deck.Any() || board == null)
+            if (deck == null || board == null)
             {
                 deck = await deckService.GenerateDeckAsync(categories);
                 drawn = new List<Card>();
@@ -293,10 +289,12 @@ namespace LiteratureSolitaire.Controllers
         {
             var board = HttpContext.Session.GetObjectFromJson<List<BoardSlot>>("board");
             var drawn = HttpContext.Session.GetObjectFromJson<List<Card>>("drawn") ?? new();
+            var categories = HttpContext.Session.GetObjectFromJson<List<CategorySorting>>("categories");
+
             if (board == null)
             {
                 TempData["Message"] = "Дъската е празна.";
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { categories });
             }
 
             var checkedBoard = await boardService.ValidateBoardSlots(board);
@@ -314,12 +312,16 @@ namespace LiteratureSolitaire.Controllers
             }
 
             int correctCount = checkedBoard.Count(s => s.Card != null && s.Card.IsCorrect == true);
+            int totalCards = checkedBoard.Count;
+
             TempData["CorrectCount"] = correctCount;
+            TempData["TotalCards"] = totalCards;
 
             HttpContext.Session.SetObjectAsJson("board", checkedBoard);
             HttpContext.Session.SetObjectAsJson("drawn", drawn);
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { categories });
+
         }
 
         private void UpdateSectionTitle(List<BoardSlot> board, int section)

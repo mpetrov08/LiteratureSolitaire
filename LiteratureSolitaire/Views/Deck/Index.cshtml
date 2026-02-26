@@ -104,7 +104,7 @@
             Верни: @TempData["CorrectCount"] / @TempData["TotalCards"]
         </span>
 
-        @if ((int)TempData["CorrectCount"] == 162)
+        @if ((int)TempData["CorrectCount"] == (int)TempData["TotalCards"])
         {
             <script>
                 window.addEventListener("load", () => {

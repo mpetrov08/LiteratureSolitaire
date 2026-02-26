@@ -130,6 +130,9 @@ async function returnToDrawPile(card) {
             return false;
         }
 
+        const updatedSections = await response.json();
+        updateSectionHeaders(updatedSections);
+
         drawPile.appendChild(card);
         cleanupCard(card);
         return true;
@@ -200,15 +203,19 @@ async function swapCards(cardA, cardB) {
     }
 
     if (slotA || slotB) {
+
         const fieldCard = slotA ? cardA : cardB;
-        const drawCard = slotA ? cardB : cardA;
+        const drawPileCard = slotA ? cardB : cardA;
         const slot = fieldCard.closest(".drop-slot");
+
+        const okReturn = await returnToDrawPile(fieldCard);
+        if (!okReturn) return false;
 
         const okPlace = await fetch("/Deck/PlaceCard", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                cardId: drawCard.dataset.cardId,
+                cardId: drawPileCard.dataset.cardId,
                 section: +slot.dataset.section,
                 position: +slot.dataset.position
             })
@@ -216,18 +223,17 @@ async function swapCards(cardA, cardB) {
 
         if (!okPlace.ok) {
             showToast("Грешка при поставяне", "error");
-            resetCard(drawCard);
             return false;
         }
 
-        const okReturn = await returnToDrawPile(fieldCard);
-        if (!okReturn) {
-            return false;
-        }
+        const updatedSections = await okPlace.json();
+        updateSectionHeaders(updatedSections);
 
-        slot.appendChild(drawCard);
-        cleanupCard(cardA);
-        cleanupCard(cardB);
+        slot.appendChild(drawPileCard);
+
+        cleanupCard(drawPileCard);
+        cleanupCard(fieldCard);
+
         return true;
     }
 
@@ -379,6 +385,10 @@ if (interactionMode === "drag") {
             }
         }
         finally {
+            if (activeCard) {
+                cleanupCard(activeCard);
+            }
+
             activeCard = null;
             clearHighlights();
             stopAutoScroll();

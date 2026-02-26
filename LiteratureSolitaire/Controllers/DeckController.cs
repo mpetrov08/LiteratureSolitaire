@@ -245,7 +245,12 @@ namespace LiteratureSolitaire.Controllers
             HttpContext.Session.SetObjectAsJson("board", board);
             HttpContext.Session.SetObjectAsJson("drawn", drawn);
 
-            return Ok();
+            var updatedSections = new Dictionary<int, string>
+            {
+                [slotWithCard.Section] = board.First(s => s.Section == slotWithCard.Section).SectionTitle!
+            };
+
+            return Json(updatedSections);
         }
 
         [HttpPost]

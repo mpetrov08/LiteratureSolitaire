@@ -1,0 +1,58 @@
+﻿.additional-card-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.additional-card-wrapper .card {
+    flex-shrink: 0;
+}
+
+.additional-card-delete {
+    width: 130px;
+}
+
+.additional-card-delete .btn {
+    width: 100%;
+    padding: 8px 12px;
+}
+
+.cards-row {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 12px;
+
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    padding: 5px 0 10px 0;
+}
+
+.card-item {
+    flex: 0 0 auto;
+    width: 120px;
+}
+
+.additional-card-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.additional-card-wrapper .card {
+    margin: 0;
+}
+
+.additional-card-delete {
+    width: 130px;
+    margin: 0;
+}
+
+.additional-card-delete button {
+    width: 100%;
+    padding: 6px 10px;
+}

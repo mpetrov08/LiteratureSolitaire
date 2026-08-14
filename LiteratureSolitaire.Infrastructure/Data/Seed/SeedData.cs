@@ -178,140 +178,160 @@ namespace LiteratureSolitaire.Infrastructure.Data.Seed
             {
                 Id = 1,
                 Name = "Димитър Талев",
-                PhotoPath = "/images/authors/dimitar_talev.png"
+                PhotoPath = "/images/authors/dimitar_talev.png",
+                MoreInformationUrl = "https://dictionarylit-bg.eu/%D0%94%D0%B8%D0%BC%D0%B8%D1%82%D1%8A%D1%80-%D0%A2%D0%B0%D0%BB%D0%B5%D0%B2?sa=1"
             };
 
             AlekoKonstantinov = new Author
             {
                 Id = 2,
                 Name = "Алеко Константинов",
-                PhotoPath = "/images/authors/aleko_konstantinov.jpg"
+                PhotoPath = "/images/authors/aleko_konstantinov.jpg",
+                MoreInformationUrl = "https://dictionarylit-bg.eu/%D0%90%D0%BB%D0%B5%D0%BA%D0%BE-%D0%98%D0%B2%D0%B0%D0%BD%D0%B8%D1%86%D0%BE%D0%B2-%D0%9A%D0%BE%D0%BD%D1%81%D1%82%D0%B0%D0%BD%D1%82%D0%B8%D0%BD%D0%BE%D0%B2?sa=1"
             };
 
             StanislavStratiev = new Author
             {
                 Id = 3,
                 Name = "Станислав Стратиев",
-                PhotoPath = "/images/authors/stanislav_stratiev.jpg"
+                PhotoPath = "/images/authors/stanislav_stratiev.jpg",
+                MoreInformationUrl = "https://dictionarylit-bg.eu/%D0%A1%D1%82%D0%B0%D0%BD%D0%B8%D1%81%D0%BB%D0%B0%D0%B2-%D0%A1%D1%82%D1%80%D0%B0%D1%82%D0%B8%D0%B5%D0%B2?sa=1"
             };
 
             IvanVazov = new Author
             {
                 Id = 4,
                 Name = "Иван Вазов",
-                PhotoPath = "/images/authors/ivan_vazov.jpg"
+                PhotoPath = "/images/authors/ivan_vazov.jpg",
+                MoreInformationUrl = "https://dictionarylit-bg.eu/%D0%98%D0%B2%D0%B0%D0%BD-%D0%9C%D0%B8%D0%BD%D1%87%D0%BE%D0%B2-%D0%92%D0%B0%D0%B7%D0%BE%D0%B2?sa=1"
             };
 
             NikolaVaptsarov = new Author
             {
                 Id = 5,
                 Name = "Никола Вапцаров",
-                PhotoPath = "/images/authors/nikola_vaptsarov.jpg"
+                PhotoPath = "/images/authors/nikola_vaptsarov.jpg",
+                MoreInformationUrl = "https://dictionarylit-bg.eu/%D0%9D%D0%B8%D0%BA%D0%BE%D0%BB%D0%B0-%D0%99%D0%BE%D0%BD%D0%BA%D0%BE%D0%B2-%D0%92%D0%B0%D0%BF%D1%86%D0%B0%D1%80%D0%BE%D0%B2?sa=1"
             };
 
             YordanRadichkov = new Author
             {
                 Id = 6,
                 Name = "Йордан Радичков",
-                PhotoPath = "/images/authors/yordan_radichkov.jpg"
+                PhotoPath = "/images/authors/yordan_radichkov.jpg",
+                MoreInformationUrl = "https://dictionarylit-bg.eu/%D0%99%D0%BE%D1%80%D0%B4%D0%B0%D0%BD-%D0%94%D0%B8%D0%BC%D0%B8%D1%82%D1%80%D0%BE%D0%B2-%D0%A0%D0%B0%D0%B4%D0%B8%D1%87%D0%BA%D0%BE%D0%B2?sa=1#biblio"
             };
 
             HristoBotev = new Author
             {
                 Id = 7,
                 Name = "Христо Ботев",
-                PhotoPath = "/images/authors/hristo_botev.jpg"
+                PhotoPath = "/images/authors/hristo_botev.jpg",
+                MoreInformationUrl = "https://muzeibotev.com/bg/hristo-botev/letopis"
             };
 
             ElinPelin = new Author
             {
                 Id = 8,
                 Name = "Елин Пелин",
-                PhotoPath = "/images/authors/elin_pelin.jpg"
+                PhotoPath = "/images/authors/elin_pelin.jpg",
+                MoreInformationUrl = "https://dictionarylit-bg.eu/%D0%95%D0%BB%D0%B8%D0%BD-%D0%9F%D0%B5%D0%BB%D0%B8%D0%BD,"
             };
 
             HristoSmirnenski = new Author
             {
                 Id = 9,
                 Name = "Христо Смирненски",
-                PhotoPath = "/images/authors/hristo_smirnenski.jpg"
+                PhotoPath = "/images/authors/hristo_smirnenski.jpg",
+                MoreInformationUrl = "https://dictionarylit-bg.eu/%D0%A5%D1%80%D0%B8%D1%81%D1%82%D0%BE-%D0%A1%D0%BC%D0%B8%D1%80%D0%BD%D0%B5%D0%BD%D1%81%D0%BA%D0%B8?sa=1"
             };
 
             EmilianStanev = new Author
             {
                 Id = 10,
                 Name = "Емилиян Станев",
-                PhotoPath = "/images/authors/emilian_stanev.jpg"
+                PhotoPath = "/images/authors/emilian_stanev.jpg",
+                MoreInformationUrl = "https://dictionarylit-bg.eu/%D0%95%D0%BC%D0%B8%D0%BB%D0%B8%D1%8F%D0%BD-%D0%A1%D1%82%D0%B0%D0%BD%D0%B5%D0%B2?sa=1"
             };
 
             PeyoYavorov = new Author
             {
                 Id = 11,
                 Name = "Пейо Яворов",
-                PhotoPath = "/images/authors/peyo_yavorov.jpg"
+                PhotoPath = "/images/authors/peyo_yavorov.jpg",
+                MoreInformationUrl = "https://dictionarylit-bg.eu/%D0%9F%D0%B5%D0%B9%D0%BE-%D0%AF%D0%B2%D0%BE%D1%80%D0%BE%D0%B2?sa=1"
             };
 
             PenchoSlaveykov = new Author
             {
                 Id = 12,
                 Name = "Пенчо Славейков",
-                PhotoPath = "/images/authors/pencho_slaveikov.jpg"
+                PhotoPath = "/images/authors/pencho_slaveikov.jpg",
+                MoreInformationUrl = "https://dictionarylit-bg.eu/%D0%9F%D0%B5%D0%BD%D1%87%D0%BE-%D0%9F%D0%B5%D1%82%D0%BA%D0%BE%D0%B2-%D0%A1%D0%BB%D0%B0%D0%B2%D0%B5%D0%B9%D0%BA%D0%BE%D0%B2?sa=1"
             };
 
             DimichoDebelyanov = new Author
             {
                 Id = 13,
                 Name = "Димчо Дебелянов",
-                PhotoPath = "/images/authors/dimcho_debelqnov.jpg"
+                PhotoPath = "/images/authors/dimcho_debelqnov.jpg",
+                MoreInformationUrl = "https://dictionarylit-bg.eu/%D0%94%D0%B8%D0%BC%D1%87%D0%BE-%D0%92%D0%B5%D0%BB%D0%B5%D0%B2-%D0%94%D0%B5%D0%B1%D0%B5%D0%BB%D1%8F%D0%BD%D0%BE%D0%B2?sa=1"
             };
 
             HristoFotev = new Author
             {
                 Id = 14,
                 Name = "Христо Фотев",
-                PhotoPath = "/images/authors/hristo_fotev.jpg"
+                PhotoPath = "/images/authors/hristo_fotev.jpg",
+                MoreInformationUrl = "https://dictionarylit-bg.eu/%D0%A5%D1%80%D0%B8%D1%81%D1%82%D0%BE-%D0%9A%D0%BE%D0%BD%D1%81%D1%82%D0%B0%D0%BD%D1%82%D0%B8%D0%BD%D0%BE%D0%B2-%D0%A4%D0%BE%D1%82%D0%B5%D0%B2?sa=1"
             };
 
             PetyaDubarova = new Author
             {
                 Id = 15,
                 Name = "Петя Дубарова",
-                PhotoPath = "/images/authors/petya_dubarova.jpg"
+                PhotoPath = "/images/authors/petya_dubarova.jpg",
+                MoreInformationUrl = "https://dictionarylit-bg.eu/%D0%9F%D0%B5%D1%82%D1%8F-%D0%A1%D1%82%D0%B0%D0%B9%D0%BA%D0%BE%D0%B2%D0%B0-%D0%94%D1%83%D0%B1%D0%B0%D1%80%D0%BE%D0%B2%D0%B0?sa=1"
             };
 
             AtanasDalchev = new Author
             {
                 Id = 16,
                 Name = "Атанас Далчев",
-                PhotoPath = "/images/authors/atanas_dalchev.jpg"
+                PhotoPath = "/images/authors/atanas_dalchev.jpg",
+                MoreInformationUrl = "https://dictionarylit-bg.eu/%D0%90%D1%82%D0%B0%D0%BD%D0%B0%D1%81-%D0%A5%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2-%D0%94%D0%B0%D0%BB%D1%87%D0%B5%D0%B2?sa=1"
             };
 
             YordanYovkov = new Author
             {
                 Id = 17,
                 Name = "Йордан Йовков",
-                PhotoPath = "/images/authors/yordan_yovkov.jpg"
+                PhotoPath = "/images/authors/yordan_yovkov.jpg",
+                MoreInformationUrl = "https://dictionarylit-bg.eu/%D0%99%D0%BE%D1%80%D0%B4%D0%B0%D0%BD-%D0%A1%D1%82%D0%B5%D1%84%D0%B0%D0%BD%D0%BE%D0%B2-%D0%99%D0%BE%D0%B2%D0%BA%D0%BE%D0%B2?sa=1"
             };
 
             ViktorPaskov = new Author
             {
                 Id = 18,
                 Name = "Виктор Пасков",
-                PhotoPath = "/images/authors/viktor_paskov.jpg"
+                PhotoPath = "/images/authors/viktor_paskov.jpg",
+                MoreInformationUrl = "https://dictionarylit-bg.eu/%D0%92%D0%B8%D0%BA%D1%82%D0%BE%D1%80-%D0%9C%D0%B0%D1%80%D0%B8%D0%BD%D0%BE%D0%B2-%D0%9F%D0%B0%D1%81%D0%BA%D0%BE%D0%B2?sa=1"
             };
 
             ElisavetaBagryana = new Author
             {
                 Id = 19,
                 Name = "Елисавета Багряна",
-                PhotoPath = "/images/authors/elisaveta_bagryana.jpg"
+                PhotoPath = "/images/authors/elisaveta_bagryana.jpg",
+                MoreInformationUrl = "https://dictionarylit-bg.eu/%D0%95%D0%BB%D0%B8%D1%81%D0%B0%D0%B2%D0%B5%D1%82%D0%B0-%D0%91%D0%B0%D0%B3%D1%80%D1%8F%D0%BD%D0%B0?sa=1"
             };
 
             BorisHristov = new Author
             {
                 Id = 20,
                 Name = "Борис Христов",
-                PhotoPath = "/images/authors/boris_hristov.jpg"
+                PhotoPath = "/images/authors/boris_hristov.jpg",
+                MoreInformationUrl = "https://dictionarylit-bg.eu/%D0%91%D0%BE%D1%80%D0%B8%D1%81-%D0%9A%D0%B8%D1%80%D0%B8%D0%BB%D0%BE%D0%B2-%D0%A5%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2?sa=1"
             };
         }
 
@@ -661,7 +681,7 @@ namespace LiteratureSolitaire.Infrastructure.Data.Seed
                 AuthorId = PeyoYavorov.Id,
                 Characters = "лирически говорител, Ваньо селянчето",
                 GenreId = EpicPoem.Id,
-                LiteraryDirectionId = Symbolism.Id,
+                LiteraryDirectionId = Realism.Id,
                 CategoryId = Nature.Id
             };
 
@@ -793,7 +813,7 @@ namespace LiteratureSolitaire.Infrastructure.Data.Seed
                 AuthorId = ElisavetaBagryana.Id,
                 Characters = "потомката - лирическият Аз",
                 GenreId = Poem.Id,
-                LiteraryDirectionId = Symbolism.Id,
+                LiteraryDirectionId = Realism.Id,
                 CategoryId = ChoiceAndInnerConflict.Id
             };
 
@@ -802,9 +822,9 @@ namespace LiteratureSolitaire.Infrastructure.Data.Seed
                 Id = 27,
                 Title = "\"Честен кръст\"",
                 AuthorId = BorisHristov.Id,
-                Characters = "лирическият говорител/Аз",
+                Characters = "поетът - лирическият говорител/Аз",
                 GenreId = EpicPoem.Id,
-                LiteraryDirectionId = Existentialism.Id,
+                LiteraryDirectionId = Realism.Id,
                 CategoryId = ChoiceAndInnerConflict.Id
             };
         }

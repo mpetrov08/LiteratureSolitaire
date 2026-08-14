@@ -39,6 +39,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             services.AddScoped<IDeckService, DeckService>();
             services.AddScoped<IBoardService, BoardService>();
+            services.AddScoped<IAdditionalCardService, AdditionalCardService>();
             return services;
         }
     }

@@ -46,48 +46,78 @@ namespace LiteratureSolitaire.Core.Services
 
             return works;
         }
-        public async Task<List<Card>> GenerateDeckAsync(List<CategorySorting>? categories = null)
+        public async Task<List<Card>> GenerateDeckAsync(List<CategorySorting>? categories = null, string? userId = null)
         {
             var works = await FilterCards(categories);
+
+            var workIds = works
+                            .Select(w => w.Id)
+                            .ToHashSet();
 
             var cards = new List<Card>();
             foreach (var work in works)
             {
                 cards.Add(new Card
                 {
+                    WorkId = work.Id,
                     Type = "Title",
                     Content = work.Title
                 });
 
                 cards.Add(new Card
                 {
+                    WorkId = work.Id,
                     Type = "Author",
-                    Content = work.Author.PhotoPath
+                    Content = work.Author.PhotoPath,
+                    MoreInformationUrl = work.Author.MoreInformationUrl
                 });
 
                 cards.Add(new Card
                 {
+                    WorkId = work.Id,
                     Type = "Literary Direction",
                     Content = work.LiteraryDirection.Name
                 });
                 
                 cards.Add(new Card
                 {
+                    WorkId = work.Id,
                     Type = "Category",
                     Content = work.Category.Name
                 });
 
                 cards.Add(new Card
                 {
+                    WorkId = work.Id,
                     Type = "Genre",
                     Content = work.Genre.Name
                 });
 
                 cards.Add(new Card
                 {
+                    WorkId = work.Id,
                     Type = "Character",
                     Content = work.Characters
                 });
+            }
+
+            if (!string.IsNullOrWhiteSpace(userId))
+            {
+                var additionalCards = await repository
+                                        .AllReadОnly<AdditionalCard>()
+                                        .Where(c => c.UserId == userId && workIds.Contains(c.WorkId))
+                                        .ToListAsync();
+
+                foreach (var additionalCard in additionalCards)
+                {
+                    cards.Add(new Card
+                    {
+                        WorkId = additionalCard.WorkId,
+                        Type = additionalCard.Type,
+                        Content = additionalCard.Content,
+                        IsAdditional = true
+                    });
+                }
             }
 
             return await ShuffleDeckAsync(cards);

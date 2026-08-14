@@ -11,7 +11,7 @@ namespace LiteratureSolitaire.Core.Contracts
 {
     public interface IDeckService
     {
-        Task<List<Card>> GenerateDeckAsync(List<CategorySorting>? categories = null);
+        Task<List<Card>> GenerateDeckAsync(List<CategorySorting>? categories = null, string? userId = null);
 
         Task<List<Card>> ShuffleDeckAsync(List<Card> cards);
 

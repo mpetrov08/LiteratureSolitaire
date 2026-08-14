@@ -22,7 +22,9 @@ namespace LiteratureSolitaire.Core.Services
             repository = _repository;
         }
 
-        public async Task<List<BoardSlot>> ValidateBoardSlots(List<BoardSlot> boardSlots)
+        public async Task<List<BoardSlot>> ValidateBoardSlots(
+           List<BoardSlot> boardSlots,
+           string? userId)
         {
             var works = await repository
                 .AllReadОnly<Work>()
@@ -32,7 +34,19 @@ namespace LiteratureSolitaire.Core.Services
                 .Include(w => w.Category)
                 .ToListAsync();
 
-            for (int section = 1; section <= 27; section++)
+            var additionalCards = new List<AdditionalCard>();
+
+            if (!string.IsNullOrWhiteSpace(userId))
+            {
+                additionalCards = await repository
+                    .AllReadОnly<AdditionalCard>()
+                    .Where(c => c.UserId == userId)
+                    .ToListAsync();
+            }
+
+            foreach (var section in boardSlots
+                .Select(s => s.Section)
+                .Distinct())
             {
                 var cards = boardSlots
                     .Where(bs => bs.Section == section)
@@ -40,47 +54,81 @@ namespace LiteratureSolitaire.Core.Services
                     .Where(c => c != null)
                     .ToList();
 
-                int titleCount = cards.Count(c => c.Type == "Title");
+                int titleCount = cards.Count(c => c!.Type == "Title");
+
                 if (titleCount > 1 || titleCount == 0)
                 {
                     foreach (var card in cards)
                     {
-                        card.IsCorrect = false;
+                        card!.IsCorrect = false;
                     }
 
                     continue;
                 }
 
-                var titleCard = cards.FirstOrDefault(c => c.Type == "Title");
-                var correspondingWork = works.FirstOrDefault(w => w.Title == titleCard.Content);
+                var titleCard = cards.First(c => c!.Type == "Title")!;
+
+                var correspondingWork = works
+                    .FirstOrDefault(w => w.Id == titleCard.WorkId);
+
+                if (correspondingWork == null)
+                {
+                    foreach (var card in cards)
+                    {
+                        card!.IsCorrect = false;
+                    }
+
+                    continue;
+                }
+
                 titleCard.IsCorrect = true;
 
-                var correctAuthor = correspondingWork.Author.PhotoPath;
-                ValidateCardsByType(cards, "Author", correctAuthor);
+                ValidateCardsByType(
+                    cards!,
+                    "Author",
+                    correspondingWork.Author.PhotoPath);
 
-                var correctLiteraryDirection = correspondingWork.LiteraryDirection.Name;
-                ValidateCardsByType(cards, "Literary Direction", correctLiteraryDirection);
+                ValidateCardsByType(
+                    cards!,
+                    "Literary Direction",
+                    correspondingWork.LiteraryDirection.Name);
 
-                var correctGenre = correspondingWork.Genre.Name;
-                ValidateCardsByType(cards, "Genre", correctGenre);
+                ValidateCardsByType(
+                    cards!,
+                    "Genre",
+                    correspondingWork.Genre.Name);
 
-                var correctCharacters = correspondingWork.Characters;
-                ValidateCardsByType(cards, "Character", correctCharacters);
+                ValidateCardsByType(
+                    cards!,
+                    "Character",
+                    correspondingWork.Characters);
 
-                var correctCategory = correspondingWork.Category.Name;
-                ValidateCardsByType(cards, "Category", correctCategory);
+                ValidateCardsByType(
+                    cards!,
+                    "Category",
+                    correspondingWork.Category.Name);
+
+                ValidateAdditionalCards(
+                    cards!,
+                    correspondingWork.Id,
+                    additionalCards);
             }
 
             return boardSlots;
         }
 
-        private void ValidateCardsByType(List<Card> cards, string type, string correctValue)
+        private void ValidateCardsByType(
+            List<Card> cards,
+            string type,
+            string correctValue)
         {
             bool isAlreadyCorrect = false;
 
             foreach (var card in cards.Where(c => c.Type == type))
             {
-                if (card.Content == correctValue && !isAlreadyCorrect)
+                if (card.WorkId > 0 &&
+                    card.Content == correctValue &&
+                    !isAlreadyCorrect)
                 {
                     card.IsCorrect = true;
                     isAlreadyCorrect = true;
@@ -89,6 +137,22 @@ namespace LiteratureSolitaire.Core.Services
                 {
                     card.IsCorrect = false;
                 }
+            }
+        }
+
+        private void ValidateAdditionalCards(
+            List<Card> cards,
+            int workId,
+            List<AdditionalCard> additionalCards)
+        {
+            foreach (var card in cards.Where(c => c.IsAdditional))
+            {
+                var matchingAdditionalCard = additionalCards.FirstOrDefault(c =>
+                    c.WorkId == workId &&
+                    c.Type == card.Type &&
+                    c.Content == card.Content);
+
+                card.IsCorrect = matchingAdditionalCard != null;
             }
         }
     }

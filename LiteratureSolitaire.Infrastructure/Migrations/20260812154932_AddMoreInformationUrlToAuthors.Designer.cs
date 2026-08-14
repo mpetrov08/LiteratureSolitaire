@@ -4,6 +4,7 @@ using LiteratureSolitaire.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LiteratureSolitaire.Infrastructure.Migrations
 {
     [DbContext(typeof(LiteratureSolitaireDbContext))]
-    partial class LiteratureSolitaireDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260812154932_AddMoreInformationUrlToAuthors")]
+    partial class AddMoreInformationUrlToAuthors
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,43 +24,6 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("LiteratureSolitaire.Infrastructure.Data.Models.AdditionalCard", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasComment("Additional Card Indetifier");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasComment("Content of the card");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasComment("Type of the card");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)")
-                        .HasComment("User Id");
-
-                    b.Property<int>("WorkId")
-                        .HasColumnType("int")
-                        .HasComment("Work Id");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.HasIndex("WorkId");
-
-                    b.ToTable("AdditionalCards");
-                });
 
             modelBuilder.Entity("LiteratureSolitaire.Infrastructure.Data.Models.Author", b =>
                 {
@@ -977,25 +943,6 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("LiteratureSolitaire.Infrastructure.Data.Models.AdditionalCard", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("LiteratureSolitaire.Infrastructure.Data.Models.Work", "Work")
-                        .WithMany()
-                        .HasForeignKey("WorkId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-
-                    b.Navigation("Work");
                 });
 
             modelBuilder.Entity("LiteratureSolitaire.Infrastructure.Data.Models.Work", b =>

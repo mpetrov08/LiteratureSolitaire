@@ -136,16 +136,20 @@
             </div>
 
             <div class="section-cards">
-                @for (int pos = 1; pos <= 6; pos++)
+                @foreach (var slot in board?
+               .Where(s => s.Section == sec)
+               .OrderBy(s => s.Position)
+               ?? Enumerable.Empty<LiteratureSolitaire.Models.BoardSlot>())
                 {
-                    var slot = board?.FirstOrDefault(s => s.Section == sec && s.Position == pos);
                     <div class="drop-slot"
                          data-section="@sec"
-                         data-position="@pos">
-                        @if (slot?.Card != null)
+                         data-position="@slot.Position">
+
+                        @if (slot.Card != null)
                         {
                             <partial name="_CardPartial" model="slot.Card" />
                         }
+
                     </div>
                 }
             </div>

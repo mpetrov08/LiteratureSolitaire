@@ -23,6 +23,9 @@ namespace LiteratureSolitaire.Infrastructure.Data.Models
         [Comment("Author`s Photo Path")]
         public string PhotoPath { get; set; } = null!;
 
+        [Required]
+        public string MoreInformationUrl { get; set; } = null!;
+
         public IEnumerable<Work> Works { get; set; } = new List<Work>();
     }
 }

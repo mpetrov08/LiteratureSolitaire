@@ -24,6 +24,7 @@ namespace LiteratureSolitaire.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(List<CategorySorting>? categories)
         {
+            var userId = User.GetUserId();
             var sessionCategories = HttpContext.Session.GetObjectFromJson<List<CategorySorting>>("categories");
 
             var deck = HttpContext.Session.GetObjectFromJson<List<Card>>("deck");
@@ -52,19 +53,22 @@ namespace LiteratureSolitaire.Controllers
 
             if (deck == null || board == null)
             {
-                deck = await deckService.GenerateDeckAsync(categories);
+                deck = await deckService.GenerateDeckAsync(categories, userId);
                 drawn = new List<Card>();
 
-                int sectionCount = deck.Count / 6;
+                var workGroups = deck
+                    .GroupBy(c => c.WorkId)
+                    .ToList();
 
-                board = Enumerable.Range(1, sectionCount)
-                    .SelectMany(s => Enumerable.Range(1, 6)
-                        .Select(p => new BoardSlot
-                        {
-                            Section = s,
-                            Position = p,
-                            Card = null
-                        }))
+                board = workGroups
+                    .SelectMany((group, index) =>
+                        Enumerable.Range(1, group.Count())
+                            .Select(position => new BoardSlot
+                            {
+                                Section = index + 1,
+                                Position = position,
+                                Card = null
+                            }))
                     .ToList();
 
                 HttpContext.Session.SetObjectAsJson("deck", deck);
@@ -256,11 +260,13 @@ namespace LiteratureSolitaire.Controllers
         [HttpPost]
         public async Task<IActionResult> Shuffle()
         {
+            var userId = User.GetUserId();
+
             var categories =
                 HttpContext.Session.GetObjectFromJson<List<CategorySorting>>("categories")
                 ?? new List<CategorySorting>();
 
-            var allCards = await deckService.GenerateDeckAsync(categories);
+            var allCards = await deckService.GenerateDeckAsync(categories, userId);
 
             foreach (var c in allCards)
             {
@@ -292,6 +298,7 @@ namespace LiteratureSolitaire.Controllers
         [HttpPost]
         public async Task<IActionResult> ValidateBoard()
         {
+            var userId = User.GetUserId();
             var board = HttpContext.Session.GetObjectFromJson<List<BoardSlot>>("board");
             var drawn = HttpContext.Session.GetObjectFromJson<List<Card>>("drawn") ?? new();
             var categories = HttpContext.Session.GetObjectFromJson<List<CategorySorting>>("categories");
@@ -302,7 +309,7 @@ namespace LiteratureSolitaire.Controllers
                 return RedirectToAction("Index", new { categories });
             }
 
-            var checkedBoard = await boardService.ValidateBoardSlots(board);
+            var checkedBoard = await boardService.ValidateBoardSlots(board, userId);
 
             foreach (var slot in checkedBoard)
             {

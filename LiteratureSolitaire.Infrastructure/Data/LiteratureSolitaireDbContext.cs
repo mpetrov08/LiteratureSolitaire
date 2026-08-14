@@ -37,5 +37,7 @@ namespace LiteratureSolitaire.Infrastructure.Data
         public DbSet<Work> Works { get; set; }
 
         public DbSet<Category> Categories { get; set; }
+
+        public DbSet<AdditionalCard> AdditionalCards { get; set; }
     }
 }

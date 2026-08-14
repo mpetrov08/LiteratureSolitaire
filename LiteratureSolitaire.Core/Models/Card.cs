@@ -10,12 +10,18 @@ namespace LiteratureSolitaire.Core.Models
     {
         public string Id { get; set; } = Guid.NewGuid().ToString();
 
+        public int WorkId { get; set; }
+
         public string Type { get; set; } = null!;
 
         public string Content { get; set; } = null!;
 
+        public string? MoreInformationUrl { get; set; }
+
         public bool IsCorrect { get; set; } = false;
 
         public bool IsCorrectChecked { get; set; }
+
+        public bool IsAdditional { get; set; }
     }
 }

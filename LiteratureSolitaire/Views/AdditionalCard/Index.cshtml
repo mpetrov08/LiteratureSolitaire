@@ -1,0 +1,263 @@
+﻿@model LiteratureSolitaire.Core.Models.AdditionalCardsViewModel
+
+@{
+    ViewData["Title"] = "Моите карти";
+}
+
+<div class="container py-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1>Моите карти</h1>
+            <p class="text-muted mb-0">
+                Вижте стандартните карти и добавете свои карти към произведенията.
+            </p>
+        </div>
+    </div>
+
+    <div class="accordion" id="worksAccordion">
+
+        @for (int i = 0; i < Model.Works.Count; i++)
+
+        {
+
+            var work = Model.Works[i];
+
+            <div class="accordion-item mb-2">
+
+                <h2 class="accordion-header" id="heading-@work.WorkId">
+
+                    <button class="accordion-button @(i == 0 ? "" : "collapsed")"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#collapse-@work.WorkId">
+
+                        <strong>@work.WorkTitle</strong>
+
+                    </button>
+
+                </h2>
+
+                <div id="collapse-@work.WorkId"
+                     class="accordion-collapse collapse @(i == 0 ? "show" : "")"
+                     data-bs-parent="#worksAccordion">
+
+                    <div class="accordion-body">
+
+                        <h5 class="mb-3">
+                            Стандартни карти
+                        </h5>
+
+                        <div class="row g-3">
+
+                            @foreach (var card in work.DefaultCards)
+
+                            {
+                                <div class="col-12 col-md-6 col-lg-4">
+
+                                    <div class="card h-100 shadow-sm">
+
+                                        <div class="card-body">
+
+                                            <span class="badge bg-primary mb-2">
+                                                @card.Type
+                                            </span>
+
+                                            <div class="card-content">
+                                                @card.Content
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            }
+
+                        </div>
+
+                        <hr class="my-4" />
+
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+
+                            <h5 class="mb-0">
+                                Моите допълнителни карти
+                            </h5>
+
+                            <button type="button"
+                                    class="btn btn-primary"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#addCardModal-@work.WorkId">
+
+                                + Добави карта
+
+                            </button>
+
+                        </div>
+
+                        @if (work.AdditionalCards.Any())
+
+                        {
+                            <div class="row g-3">
+
+                                @foreach (var card in work.AdditionalCards)
+
+                                {
+                                    <div class="col-12 col-md-6 col-lg-4">
+
+                                        <div class="card h-100 border-warning">
+
+                                            <div class="card-body">
+
+                                                <div class="d-flex justify-content-between align-items-start">
+
+                                                    <span class="badge bg-warning text-dark mb-2">
+                                                        @card.Type
+                                                    </span>
+
+                                                    <form asp-action="Delete"
+                                                          method="post">
+
+                                                        <input type="hidden"
+                                                               name="id"
+                                                               value="@card.Id" />
+
+                                                        @Html.AntiForgeryToken()
+
+                                                        <button type="submit"
+                                                                class="btn btn-sm btn-outline-danger"
+                                                                onclick="return confirm('Сигурни ли сте, че искате да изтриете тази карта?');">
+
+                                                            Изтрий
+
+                                                        </button>
+
+                                                    </form>
+
+                                                </div>
+
+                                                <div class="card-content">
+                                                    @card.Content
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                }
+
+                            </div>
+                        }
+
+                        else
+
+                        {
+                            <div class="alert alert-light border">
+                                Все още нямате добавени допълнителни карти към това произведение.
+                            </div>
+                        }
+
+                    </div>
+
+                </div>
+
+                <div class="modal fade"
+                     id="addCardModal-@work.WorkId"
+                     tabindex="-1"
+                     aria-hidden="true">
+
+                    <div class="modal-dialog">
+
+                        <div class="modal-content">
+
+                            <form asp-action="Add"
+                                  method="post">
+
+                                @Html.AntiForgeryToken()
+
+                                <div class="modal-header">
+
+                                    <h5 class="modal-title">
+                                        Добавяне на карта към „@work.WorkTitle“
+                                    </h5>
+
+                                    <button type="button"
+                                            class="btn-close"
+                                            data-bs-dismiss="modal">
+                                    </button>
+
+                                </div>
+
+                                <div class="modal-body">
+
+                                    <input type="hidden"
+                                           name="workId"
+                                           value="@work.WorkId" />
+
+                                    <div class="mb-3">
+
+                                        <label for="cardType-@work.WorkId"
+                                               class="form-label">
+                                            Тип на картата
+                                        </label>
+
+                                        <input type="text"
+                                               id="cardType-@work.WorkId"
+                                               name="type"
+                                               class="form-control"
+                                               placeholder="Например: Цитат, Мотиви, Конфликти..."
+                                               maxlength="50"
+                                               required />
+
+                                    </div>
+
+                                    <div class="mb-3">
+
+                                        <label class="form-label">
+                                            Съдържание
+                                        </label>
+
+                                        <textarea name="content"
+                                                  class="form-control"
+                                                  rows="4"
+                                                  required
+                                                  maxlength="500"></textarea>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="modal-footer">
+
+                                    <button type="button"
+                                            class="btn btn-secondary"
+                                            data-bs-dismiss="modal">
+
+                                        Отказ
+
+                                    </button>
+
+                                    <button type="submit"
+                                            class="btn btn-primary">
+
+                                        Добави карта
+
+                                    </button>
+
+                                </div>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        }
+
+    </div>
+
+</div>

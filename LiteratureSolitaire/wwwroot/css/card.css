@@ -181,7 +181,7 @@ footer {
     text-align: center;
 
     word-break: normal;
-    overflow-wrap: normal;
+    overflow-wrap: break-word;
     hyphens: none;
 }
 
@@ -226,6 +226,16 @@ footer {
 .card.has-overflow .card-content {
     justify-content: flex-start;
     align-items: flex-start;
+}
+
+.more-information-author {
+    text-decoration: none;
+    color: #555;
+}
+
+.more-information-author:hover{
+    color: blue;
+    text-decoration: underline;
 }
 
 #board {
@@ -632,8 +642,10 @@ footer {
     }
 
     .card-content {
-        word-break: normal;
-        overflow-wrap: normal; 
+        font-size: 11px;
+        line-height: 1.15;
+        word-break: break-word;
+        overflow-wrap: anywhere;
         hyphens: auto;
     }
 

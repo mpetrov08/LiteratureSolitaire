@@ -9,6 +9,6 @@ namespace LiteratureSolitaire.Core.Contracts
 {
     public interface IBoardService
     {
-        public Task<List<BoardSlot>> ValidateBoardSlots(List<BoardSlot> boardSlots);
+        public Task<List<BoardSlot>> ValidateBoardSlots(List<BoardSlot> boardSlots, string? userId);
     }
 }

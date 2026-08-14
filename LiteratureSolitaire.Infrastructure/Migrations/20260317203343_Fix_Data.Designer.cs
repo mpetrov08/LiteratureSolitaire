@@ -4,6 +4,7 @@ using LiteratureSolitaire.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LiteratureSolitaire.Infrastructure.Migrations
 {
     [DbContext(typeof(LiteratureSolitaireDbContext))]
-    partial class LiteratureSolitaireDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260317203343_Fix_Data")]
+    partial class Fix_Data
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,43 +24,6 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("LiteratureSolitaire.Infrastructure.Data.Models.AdditionalCard", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasComment("Additional Card Indetifier");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasComment("Content of the card");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasComment("Type of the card");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)")
-                        .HasComment("User Id");
-
-                    b.Property<int>("WorkId")
-                        .HasColumnType("int")
-                        .HasComment("Work Id");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.HasIndex("WorkId");
-
-                    b.ToTable("AdditionalCards");
-                });
 
             modelBuilder.Entity("LiteratureSolitaire.Infrastructure.Data.Models.Author", b =>
                 {
@@ -67,10 +33,6 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                         .HasComment("Author Identifier");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("MoreInformationUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -93,140 +55,120 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            MoreInformationUrl = "https://dictionarylit-bg.eu/%D0%94%D0%B8%D0%BC%D0%B8%D1%82%D1%8A%D1%80-%D0%A2%D0%B0%D0%BB%D0%B5%D0%B2?sa=1",
                             Name = "Димитър Талев",
                             PhotoPath = "/images/authors/dimitar_talev.png"
                         },
                         new
                         {
                             Id = 2,
-                            MoreInformationUrl = "https://dictionarylit-bg.eu/%D0%90%D0%BB%D0%B5%D0%BA%D0%BE-%D0%98%D0%B2%D0%B0%D0%BD%D0%B8%D1%86%D0%BE%D0%B2-%D0%9A%D0%BE%D0%BD%D1%81%D1%82%D0%B0%D0%BD%D1%82%D0%B8%D0%BD%D0%BE%D0%B2?sa=1",
                             Name = "Алеко Константинов",
                             PhotoPath = "/images/authors/aleko_konstantinov.jpg"
                         },
                         new
                         {
                             Id = 3,
-                            MoreInformationUrl = "https://dictionarylit-bg.eu/%D0%A1%D1%82%D0%B0%D0%BD%D0%B8%D1%81%D0%BB%D0%B0%D0%B2-%D0%A1%D1%82%D1%80%D0%B0%D1%82%D0%B8%D0%B5%D0%B2?sa=1",
                             Name = "Станислав Стратиев",
                             PhotoPath = "/images/authors/stanislav_stratiev.jpg"
                         },
                         new
                         {
                             Id = 4,
-                            MoreInformationUrl = "https://dictionarylit-bg.eu/%D0%98%D0%B2%D0%B0%D0%BD-%D0%9C%D0%B8%D0%BD%D1%87%D0%BE%D0%B2-%D0%92%D0%B0%D0%B7%D0%BE%D0%B2?sa=1",
                             Name = "Иван Вазов",
                             PhotoPath = "/images/authors/ivan_vazov.jpg"
                         },
                         new
                         {
                             Id = 5,
-                            MoreInformationUrl = "https://dictionarylit-bg.eu/%D0%9D%D0%B8%D0%BA%D0%BE%D0%BB%D0%B0-%D0%99%D0%BE%D0%BD%D0%BA%D0%BE%D0%B2-%D0%92%D0%B0%D0%BF%D1%86%D0%B0%D1%80%D0%BE%D0%B2?sa=1",
                             Name = "Никола Вапцаров",
                             PhotoPath = "/images/authors/nikola_vaptsarov.jpg"
                         },
                         new
                         {
                             Id = 6,
-                            MoreInformationUrl = "https://dictionarylit-bg.eu/%D0%99%D0%BE%D1%80%D0%B4%D0%B0%D0%BD-%D0%94%D0%B8%D0%BC%D0%B8%D1%82%D1%80%D0%BE%D0%B2-%D0%A0%D0%B0%D0%B4%D0%B8%D1%87%D0%BA%D0%BE%D0%B2?sa=1#biblio",
                             Name = "Йордан Радичков",
                             PhotoPath = "/images/authors/yordan_radichkov.jpg"
                         },
                         new
                         {
                             Id = 7,
-                            MoreInformationUrl = "https://muzeibotev.com/bg/hristo-botev/letopis",
                             Name = "Христо Ботев",
                             PhotoPath = "/images/authors/hristo_botev.jpg"
                         },
                         new
                         {
                             Id = 8,
-                            MoreInformationUrl = "https://dictionarylit-bg.eu/%D0%95%D0%BB%D0%B8%D0%BD-%D0%9F%D0%B5%D0%BB%D0%B8%D0%BD,",
                             Name = "Елин Пелин",
                             PhotoPath = "/images/authors/elin_pelin.jpg"
                         },
                         new
                         {
                             Id = 9,
-                            MoreInformationUrl = "https://dictionarylit-bg.eu/%D0%A5%D1%80%D0%B8%D1%81%D1%82%D0%BE-%D0%A1%D0%BC%D0%B8%D1%80%D0%BD%D0%B5%D0%BD%D1%81%D0%BA%D0%B8?sa=1",
                             Name = "Христо Смирненски",
                             PhotoPath = "/images/authors/hristo_smirnenski.jpg"
                         },
                         new
                         {
                             Id = 10,
-                            MoreInformationUrl = "https://dictionarylit-bg.eu/%D0%95%D0%BC%D0%B8%D0%BB%D0%B8%D1%8F%D0%BD-%D0%A1%D1%82%D0%B0%D0%BD%D0%B5%D0%B2?sa=1",
                             Name = "Емилиян Станев",
                             PhotoPath = "/images/authors/emilian_stanev.jpg"
                         },
                         new
                         {
                             Id = 11,
-                            MoreInformationUrl = "https://dictionarylit-bg.eu/%D0%9F%D0%B5%D0%B9%D0%BE-%D0%AF%D0%B2%D0%BE%D1%80%D0%BE%D0%B2?sa=1",
                             Name = "Пейо Яворов",
                             PhotoPath = "/images/authors/peyo_yavorov.jpg"
                         },
                         new
                         {
                             Id = 12,
-                            MoreInformationUrl = "https://dictionarylit-bg.eu/%D0%9F%D0%B5%D0%BD%D1%87%D0%BE-%D0%9F%D0%B5%D1%82%D0%BA%D0%BE%D0%B2-%D0%A1%D0%BB%D0%B0%D0%B2%D0%B5%D0%B9%D0%BA%D0%BE%D0%B2?sa=1",
                             Name = "Пенчо Славейков",
                             PhotoPath = "/images/authors/pencho_slaveikov.jpg"
                         },
                         new
                         {
                             Id = 13,
-                            MoreInformationUrl = "https://dictionarylit-bg.eu/%D0%94%D0%B8%D0%BC%D1%87%D0%BE-%D0%92%D0%B5%D0%BB%D0%B5%D0%B2-%D0%94%D0%B5%D0%B1%D0%B5%D0%BB%D1%8F%D0%BD%D0%BE%D0%B2?sa=1",
                             Name = "Димчо Дебелянов",
                             PhotoPath = "/images/authors/dimcho_debelqnov.jpg"
                         },
                         new
                         {
                             Id = 14,
-                            MoreInformationUrl = "https://dictionarylit-bg.eu/%D0%A5%D1%80%D0%B8%D1%81%D1%82%D0%BE-%D0%9A%D0%BE%D0%BD%D1%81%D1%82%D0%B0%D0%BD%D1%82%D0%B8%D0%BD%D0%BE%D0%B2-%D0%A4%D0%BE%D1%82%D0%B5%D0%B2?sa=1",
                             Name = "Христо Фотев",
                             PhotoPath = "/images/authors/hristo_fotev.jpg"
                         },
                         new
                         {
                             Id = 15,
-                            MoreInformationUrl = "https://dictionarylit-bg.eu/%D0%9F%D0%B5%D1%82%D1%8F-%D0%A1%D1%82%D0%B0%D0%B9%D0%BA%D0%BE%D0%B2%D0%B0-%D0%94%D1%83%D0%B1%D0%B0%D1%80%D0%BE%D0%B2%D0%B0?sa=1",
                             Name = "Петя Дубарова",
                             PhotoPath = "/images/authors/petya_dubarova.jpg"
                         },
                         new
                         {
                             Id = 16,
-                            MoreInformationUrl = "https://dictionarylit-bg.eu/%D0%90%D1%82%D0%B0%D0%BD%D0%B0%D1%81-%D0%A5%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2-%D0%94%D0%B0%D0%BB%D1%87%D0%B5%D0%B2?sa=1",
                             Name = "Атанас Далчев",
                             PhotoPath = "/images/authors/atanas_dalchev.jpg"
                         },
                         new
                         {
                             Id = 17,
-                            MoreInformationUrl = "https://dictionarylit-bg.eu/%D0%99%D0%BE%D1%80%D0%B4%D0%B0%D0%BD-%D0%A1%D1%82%D0%B5%D1%84%D0%B0%D0%BD%D0%BE%D0%B2-%D0%99%D0%BE%D0%B2%D0%BA%D0%BE%D0%B2?sa=1",
                             Name = "Йордан Йовков",
                             PhotoPath = "/images/authors/yordan_yovkov.jpg"
                         },
                         new
                         {
                             Id = 18,
-                            MoreInformationUrl = "https://dictionarylit-bg.eu/%D0%92%D0%B8%D0%BA%D1%82%D0%BE%D1%80-%D0%9C%D0%B0%D1%80%D0%B8%D0%BD%D0%BE%D0%B2-%D0%9F%D0%B0%D1%81%D0%BA%D0%BE%D0%B2?sa=1",
                             Name = "Виктор Пасков",
                             PhotoPath = "/images/authors/viktor_paskov.jpg"
                         },
                         new
                         {
                             Id = 19,
-                            MoreInformationUrl = "https://dictionarylit-bg.eu/%D0%95%D0%BB%D0%B8%D1%81%D0%B0%D0%B2%D0%B5%D1%82%D0%B0-%D0%91%D0%B0%D0%B3%D1%80%D1%8F%D0%BD%D0%B0?sa=1",
                             Name = "Елисавета Багряна",
                             PhotoPath = "/images/authors/elisaveta_bagryana.jpg"
                         },
                         new
                         {
                             Id = 20,
-                            MoreInformationUrl = "https://dictionarylit-bg.eu/%D0%91%D0%BE%D1%80%D0%B8%D1%81-%D0%9A%D0%B8%D1%80%D0%B8%D0%BB%D0%BE%D0%B2-%D0%A5%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2?sa=1",
                             Name = "Борис Христов",
                             PhotoPath = "/images/authors/boris_hristov.jpg"
                         });
@@ -977,25 +919,6 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("LiteratureSolitaire.Infrastructure.Data.Models.AdditionalCard", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("LiteratureSolitaire.Infrastructure.Data.Models.Work", "Work")
-                        .WithMany()
-                        .HasForeignKey("WorkId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-
-                    b.Navigation("Work");
                 });
 
             modelBuilder.Entity("LiteratureSolitaire.Infrastructure.Data.Models.Work", b =>

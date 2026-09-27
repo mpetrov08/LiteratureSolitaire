@@ -75,6 +75,7 @@ namespace LiteratureSolitaire.Controllers
                 HttpContext.Session.SetObjectAsJson("drawn", drawn);
                 HttpContext.Session.SetObjectAsJson("board", board);
                 HttpContext.Session.SetObjectAsJson("categories", categories);
+                HttpContext.Session.Remove("solutions");
             }
 
             var boardCardIds = board
@@ -88,13 +89,16 @@ namespace LiteratureSolitaire.Controllers
 
             HttpContext.Session.SetObjectAsJson("drawn", drawn);
 
+            var solutions = HttpContext.Session.GetObjectFromJson<Dictionary<int, List<Card>>>("solutions");
+
             return View(new DeckViewModel
             {
                 SelectedCategories = categories,
                 SectionCount = board
                                 .Select(s => s.Section)
                                 .Distinct()
-                                .Count()
+                                .Count(),
+                SectionSolutions = solutions
             });
         }
 
@@ -276,6 +280,7 @@ namespace LiteratureSolitaire.Controllers
 
             HttpContext.Session.SetObjectAsJson("deck", allCards);
             HttpContext.Session.SetObjectAsJson("drawn", new List<Card>());
+            HttpContext.Session.Remove("solutions");
 
             var board = HttpContext.Session.GetObjectFromJson<List<BoardSlot>>("board");
 
@@ -328,6 +333,9 @@ namespace LiteratureSolitaire.Controllers
 
             TempData["CorrectCount"] = correctCount;
             TempData["TotalCards"] = totalCards;
+
+            var solutions = boardService.BuildSolutionsAsync(checkedBoard, userId);
+            HttpContext.Session.SetObjectAsJson("solutions", solutions);
 
             HttpContext.Session.SetObjectAsJson("board", checkedBoard);
             HttpContext.Session.SetObjectAsJson("drawn", drawn);

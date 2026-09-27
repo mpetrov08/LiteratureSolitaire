@@ -155,5 +155,77 @@ namespace LiteratureSolitaire.Core.Services
                 card.IsCorrect = matchingAdditionalCard != null;
             }
         }
+
+        public Dictionary<int, List<Card>> BuildSolutionsAsync(List<BoardSlot> boardSlots, string? userId)
+        {
+            var works = repository
+                .AllReadОnly<Work>()
+                .Include(w => w.Author)
+                .Include(w => w.Genre)
+                .Include(w => w.LiteraryDirection)
+                .Include(w => w.Category)
+                .ToList();
+
+            var additionalCards = new List<AdditionalCard>();
+
+            if (!string.IsNullOrWhiteSpace(userId))
+            {
+                additionalCards = repository
+                    .AllReadОnly<AdditionalCard>()
+                    .Where(c => c.UserId == userId)
+                    .ToList();
+            }
+
+            var solutions = new Dictionary<int, List<Card>>();
+
+            foreach (var section in boardSlots.Select(s => s.Section).Distinct())
+            {
+                var sectionSlots = boardSlots
+                    .Where(s => s.Section == section)
+                    .ToList();
+
+                var titleCard = sectionSlots
+                    .Select(s => s.Card)
+                    .FirstOrDefault(c => c != null && c.Type == "Title");
+
+                if (titleCard == null)
+                    continue;
+
+                var work = works.FirstOrDefault(w => w.Id == titleCard.WorkId);
+                if (work == null)
+                    continue;
+
+                var solutionCards = new List<Card>
+                {
+                    new Card { WorkId = work.Id, Type = "Title", Content = work.Title },
+                    new Card
+                    {
+                        WorkId = work.Id,
+                        Type = "Author",
+                        Content = work.Author.PhotoPath,
+                        MoreInformationUrl = work.Author.MoreInformationUrl
+                    },
+                    new Card { WorkId = work.Id, Type = "Literary Direction", Content = work.LiteraryDirection.Name },
+                    new Card { WorkId = work.Id, Type = "Category", Content = work.Category.Name },
+                    new Card { WorkId = work.Id, Type = "Genre", Content = work.Genre.Name },
+                    new Card { WorkId = work.Id, Type = "Character", Content = work.Characters }
+                };
+
+                solutionCards.AddRange(
+                    additionalCards
+                        .Where(c => c.WorkId == work.Id)
+                        .Select(c => new Card
+                        {
+                            WorkId = c.WorkId,
+                            Type = c.Type,
+                            Content = c.Content,
+                            IsAdditional = true
+                        }));
+
+                solutions[section] = solutionCards;
+            }
+
+            return solutions;
+        }
     }
 }

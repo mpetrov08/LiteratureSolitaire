@@ -1,0 +1,22 @@
+﻿@model LiteratureSolitaire.Core.Models.SectionSolutionViewModel
+
+<div class="solution-popup" id="solution-@Model.Section">
+    <div class="solution-popup-content">
+        <div class="solution-drag-handle">
+            <h4>Правилно решение</h4>
+
+            <button type="button"
+                    class="solution-close"
+                    onclick="hideSolution(@Model.Section)">
+                ×
+            </button>
+        </div>
+
+        <div class="solution-cards">
+            @foreach (var card in Model.Cards)
+            {
+                <partial name="_CardPartial" model="card" />
+            }
+        </div>
+    </div>
+</div>

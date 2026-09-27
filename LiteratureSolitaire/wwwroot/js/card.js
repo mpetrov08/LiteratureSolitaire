@@ -286,6 +286,7 @@ if (interactionMode === "drag") {
     document.addEventListener("pointerdown", e => {
         const card = e.target.closest(".card");
         if (!card) return;
+        if (card.closest(".solution-popup")) return;
 
         onPointerDown(e);
     });
@@ -305,6 +306,8 @@ if (interactionMode === "drag") {
 
         const card = e.target.closest(".card");
         if (!card) return;
+
+        if (card.closest(".solution-popup")) return;
 
         activeCard = card;
         card._origin ??= card.parentElement;
@@ -492,6 +495,9 @@ if (interactionMode === "drag") {
 
     document.addEventListener("click", async (e) => {
         const card = e.target.closest(".card");
+
+        if (card && card.closest(".solution-popup")) return;
+
         const slot = e.target.closest(".drop-slot");
         const drawPile = e.target.closest("#drawPile");
 
@@ -566,6 +572,7 @@ document.addEventListener("click", e => {
 
     const card = e.target.closest(".card");
     if (!card) return;
+    if (card.closest(".solution-popup")) return;
 
     if (card.dataset.type === "Character") {
         card.classList.toggle("expanded");
@@ -579,3 +586,75 @@ function clearFilter() {
 
     document.getElementById("filterForm").submit();
 }
+
+function showSolution(section) {
+    const popup = document.getElementById(`solution-${section}`);
+    if (popup) popup.classList.add("open");
+
+    const content = popup.querySelector(".solution-popup-content");
+    if (content) {
+        content.style.position = "";
+        content.style.left = "";
+        content.style.top = "";
+        content.style.margin = "";
+    }
+
+    popup.classList.add("open");
+}
+
+function hideSolution(section) {
+    const popup = document.getElementById(`solution-${section}`);
+    if (popup) popup.classList.remove("open");
+}
+
+document.addEventListener("click", e => {
+    if (e.target.classList.contains("solution-popup")) {
+        e.target.classList.remove("open");
+    }
+});
+
+function initDraggablePopups() {
+    document.querySelectorAll(".solution-popup-content").forEach(popup => {
+        const handle = popup.querySelector(".solution-drag-handle");
+        if (!handle || handle._dragInit) return;
+        handle._dragInit = true;
+
+        let dragging = false;
+        let offsetX = 0, offsetY = 0;
+
+        handle.addEventListener("pointerdown", e => {
+            if (window.innerWidth <= 600) return;
+            if (e.target.closest(".solution-close")) return;
+
+            dragging = true;
+            const rect = popup.getBoundingClientRect();
+            offsetX = e.clientX - rect.left;
+            offsetY = e.clientY - rect.top;
+
+            popup.style.position = "fixed";
+            popup.style.margin = "0";
+            popup.style.left = rect.left + "px";
+            popup.style.top = rect.top + "px";
+
+            handle.setPointerCapture(e.pointerId);
+        });
+
+        handle.addEventListener("pointermove", e => {
+            if (!dragging) return;
+
+            const maxX = window.innerWidth - popup.offsetWidth;
+            const maxY = window.innerHeight - popup.offsetHeight;
+
+            const x = Math.max(0, Math.min(e.clientX - offsetX, maxX));
+            const y = Math.max(0, Math.min(e.clientY - offsetY, maxY));
+
+            popup.style.left = x + "px";
+            popup.style.top = y + "px";
+        });
+
+        handle.addEventListener("pointerup", () => dragging = false);
+        handle.addEventListener("pointercancel", () => dragging = false);
+    });
+}
+
+document.addEventListener("DOMContentLoaded", initDraggablePopups);

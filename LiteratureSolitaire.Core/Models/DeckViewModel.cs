@@ -12,5 +12,7 @@ namespace LiteratureSolitaire.Core.Models
         public List<CategorySorting>? SelectedCategories { get; set; }
 
         public int SectionCount { get; set; }
+
+        public Dictionary<int, List<Card>>? SectionSolutions { get; set; }
     }
 }

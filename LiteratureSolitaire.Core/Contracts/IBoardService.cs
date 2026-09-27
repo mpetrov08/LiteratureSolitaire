@@ -1,4 +1,5 @@
-﻿using LiteratureSolitaire.Models;
+﻿using LiteratureSolitaire.Core.Models;
+using LiteratureSolitaire.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace LiteratureSolitaire.Core.Contracts
     public interface IBoardService
     {
         public Task<List<BoardSlot>> ValidateBoardSlots(List<BoardSlot> boardSlots, string? userId);
+        public Dictionary<int, List<Card>> BuildSolutionsAsync(List<BoardSlot> boardSlots, string? userId);
     }
 }

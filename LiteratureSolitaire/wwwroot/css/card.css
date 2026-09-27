@@ -494,6 +494,93 @@ footer {
     box-shadow: 0 0 12px rgba(37,117,252,0.4);
 }
 
+.info-btn {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: none;
+    background: #0096c8;
+    color: white;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 14px;
+    cursor: pointer;
+    margin-left: 8px;
+    flex-shrink: 0;
+    transition: background .2s, transform .2s;
+}
+
+.info-btn:hover {
+    background: #0077a3;
+    transform: scale(1.1);
+}
+
+.solution-popup {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.solution-popup.open {
+    display: flex;
+}
+
+.solution-popup-content {
+    background: #fff;
+    border-radius: 14px;
+    padding: 24px;
+    max-width: 700px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+.solution-close {
+    position: static;
+    top: 10px;
+    right: 14px;
+    background: none;
+    border: none;
+    font-size: 26px;
+    line-height: 1;
+    cursor: pointer;
+    color: #555;
+}
+
+.solution-close:hover {
+    color: #000;
+}
+
+.solution-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 16px;
+}
+
+.solution-drag-handle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: move;
+    touch-action: none;
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #eee;
+}
+
+.solution-drag-handle h4 {
+    margin: 0;
+}
+
 @keyframes cardIn {
     from {
         transform: scale(0.9);
@@ -790,5 +877,29 @@ footer {
     .interaction-item {
         width: 100%;
         justify-content: center;
+    }
+
+    .solution-popup {
+        padding: 10px;
+    }
+
+    .solution-popup-content {
+        padding: 16px;
+        max-height: 90vh;
+        border-radius: 10px;
+    }
+
+    .solution-popup-content h4 {
+        font-size: 16px;
+    }
+
+    .solution-close {
+        top: 6px;
+        right: 10px;
+        font-size: 22px;
+    }
+
+    .solution-cards {
+        gap: 8px;
     }
 }

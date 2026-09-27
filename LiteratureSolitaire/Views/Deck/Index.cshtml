@@ -124,6 +124,8 @@
 
     @for (int sec = 1; sec <= Model.SectionCount; sec++)
     {
+        bool hasSolution = Model.SectionSolutions != null && Model.SectionSolutions.ContainsKey(sec);
+
         <div class="section">
             <div class="section-header">
                 @{
@@ -133,6 +135,16 @@
                 }
 
                 <h4>@sectionTitle</h4>
+
+                @if (hasSolution)
+                {
+                    <button type="button"
+                            class="info-btn"
+                            onclick="showSolution(@sec)"
+                            title="Покажи правилното решение">
+                        i
+                    </button>
+                }
             </div>
 
             <div class="section-cards">
@@ -154,6 +166,12 @@
                 }
             </div>
         </div>
+
+        @if (hasSolution)
+        {
+            <partial name="_SolutionPopupPartial"
+                     model="new SectionSolutionViewModel { Section = sec, Cards = Model.SectionSolutions![sec] }" />
+        }
     }
 </div>
 

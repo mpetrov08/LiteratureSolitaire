@@ -8,6 +8,8 @@
 
         public Dictionary<int, int?> SelectedAnswers { get; set; } = new Dictionary<int, int?>();
 
+        public Dictionary<int, string> TextAnswers { get; set; } = new Dictionary<int, string>();
+
         public bool IsChecked { get; set; }
     }
 }

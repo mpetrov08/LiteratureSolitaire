@@ -57,6 +57,25 @@ namespace LiteratureSolitaire.Controllers
         }
 
         [HttpPost]
+        public IActionResult SaveTextAnswer([FromBody] SaveTextAnswerDto dto)
+        {
+            var state = HttpContext.Session.GetObjectFromJson<ExamState>(ExamStateKey);
+
+            if (state == null || !state.QuestionIds.Contains(dto.QuestionId))
+                return BadRequest();
+
+            if (state.IsChecked)
+                return BadRequest("ALREADY_CHECKED");
+
+            var text = dto.Text ?? string.Empty;
+            state.TextAnswers[dto.QuestionId] = text.Length > 4000 ? text[..4000] : text;
+
+            HttpContext.Session.SetObjectAsJson(ExamStateKey, state);
+
+            return Ok();
+        }
+
+        [HttpPost]
         public IActionResult Validate()
         {
             var state = HttpContext.Session.GetObjectFromJson<ExamState>(ExamStateKey);

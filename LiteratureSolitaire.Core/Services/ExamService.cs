@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace LiteratureSolitaire.Core.Services
@@ -22,7 +23,8 @@ namespace LiteratureSolitaire.Core.Services
             ["PunctuationNorm"] = 2,
             ["ReadingComprehension"] = 4,
             ["LiteratureStudiedWorks"] = 10,
-            ["LiteratureUnstudiedWorks"] = 1
+            ["LiteratureUnstudiedWorks"] = 1,
+            ["PunctuationText"] = 1
         };
 
         public ExamService(IRepository _repository)
@@ -168,6 +170,9 @@ namespace LiteratureSolitaire.Core.Services
 
         private ExamQuestionViewModel MapQuestion(Question question, ExamState state)
         {
+            if (question.QuestionType.Name == "PunctuationText")
+                return MapTextQuestion(question, state);
+
             int? selectedAnswerId = state.SelectedAnswers.GetValueOrDefault(question.Id);
 
             var answerViewModels = question.Answers.Select(a => new AnswerViewModel
@@ -194,6 +199,31 @@ namespace LiteratureSolitaire.Core.Services
                 Answers = answerViewModels,
                 IsChecked = state.IsChecked,
                 IsCorrect = isCorrect
+            };
+        }
+
+        private ExamQuestionViewModel MapTextQuestion(Question question, ExamState state)
+        {
+            var parts = question.Content.Split(new[] { "\r\n" }, 2, StringSplitOptions.None);
+            var originalText = parts.Length > 1 ? parts[1] : string.Empty;
+
+            var correctText = question.Answers
+                .FirstOrDefault(a => a.IsCorrect)?.Content ?? string.Empty;
+
+            state.TextAnswers.TryGetValue(question.Id, out var userText);
+
+            return new ExamQuestionViewModel
+            {
+                Id = question.Id,
+                Content = parts[0],
+                QuestionTypeName = question.QuestionType.Name,
+                IsTextQuestion = true,
+                UserText = userText ?? originalText,
+                CorrectText = state.IsChecked ? correctText : null,
+                IsChecked = state.IsChecked,
+                IsCorrect = state.IsChecked
+                    ? IsCorrectPunctuationText(userText, correctText)
+                    : null
             };
         }
 
@@ -242,5 +272,46 @@ namespace LiteratureSolitaire.Core.Services
                 .Take(count)
                 .ToList();
         }
+
+        public static bool IsCorrectPunctuationText(string? userText, string correctText)
+        {
+            if (string.IsNullOrWhiteSpace(userText) || string.IsNullOrWhiteSpace(correctText))
+                return false;
+
+            var user = Parse(userText);
+            var correct = Parse(correctText);
+
+            return user.Words.SequenceEqual(correct.Words, StringComparer.OrdinalIgnoreCase)
+                && user.Gaps.Count == correct.Gaps.Count
+                && user.Gaps.All(g => correct.Gaps.TryGetValue(g.Key, out var v) && v == g.Value);
+        }
+
+        private static readonly Regex TokenRegex = new(@"[\p{L}\p{N}]+|[^\s\p{L}\p{N}]", RegexOptions.Compiled);
+
+        private static (List<string> Words, Dictionary<int, string> Gaps) Parse(string text)
+        {
+            var words = new List<string>();
+            var gaps = new Dictionary<int, string>();
+
+            foreach (Match m in TokenRegex.Matches(Normalize(text)))
+            {
+                if (char.IsLetterOrDigit(m.Value[0]))
+                {
+                    words.Add(m.Value);
+                }
+                else
+                {
+                    gaps[words.Count] = gaps.GetValueOrDefault(words.Count, "") + m.Value;
+                }
+            }
+
+            return (words, gaps);
+        }
+
+        private static string Normalize(string text) => text
+           .Replace('„', '"').Replace('“', '"').Replace('”', '"')
+           .Replace('«', '"').Replace('»', '"')
+           .Replace('—', '–').Replace('−', '–').Replace('-', '–')
+           .Replace("…", "...");
     }
 }

@@ -19,5 +19,11 @@ namespace LiteratureSolitaire.Core.Models
         public bool IsChecked { get; set; }
 
         public bool? IsCorrect { get; set; }
+
+        public bool IsTextQuestion { get; set; }
+
+        public string? UserText { get; set; }
+
+        public string? CorrectText { get; set; }
     }
 }

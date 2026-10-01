@@ -1,37 +1,62 @@
 ﻿@model LiteratureSolitaire.Core.Models.ExamQuestionViewModel
 
-<div class="exam-question" data-question-id="@Model.Id">
-    <p class="question-content">@Model.Content</p>
+@if (Model.IsTextQuestion)
+{
+    var textCls = "text-answer";
 
-    <div class="answers-list">
-        @{
-            var letters = new[] { "А", "Б", "В", "Г" };
-        }
+    if (Model.IsChecked)
+    {
+        textCls += Model.IsCorrect == true ? " correct" : " wrong";
+    }
 
-        @for (int i = 0; i < Model.Answers.Count; i++)
+    <div class="exam-question" data-question-id="@Model.Id">
+        <p class="question-content">@Model.Content</p>
 
+        <textarea class="@textCls"
+                  rows="8"
+                  data-question-id="@Model.Id"
+        @(Model.IsChecked ? "readonly" : "")>@Model.UserText</textarea>
+
+        @if (Model.IsChecked && Model.IsCorrect != true)
         {
-
-            var answer = Model.Answers[i];
-
-
-
-            var cls = "answer-option";
-
-            if (answer.IsSelected) cls += " selected";
-
-            if (Model.IsChecked && answer.IsCorrect == true) cls += " correct";
-
-            if (Model.IsChecked && answer.IsSelected && answer.IsCorrect == false) cls += " wrong";
-
-            <label class="@cls" data-answer-id="@answer.Id">
-                <input type="radio"
-                       name="question-@Model.Id"
-                       value="@answer.Id"
-                @(answer.IsSelected ? "checked" : "")
-                @(Model.IsChecked ? "disabled" : "") />
-                <span>@letters[i]) @answer.Content</span>
-            </label>
+            <div class="correct-text">
+                <strong>Верен отговор:</strong>
+                <p>@Model.CorrectText</p>
+            </div>
         }
     </div>
-</div>
+}
+else
+{
+    <div class="exam-question" data-question-id="@Model.Id">
+        <p class="question-content">@Model.Content</p>
+
+        <div class="answers-list">
+            @{
+                var letters = new[] { "А", "Б", "В", "Г" };
+            }
+
+            @for (int i = 0; i < Model.Answers.Count; i++)
+            {
+                var answer = Model.Answers[i];
+
+                var cls = "answer-option";
+
+                if (answer.IsSelected) cls += " selected";
+
+                if (Model.IsChecked && answer.IsCorrect == true) cls += " correct";
+
+                if (Model.IsChecked && answer.IsSelected && answer.IsCorrect == false) cls += " wrong";
+
+                <label class="@cls" data-answer-id="@answer.Id">
+                    <input type="radio"
+                           name="question-@Model.Id"
+                           value="@answer.Id"
+                    @(answer.IsSelected ? "checked" : "")
+                    @(Model.IsChecked ? "disabled" : "") />
+                    <span>@letters[i]) @answer.Content</span>
+                </label>
+            }
+        </div>
+    </div>
+}

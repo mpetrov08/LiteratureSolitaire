@@ -4,6 +4,7 @@ using LiteratureSolitaire.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LiteratureSolitaire.Infrastructure.Migrations
 {
     [DbContext(typeof(LiteratureSolitaireDbContext))]
-    partial class LiteratureSolitaireDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260930194322_FixedExamSeed")]
+    partial class FixedExamSeed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -8331,72 +8334,12 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                         },
                         new
                         {
-                            QuestionId = 69,
-                            PassageId = 1
-                        },
-                        new
-                        {
-                            QuestionId = 69,
-                            PassageId = 2
-                        },
-                        new
-                        {
-                            QuestionId = 70,
-                            PassageId = 1
-                        },
-                        new
-                        {
-                            QuestionId = 70,
-                            PassageId = 2
-                        },
-                        new
-                        {
-                            QuestionId = 71,
-                            PassageId = 1
-                        },
-                        new
-                        {
-                            QuestionId = 71,
-                            PassageId = 2
-                        },
-                        new
-                        {
                             QuestionId = 72,
                             PassageId = 3
                         },
                         new
                         {
                             QuestionId = 72,
-                            PassageId = 4
-                        },
-                        new
-                        {
-                            QuestionId = 73,
-                            PassageId = 3
-                        },
-                        new
-                        {
-                            QuestionId = 73,
-                            PassageId = 4
-                        },
-                        new
-                        {
-                            QuestionId = 74,
-                            PassageId = 3
-                        },
-                        new
-                        {
-                            QuestionId = 74,
-                            PassageId = 4
-                        },
-                        new
-                        {
-                            QuestionId = 75,
-                            PassageId = 3
-                        },
-                        new
-                        {
-                            QuestionId = 75,
                             PassageId = 4
                         },
                         new
@@ -8411,72 +8354,12 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                         },
                         new
                         {
-                            QuestionId = 77,
-                            PassageId = 5
-                        },
-                        new
-                        {
-                            QuestionId = 77,
-                            PassageId = 6
-                        },
-                        new
-                        {
-                            QuestionId = 78,
-                            PassageId = 5
-                        },
-                        new
-                        {
-                            QuestionId = 78,
-                            PassageId = 6
-                        },
-                        new
-                        {
-                            QuestionId = 79,
-                            PassageId = 5
-                        },
-                        new
-                        {
-                            QuestionId = 79,
-                            PassageId = 6
-                        },
-                        new
-                        {
                             QuestionId = 80,
                             PassageId = 7
                         },
                         new
                         {
                             QuestionId = 80,
-                            PassageId = 8
-                        },
-                        new
-                        {
-                            QuestionId = 81,
-                            PassageId = 7
-                        },
-                        new
-                        {
-                            QuestionId = 81,
-                            PassageId = 8
-                        },
-                        new
-                        {
-                            QuestionId = 82,
-                            PassageId = 7
-                        },
-                        new
-                        {
-                            QuestionId = 82,
-                            PassageId = 8
-                        },
-                        new
-                        {
-                            QuestionId = 83,
-                            PassageId = 7
-                        },
-                        new
-                        {
-                            QuestionId = 83,
                             PassageId = 8
                         },
                         new
@@ -8491,72 +8374,12 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                         },
                         new
                         {
-                            QuestionId = 85,
-                            PassageId = 9
-                        },
-                        new
-                        {
-                            QuestionId = 85,
-                            PassageId = 10
-                        },
-                        new
-                        {
-                            QuestionId = 86,
-                            PassageId = 9
-                        },
-                        new
-                        {
-                            QuestionId = 86,
-                            PassageId = 10
-                        },
-                        new
-                        {
-                            QuestionId = 87,
-                            PassageId = 9
-                        },
-                        new
-                        {
-                            QuestionId = 87,
-                            PassageId = 10
-                        },
-                        new
-                        {
                             QuestionId = 88,
                             PassageId = 11
                         },
                         new
                         {
                             QuestionId = 88,
-                            PassageId = 12
-                        },
-                        new
-                        {
-                            QuestionId = 89,
-                            PassageId = 11
-                        },
-                        new
-                        {
-                            QuestionId = 89,
-                            PassageId = 12
-                        },
-                        new
-                        {
-                            QuestionId = 90,
-                            PassageId = 11
-                        },
-                        new
-                        {
-                            QuestionId = 90,
-                            PassageId = 12
-                        },
-                        new
-                        {
-                            QuestionId = 91,
-                            PassageId = 11
-                        },
-                        new
-                        {
-                            QuestionId = 91,
                             PassageId = 12
                         },
                         new
@@ -8571,72 +8394,12 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                         },
                         new
                         {
-                            QuestionId = 93,
-                            PassageId = 13
-                        },
-                        new
-                        {
-                            QuestionId = 93,
-                            PassageId = 14
-                        },
-                        new
-                        {
-                            QuestionId = 94,
-                            PassageId = 13
-                        },
-                        new
-                        {
-                            QuestionId = 94,
-                            PassageId = 14
-                        },
-                        new
-                        {
-                            QuestionId = 95,
-                            PassageId = 13
-                        },
-                        new
-                        {
-                            QuestionId = 95,
-                            PassageId = 14
-                        },
-                        new
-                        {
                             QuestionId = 96,
                             PassageId = 15
                         },
                         new
                         {
                             QuestionId = 96,
-                            PassageId = 16
-                        },
-                        new
-                        {
-                            QuestionId = 97,
-                            PassageId = 15
-                        },
-                        new
-                        {
-                            QuestionId = 97,
-                            PassageId = 16
-                        },
-                        new
-                        {
-                            QuestionId = 98,
-                            PassageId = 15
-                        },
-                        new
-                        {
-                            QuestionId = 98,
-                            PassageId = 16
-                        },
-                        new
-                        {
-                            QuestionId = 99,
-                            PassageId = 15
-                        },
-                        new
-                        {
-                            QuestionId = 99,
                             PassageId = 16
                         },
                         new
@@ -8651,72 +8414,12 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                         },
                         new
                         {
-                            QuestionId = 101,
-                            PassageId = 17
-                        },
-                        new
-                        {
-                            QuestionId = 101,
-                            PassageId = 18
-                        },
-                        new
-                        {
-                            QuestionId = 102,
-                            PassageId = 17
-                        },
-                        new
-                        {
-                            QuestionId = 102,
-                            PassageId = 18
-                        },
-                        new
-                        {
-                            QuestionId = 103,
-                            PassageId = 17
-                        },
-                        new
-                        {
-                            QuestionId = 103,
-                            PassageId = 18
-                        },
-                        new
-                        {
                             QuestionId = 104,
                             PassageId = 19
                         },
                         new
                         {
                             QuestionId = 104,
-                            PassageId = 20
-                        },
-                        new
-                        {
-                            QuestionId = 105,
-                            PassageId = 19
-                        },
-                        new
-                        {
-                            QuestionId = 105,
-                            PassageId = 20
-                        },
-                        new
-                        {
-                            QuestionId = 106,
-                            PassageId = 19
-                        },
-                        new
-                        {
-                            QuestionId = 106,
-                            PassageId = 20
-                        },
-                        new
-                        {
-                            QuestionId = 107,
-                            PassageId = 19
-                        },
-                        new
-                        {
-                            QuestionId = 107,
                             PassageId = 20
                         });
                 });

@@ -13,7 +13,7 @@ namespace LiteratureSolitaire.Infrastructure.Data.Seed
     {
         public void Configure(EntityTypeBuilder<Genre> builder)
         {
-            var data = new SeedData();
+            var data = new SeedLiteratureData();
 
             builder.HasData(new Genre[]
             {

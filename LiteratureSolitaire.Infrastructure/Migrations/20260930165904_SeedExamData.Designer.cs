@@ -4,6 +4,7 @@ using LiteratureSolitaire.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LiteratureSolitaire.Infrastructure.Migrations
 {
     [DbContext(typeof(LiteratureSolitaireDbContext))]
-    partial class LiteratureSolitaireDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260930165904_SeedExamData")]
+    partial class SeedExamData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -6805,7 +6808,7 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                         new
                         {
                             Id = 2,
-                            Content = "В коя от думите е допусната правописна грешка? Двата нови спектакъла(А) на Народния(Б) театър, представящи модерни за театралното изкуство идеи(В), предизвикаха широк одзвук(Г) сред зрителите.",
+                            Content = "В коя от подчертаните думи е допусната правописна грешка? Двата нови спектакъла (",
                             ExamSessionId = 1,
                             QuestionTypeId = 1
                         },
@@ -7050,7 +7053,7 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                         new
                         {
                             Id = 37,
-                            Content = "В коя от подчертаните думи е допусната граматична грешка? Госпожо Иванова, бихте ли ни разказала(А) повече за писателя(Б), чиито(В) романи са преведени на английски, немски и френски език(Г)?",
+                            Content = "В коя от подчертаните думи е допусната граматична грешка? Госпожо Иванова, бихте ли ни разказала (",
                             ExamSessionId = 5,
                             QuestionTypeId = 2
                         },
@@ -7071,7 +7074,7 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                         new
                         {
                             Id = 40,
-                            Content = "В коя от подчертаните думи е допусната граматична грешка? В изявлението му(А) пред медиите режисьорът сподели, че камерният(Б) спектакъл с двамата известни актьори(В) жъне успехи на българските и световните(Г) театрални сцени.",
+                            Content = "В коя от подчертаните думи е допусната граматична грешка? В изявлението му (",
                             ExamSessionId = 7,
                             QuestionTypeId = 2
                         },
@@ -7106,7 +7109,7 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                         new
                         {
                             Id = 45,
-                            Content = "В коя от подчертаните думи е допусната граматична грешка? В Министерство(А) на външните работи българският и гръцкият министър(Б) са провели разговори, на които(В) са присъствали не само официални лица. Господин Петров, Вие бяхте ли поканен(Г)?",
+                            Content = "В коя от подчертаните думи е допусната граматична грешка?\r\n В Министерство (",
                             ExamSessionId = 9,
                             QuestionTypeId = 2
                         },
@@ -7148,7 +7151,7 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                         new
                         {
                             Id = 51,
-                            Content = "В коя от позициите, означени с букви, е допусната пунктуационна грешка? Човек разбира,(А) кое е истински важно в живота,(Б) когато осъзнае,(В) че най-ценните неща не могат да се купят,(Г) защото са безплатни.",
+                            Content = "В коя от позициите, означени с букви, е допусната пунктуационна грешка? Човек разбира, (",
                             ExamSessionId = 2,
                             QuestionTypeId = 3
                         },
@@ -7190,7 +7193,7 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                         new
                         {
                             Id = 57,
-                            Content = "В коя от позициите, означени с букви, е допусната пунктуационна грешка? Психолозите съветват, че за да живеем спокойно и щастливо,(А) трябва да спрем да се оплакваме,(Б) макар за много хора,(В) това да е почти невъзможно,(Г) тъй като все ще намерят повод да недоволстват.",
+                            Content = "В коя от позициите, означени с букви, е допусната пунктуационна грешка? Психолозите съветват, че за да живеем спокойно и щастливо, (",
                             ExamSessionId = 5,
                             QuestionTypeId = 3
                         },
@@ -7260,7 +7263,7 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                         new
                         {
                             Id = 67,
-                            Content = "В коя от позициите, означени с букви, е допусната пунктуационна грешка? Докато обмислях(А) къде да прекарам лятната си отпуска(Б) осъзнах, че пътешествията надалеч ще ми помогнат да се преборя със страховете си,(В) ще ме научат на търпение(Г) и ще ме накарат по-внимателно да преценявам непознати ситуации.",
+                            Content = "В коя от позициите, означени с букви, е допусната пунктуационна грешка? Докато обмислях (",
                             ExamSessionId = 10,
                             QuestionTypeId = 3
                         },
@@ -7281,7 +7284,7 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                         new
                         {
                             Id = 70,
-                            Content = "Кое от твърденията съответства по смисъл на цитираното изречение от Текст 1? \"Несъмнено потреблението на видеосъдържание има и своята тъмна страна.\"",
+                            Content = "Кое от твърденията съответства по смисъл на цитираното изречение от Текст 1? Несъмнено потреблението на видеосъдържание има и своята тъмна страна.",
                             ExamSessionId = 1,
                             QuestionTypeId = 4
                         },
@@ -8331,72 +8334,12 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                         },
                         new
                         {
-                            QuestionId = 69,
-                            PassageId = 1
-                        },
-                        new
-                        {
-                            QuestionId = 69,
-                            PassageId = 2
-                        },
-                        new
-                        {
-                            QuestionId = 70,
-                            PassageId = 1
-                        },
-                        new
-                        {
-                            QuestionId = 70,
-                            PassageId = 2
-                        },
-                        new
-                        {
-                            QuestionId = 71,
-                            PassageId = 1
-                        },
-                        new
-                        {
-                            QuestionId = 71,
-                            PassageId = 2
-                        },
-                        new
-                        {
                             QuestionId = 72,
                             PassageId = 3
                         },
                         new
                         {
                             QuestionId = 72,
-                            PassageId = 4
-                        },
-                        new
-                        {
-                            QuestionId = 73,
-                            PassageId = 3
-                        },
-                        new
-                        {
-                            QuestionId = 73,
-                            PassageId = 4
-                        },
-                        new
-                        {
-                            QuestionId = 74,
-                            PassageId = 3
-                        },
-                        new
-                        {
-                            QuestionId = 74,
-                            PassageId = 4
-                        },
-                        new
-                        {
-                            QuestionId = 75,
-                            PassageId = 3
-                        },
-                        new
-                        {
-                            QuestionId = 75,
                             PassageId = 4
                         },
                         new
@@ -8411,72 +8354,12 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                         },
                         new
                         {
-                            QuestionId = 77,
-                            PassageId = 5
-                        },
-                        new
-                        {
-                            QuestionId = 77,
-                            PassageId = 6
-                        },
-                        new
-                        {
-                            QuestionId = 78,
-                            PassageId = 5
-                        },
-                        new
-                        {
-                            QuestionId = 78,
-                            PassageId = 6
-                        },
-                        new
-                        {
-                            QuestionId = 79,
-                            PassageId = 5
-                        },
-                        new
-                        {
-                            QuestionId = 79,
-                            PassageId = 6
-                        },
-                        new
-                        {
                             QuestionId = 80,
                             PassageId = 7
                         },
                         new
                         {
                             QuestionId = 80,
-                            PassageId = 8
-                        },
-                        new
-                        {
-                            QuestionId = 81,
-                            PassageId = 7
-                        },
-                        new
-                        {
-                            QuestionId = 81,
-                            PassageId = 8
-                        },
-                        new
-                        {
-                            QuestionId = 82,
-                            PassageId = 7
-                        },
-                        new
-                        {
-                            QuestionId = 82,
-                            PassageId = 8
-                        },
-                        new
-                        {
-                            QuestionId = 83,
-                            PassageId = 7
-                        },
-                        new
-                        {
-                            QuestionId = 83,
                             PassageId = 8
                         },
                         new
@@ -8491,72 +8374,12 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                         },
                         new
                         {
-                            QuestionId = 85,
-                            PassageId = 9
-                        },
-                        new
-                        {
-                            QuestionId = 85,
-                            PassageId = 10
-                        },
-                        new
-                        {
-                            QuestionId = 86,
-                            PassageId = 9
-                        },
-                        new
-                        {
-                            QuestionId = 86,
-                            PassageId = 10
-                        },
-                        new
-                        {
-                            QuestionId = 87,
-                            PassageId = 9
-                        },
-                        new
-                        {
-                            QuestionId = 87,
-                            PassageId = 10
-                        },
-                        new
-                        {
                             QuestionId = 88,
                             PassageId = 11
                         },
                         new
                         {
                             QuestionId = 88,
-                            PassageId = 12
-                        },
-                        new
-                        {
-                            QuestionId = 89,
-                            PassageId = 11
-                        },
-                        new
-                        {
-                            QuestionId = 89,
-                            PassageId = 12
-                        },
-                        new
-                        {
-                            QuestionId = 90,
-                            PassageId = 11
-                        },
-                        new
-                        {
-                            QuestionId = 90,
-                            PassageId = 12
-                        },
-                        new
-                        {
-                            QuestionId = 91,
-                            PassageId = 11
-                        },
-                        new
-                        {
-                            QuestionId = 91,
                             PassageId = 12
                         },
                         new
@@ -8571,72 +8394,12 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                         },
                         new
                         {
-                            QuestionId = 93,
-                            PassageId = 13
-                        },
-                        new
-                        {
-                            QuestionId = 93,
-                            PassageId = 14
-                        },
-                        new
-                        {
-                            QuestionId = 94,
-                            PassageId = 13
-                        },
-                        new
-                        {
-                            QuestionId = 94,
-                            PassageId = 14
-                        },
-                        new
-                        {
-                            QuestionId = 95,
-                            PassageId = 13
-                        },
-                        new
-                        {
-                            QuestionId = 95,
-                            PassageId = 14
-                        },
-                        new
-                        {
                             QuestionId = 96,
                             PassageId = 15
                         },
                         new
                         {
                             QuestionId = 96,
-                            PassageId = 16
-                        },
-                        new
-                        {
-                            QuestionId = 97,
-                            PassageId = 15
-                        },
-                        new
-                        {
-                            QuestionId = 97,
-                            PassageId = 16
-                        },
-                        new
-                        {
-                            QuestionId = 98,
-                            PassageId = 15
-                        },
-                        new
-                        {
-                            QuestionId = 98,
-                            PassageId = 16
-                        },
-                        new
-                        {
-                            QuestionId = 99,
-                            PassageId = 15
-                        },
-                        new
-                        {
-                            QuestionId = 99,
                             PassageId = 16
                         },
                         new
@@ -8651,72 +8414,12 @@ namespace LiteratureSolitaire.Infrastructure.Migrations
                         },
                         new
                         {
-                            QuestionId = 101,
-                            PassageId = 17
-                        },
-                        new
-                        {
-                            QuestionId = 101,
-                            PassageId = 18
-                        },
-                        new
-                        {
-                            QuestionId = 102,
-                            PassageId = 17
-                        },
-                        new
-                        {
-                            QuestionId = 102,
-                            PassageId = 18
-                        },
-                        new
-                        {
-                            QuestionId = 103,
-                            PassageId = 17
-                        },
-                        new
-                        {
-                            QuestionId = 103,
-                            PassageId = 18
-                        },
-                        new
-                        {
                             QuestionId = 104,
                             PassageId = 19
                         },
                         new
                         {
                             QuestionId = 104,
-                            PassageId = 20
-                        },
-                        new
-                        {
-                            QuestionId = 105,
-                            PassageId = 19
-                        },
-                        new
-                        {
-                            QuestionId = 105,
-                            PassageId = 20
-                        },
-                        new
-                        {
-                            QuestionId = 106,
-                            PassageId = 19
-                        },
-                        new
-                        {
-                            QuestionId = 106,
-                            PassageId = 20
-                        },
-                        new
-                        {
-                            QuestionId = 107,
-                            PassageId = 19
-                        },
-                        new
-                        {
-                            QuestionId = 107,
                             PassageId = 20
                         });
                 });

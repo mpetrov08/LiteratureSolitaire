@@ -1,0 +1,19 @@
+﻿using LiteratureSolitaire.Infrastructure.Data.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace LiteratureSolitaire.Infrastructure.Data.Seed
+{
+    public class PassageConfiguration : IEntityTypeConfiguration<Passage>
+    {
+        public void Configure(EntityTypeBuilder<Passage> builder)
+        {
+            builder.HasData(SeedExamData.Instance.Passages);
+        }
+    }
+}

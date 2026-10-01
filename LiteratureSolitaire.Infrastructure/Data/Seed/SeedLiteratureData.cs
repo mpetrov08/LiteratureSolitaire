@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LiteratureSolitaire.Infrastructure.Data.Seed
 {
-    internal class SeedData
+    internal class SeedLiteratureData
     {
         public Author DimitarTalev { get; set; }
 
@@ -163,7 +163,7 @@ namespace LiteratureSolitaire.Infrastructure.Data.Seed
 
         public Work HonestCross { get; set; }
 
-        public SeedData()
+        public SeedLiteratureData()
         {
             SeedAuthors();
             SeedGenres();

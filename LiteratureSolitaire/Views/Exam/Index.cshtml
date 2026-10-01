@@ -1,0 +1,102 @@
+﻿@model LiteratureSolitaire.Core.Models.ExamViewModel
+
+@{
+    ViewData["Title"] = "ДЗИ Тест";
+    ViewData["HideFooter"] = true;
+    Layout = "_Layout";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/shared-ui.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/exam.css" asp-append-version="true" />
+}
+
+<h2>Тест по модел на ДЗИ</h2>
+
+<details class="mobile-filter" open>
+    <summary>Филтър по сесии</summary>
+
+    <form method="get" asp-action="Index" class="filter-bar" id="examFilterForm">
+        <div class="filter-wrapper">
+            <div class="category-grid">
+                @foreach (var session in Model.AvailableExamSessions)
+                {
+                    var isChecked = Model.SelectedExamSessionIds.Contains(session.Id);
+
+                    <label class="category-item">
+                        <input type="checkbox"
+                               name="examSessionIds"
+                               value="@session.Id"
+                        @(isChecked ? "checked" : "") />
+                        <span>@session.SessionDisplay @session.Year</span>
+                    </label>
+                }
+            </div>
+
+            <div class="filter-buttons">
+                <button type="submit" class="top-btn filter-btn">Филтрирай</button>
+            </div>
+        </div>
+    </form>
+</details>
+
+<div class="button-group exam-actions">
+    @if (!Model.IsChecked)
+    {
+        <form asp-action="Validate" method="post">
+            <button type="submit" class="top-btn validate">Провери</button>
+        </form>
+    }
+
+    <form asp-action="NewExam" method="post" id="newExamForm">
+        @foreach (var id in Model.SelectedExamSessionIds)
+        {
+            <input type="hidden" name="examSessionIds" value="@id" />
+        }
+
+        <button type="submit" class="top-btn shuffle">Нов тест</button>
+    </form>
+</div>
+
+@if (Model.IsChecked)
+{
+    <div class="result-box">
+        <span>Верни: @Model.CorrectCount / @Model.TotalCount</span>
+    </div>
+}
+
+@foreach (var group in Model.PassageGroups)
+{
+    <div class="passage-group">
+        @foreach (var passage in group.Passages)
+        {
+            <div class="passage-block">
+                <h4>Текст @passage.Number</h4>
+
+                @if (!string.IsNullOrEmpty(passage.Content))
+                {
+                    <p class="passage-text">@passage.Content</p>
+                }
+
+                @if (!string.IsNullOrEmpty(passage.ImagePath))
+                {
+                    <img src="@passage.ImagePath" alt="Passage image" class="passage-image" />
+                }
+            </div>
+        }
+
+        @foreach (var question in group.Questions)
+        {
+            <partial name="_QuestionPartial" model="question" />
+        }
+    </div>
+}
+
+@foreach (var question in Model.StandaloneQuestions)
+{
+    <partial name="_QuestionPartial" model="question" />
+}
+
+@section Scripts {
+    <script src="~/js/exam.js" asp-append-version="true"></script>
+}

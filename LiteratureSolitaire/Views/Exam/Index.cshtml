@@ -60,7 +60,8 @@
 
 @if (Model.IsChecked)
 {
-    <div class="result-box">
+    <div class="result-box"
+         data-all-correct="@((Model.TotalCount > 0 && Model.CorrectCount == Model.TotalCount).ToString().ToLower())">
         <span>Верни: @Model.CorrectCount / @Model.TotalCount</span>
     </div>
 }
@@ -99,4 +100,6 @@
 
 @section Scripts {
     <script src="~/js/exam.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="~/js/confetti-effect.js" asp-append-version="true"></script>
 }

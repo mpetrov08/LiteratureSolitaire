@@ -29,3 +29,11 @@
         console.error("SelectAnswer failed", err);
     }
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    const result = document.querySelector(".result-box");
+
+    if (result && result.dataset.allCorrect === "true") {
+        launchConfetti();
+    }
+});

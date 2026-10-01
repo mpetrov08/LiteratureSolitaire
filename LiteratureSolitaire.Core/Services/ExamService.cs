@@ -16,6 +16,17 @@ namespace LiteratureSolitaire.Core.Services
     {
         private readonly IRepository repository;
 
+        private static readonly Dictionary<string, string> QuestionTypeDisplayNames = new()
+        {
+            ["SpellingNorm"] = "Правописна норма",
+            ["GrammarNorm"] = "Граматична норма",
+            ["PunctuationNorm"] = "Пунктуационна норма",
+            ["ReadingComprehension"] = "Четене с разбиране",
+            ["LiteratureStudiedWorks"] = "Литература – изучавани произведения",
+            ["LiteratureUnstudiedWorks"] = "Литература – неизучавано произведение",
+            ["PunctuationText"] = "Поставяне на препинателни знаци в текст"
+        };
+
         private static readonly Dictionary<string, int> QuestionsPerType = new()
         {
             ["SpellingNorm"] = 3,
@@ -46,17 +57,20 @@ namespace LiteratureSolitaire.Core.Services
                 .ToListAsync();
         }
 
-        public async Task<ExamState> GenerateExamAsync(List<int>? examSessionIds)
+        public async Task<ExamState> GenerateExamAsync(List<int>? examSessionIds, int? questionTypeId = null)
         {
-            var questionTypes = await repository
-                .AllReadОnly<QuestionType>()
-                .ToListAsync();
+            var typesQuery = repository.AllReadОnly<QuestionType>();
+
+            if (questionTypeId.HasValue)
+                typesQuery = typesQuery.Where(t => t.Id == questionTypeId.Value);
+
+            var questionTypes = await typesQuery.ToListAsync();
 
             var selectedQuestionIds = new List<int>();
 
             foreach (var type in questionTypes)
             {
-                var count = QuestionsPerType[type.Name];
+                var count = GetQuestionCount(type.Name, questionTypeId.HasValue);
 
                 if (type.Name == "ReadingComprehension")
                 {
@@ -108,9 +122,21 @@ namespace LiteratureSolitaire.Core.Services
                 .Where(q => state.QuestionIds.Contains(q.Id))
                 .ToListAsync();
 
+            var questionTypes = await repository
+                .AllReadОnly<QuestionType>()
+                .ToListAsync();
+
             var viewModel = new ExamViewModel
             {
                 SelectedExamSessionIds = state.ExamSessionIds,
+                SelectedQuestionTypeId = state.QuestionTypeId,
+                AvailableQuestionTypes = questionTypes
+                    .Select(t => new QuestionTypeOptionViewModel
+                    {
+                        Id = t.Id,
+                        Display = QuestionTypeDisplayNames.GetValueOrDefault(t.Name, t.Name)
+                    })
+                    .ToList(),
                 AvailableExamSessions = availableSessions,
                 IsChecked = state.IsChecked
             };
@@ -313,5 +339,18 @@ namespace LiteratureSolitaire.Core.Services
            .Replace('«', '"').Replace('»', '"')
            .Replace('—', '–').Replace('−', '–').Replace('-', '–')
            .Replace("…", "...");
+
+        private static int GetQuestionCount(string typeName, bool singleCategory)
+        {
+            if (!singleCategory)
+                return QuestionsPerType[typeName];
+
+            return typeName switch
+            {
+                "ReadingComprehension" => 4, 
+                "PunctuationText" => 3,       
+                _ => 10
+            };
+        }
     }
 }

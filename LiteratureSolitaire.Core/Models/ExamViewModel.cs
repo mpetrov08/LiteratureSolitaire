@@ -21,5 +21,9 @@ namespace LiteratureSolitaire.Core.Models
         public int? CorrectCount { get; set; }
 
         public int? TotalCount { get; set; }
+
+        public int? SelectedQuestionTypeId { get; set; }
+
+        public List<QuestionTypeOptionViewModel> AvailableQuestionTypes { get; set; } = new List<QuestionTypeOptionViewModel>();
     }
 }

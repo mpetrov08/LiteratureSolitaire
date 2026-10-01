@@ -11,5 +11,7 @@
         public Dictionary<int, string> TextAnswers { get; set; } = new Dictionary<int, string>();
 
         public bool IsChecked { get; set; }
+
+        public int? QuestionTypeId { get; set; }
     }
 }

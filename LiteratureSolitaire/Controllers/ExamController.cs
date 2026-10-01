@@ -18,18 +18,23 @@ namespace LiteratureSolitaire.Controllers
         private const string ExamStateKey = "examState";
 
         [HttpGet]
-        public async Task<IActionResult> Index(List<int>? examSessionIds)
+        public async Task<IActionResult> Index(List<int>? examSessionIds, int? questionTypeId)
         {
             var state = HttpContext.Session.GetObjectFromJson<ExamState>(ExamStateKey);
 
-            bool sessionsChanged =
-                examSessionIds != null &&
-                (state == null ||
-                 !state.ExamSessionIds.OrderBy(x => x).SequenceEqual(examSessionIds.OrderBy(x => x)));
+            bool filterSubmitted = Request.Query.Count > 0;
 
-            if (state == null || sessionsChanged)
+            var requestedSessions = (examSessionIds ?? new List<int>()).OrderBy(x => x).ToList();
+
+            bool filterChanged =
+                filterSubmitted &&
+                (state == null ||
+                 !state.ExamSessionIds.OrderBy(x => x).SequenceEqual(requestedSessions) ||
+                 state.QuestionTypeId != questionTypeId);
+
+            if (state == null || filterChanged)
             {
-                state = await examService.GenerateExamAsync(examSessionIds);
+                state = await examService.GenerateExamAsync(examSessionIds, questionTypeId);
                 HttpContext.Session.SetObjectAsJson(ExamStateKey, state);
             }
 
@@ -57,23 +62,23 @@ namespace LiteratureSolitaire.Controllers
         }
 
         [HttpPost]
-        public IActionResult SaveTextAnswer([FromBody] SaveTextAnswerDto dto)
-        {
-            var state = HttpContext.Session.GetObjectFromJson<ExamState>(ExamStateKey);
+public IActionResult SaveTextAnswer([FromBody] SaveTextAnswerDto dto)
+{
+    var state = HttpContext.Session.GetObjectFromJson<ExamState>(ExamStateKey);
 
-            if (state == null || !state.QuestionIds.Contains(dto.QuestionId))
-                return BadRequest();
+    if (state == null || !state.QuestionIds.Contains(dto.QuestionId))
+        return BadRequest();
 
-            if (state.IsChecked)
-                return BadRequest("ALREADY_CHECKED");
+    if (state.IsChecked)
+        return BadRequest("ALREADY_CHECKED");
 
-            var text = dto.Text ?? string.Empty;
-            state.TextAnswers[dto.QuestionId] = text.Length > 4000 ? text[..4000] : text;
+    var text = dto.Text ?? string.Empty;
+    state.TextAnswers[dto.QuestionId] = text.Length > 4000 ? text[..4000] : text;
 
-            HttpContext.Session.SetObjectAsJson(ExamStateKey, state);
+    HttpContext.Session.SetObjectAsJson(ExamStateKey, state);
 
-            return Ok();
-        }
+    return Ok();
+}
 
         [HttpPost]
         public IActionResult Validate()
@@ -88,17 +93,18 @@ namespace LiteratureSolitaire.Controllers
 
             return RedirectToAction("Index", new
             {
-                examSessionIds = state.ExamSessionIds
+                examSessionIds = state.ExamSessionIds,
+                questionTypeId = state.QuestionTypeId
             });
         }
 
         [HttpPost]
-        public async Task<IActionResult> NewExam(List<int>? examSessionIds)
+        public async Task<IActionResult> NewExam(List<int>? examSessionIds, int? questionTypeId)
         {
-            var state = await examService.GenerateExamAsync(examSessionIds);
+            var state = await examService.GenerateExamAsync(examSessionIds, questionTypeId);
             HttpContext.Session.SetObjectAsJson(ExamStateKey, state);
 
-            return RedirectToAction("Index", new { examSessionIds });
+            return RedirectToAction("Index", new { examSessionIds, questionTypeId });
         }
     }
 }

@@ -113,3 +113,41 @@
     background: #eafbef;
     border-radius: 6px;
 }
+
+.category-select {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 900px;
+}
+
+.category-select label {
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.category-select select {
+    flex: 1;
+    padding: 10px 14px;
+    font: inherit;
+    border-radius: 10px;
+    background: #fff;
+    border: 2px solid #ddd;
+    cursor: pointer;
+    transition: all .2s ease;
+}
+
+.category-select select:hover,
+.category-select select:focus {
+    border-color: #2575fc;
+    background: #f0f5ff;
+    outline: none;
+}
+
+@media (max-width: 600px) {
+    .category-select {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}

@@ -14,7 +14,7 @@
 <h2>Тест по модел на ДЗИ</h2>
 
 <details class="mobile-filter" open>
-    <summary>Филтър по сесии</summary>
+    <summary>Филтър</summary>
 
     <form method="get" asp-action="Index" class="filter-bar" id="examFilterForm">
         <div class="filter-wrapper">
@@ -31,6 +31,20 @@
                         <span>@session.SessionDisplay @session.Year</span>
                     </label>
                 }
+            </div>
+
+            <div class="category-select">
+                <label for="questionTypeId">Категория:</label>
+                <select name="questionTypeId" id="questionTypeId">
+                    <option value="">Всички (пълен тест)</option>
+                    @foreach (var type in Model.AvailableQuestionTypes)
+
+                    {
+                        <option value="@type.Id" selected="@(Model.SelectedQuestionTypeId == type.Id)">
+                            @type.Display
+                        </option>
+                    }
+                </select>
             </div>
 
             <div class="filter-buttons">
@@ -52,6 +66,11 @@
         @foreach (var id in Model.SelectedExamSessionIds)
         {
             <input type="hidden" name="examSessionIds" value="@id" />
+        }
+
+        @if (Model.SelectedQuestionTypeId.HasValue)
+        {
+            <input type="hidden" name="questionTypeId" value="@Model.SelectedQuestionTypeId" />
         }
 
         <button type="submit" class="top-btn shuffle">Нов тест</button>

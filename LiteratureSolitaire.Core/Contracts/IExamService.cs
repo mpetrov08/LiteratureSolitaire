@@ -11,7 +11,7 @@ namespace LiteratureSolitaire.Core.Contracts
     {
         Task<List<ExamSessionOptionViewModel>> GetAvailableExamSessionsAsync();
 
-        Task<ExamState> GenerateExamAsync(List<int>? examSessionIds);
+        Task<ExamState> GenerateExamAsync(List<int>? examSessionIds, int? questionTypeId = null);
 
         Task<ExamViewModel> BuildViewModelAsync(ExamState state);
     }

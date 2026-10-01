@@ -28,6 +28,12 @@ namespace LiteratureSolitaire.Controllers
             return View();
         }
 
+        public IActionResult LanguageRules()
+        {
+            return View();
+        }
+
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
